@@ -1,5 +1,6 @@
 {
-  "item_group.kaleidoscope_doll.doll.name": "Kaleidoscope Doll",
+  "item_group.kaleidoscope_doll.vanilla_doll.name": "Kaleidoscope Doll: Vanilla",
+  "item_group.kaleidoscope_doll.player_doll.name": "Kaleidoscope Doll: Author & Sponsors",
   "block.kaleidoscope_doll.doll_machine": "Doll Machine",
   "block.kaleidoscope_doll.purple_doll_gift_box": "Purple Doll Gift Box",
   "block.kaleidoscope_doll.green_doll_gift_box": "Green Doll Gift Box",

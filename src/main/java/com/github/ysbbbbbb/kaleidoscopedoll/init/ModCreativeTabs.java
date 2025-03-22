@@ -9,21 +9,25 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModCreativeTabs extends CreativeModeTab {
-    public static final CreativeModeTab TAB = new ModCreativeTabs();
-    private static final ResourceLocation ICON_ID = new ResourceLocation(KaleidoscopeDoll.MOD_ID, "doll_52");
+    private static final ResourceLocation VANILLA_ICON_ID = new ResourceLocation(KaleidoscopeDoll.MOD_ID, "doll_52");
+    private static final ResourceLocation PLAYER_ICON_ID = new ResourceLocation(KaleidoscopeDoll.MOD_ID, "doll_0");
+    public static final CreativeModeTab VANILLA_DOLL_TAB = new ModCreativeTabs("vanilla_doll", VANILLA_ICON_ID);
+    public static final CreativeModeTab PLAYER_DOLL_TAB = new ModCreativeTabs("player_doll", PLAYER_ICON_ID);
 
     private final Component displayName;
+    private final ResourceLocation icon_id;
     private ItemStack icon;
 
-    public ModCreativeTabs() {
-        super("kaleidoscope_doll.doll");
-        this.displayName = new TranslatableComponent("item_group.kaleidoscope_doll.doll.name");
+    public ModCreativeTabs(String tabName, ResourceLocation iconId) {
+        super(String.format("kaleidoscope_doll.doll.%s", tabName));
+        this.icon_id = iconId;
+        this.displayName = new TranslatableComponent(String.format("item_group.kaleidoscope_doll.%s.name", tabName));
     }
 
     @Override
     public ItemStack makeIcon() {
         if (icon == null) {
-            icon = ForgeRegistries.ITEMS.getValue(ICON_ID).getDefaultInstance();
+            icon = ForgeRegistries.ITEMS.getValue(icon_id).getDefaultInstance();
         }
 
         return icon;

@@ -14,13 +14,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static com.github.ysbbbbbb.kaleidoscopedoll.init.ModCreativeTabs.TAB;
+import static com.github.ysbbbbbb.kaleidoscopedoll.init.ModCreativeTabs.PLAYER_DOLL_TAB;
 
 public class DollItem extends BlockItem {
     private final String langKey;
 
     public DollItem(Block block, String langKey) {
-        super(block, new Item.Properties().tab(TAB));
+        super(block, new Item.Properties().tab(PLAYER_DOLL_TAB));
         this.langKey = "tooltip.kaleidoscope_doll.doll." + langKey;
     }
 

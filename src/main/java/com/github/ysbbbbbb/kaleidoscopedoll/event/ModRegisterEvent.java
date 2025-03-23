@@ -21,7 +21,7 @@ public class ModRegisterEvent {
     public static final Map<ResourceLocation, DollBlock> DOLL_BLOCKS = Maps.newHashMap();
     public static final Map<ResourceLocation, String> SPECIAL_TOOLTIPS = Maps.newHashMap();
     public static final Set<Item> DOLL_ITEMS = Sets.newLinkedHashSet();
-    private static final int MAX_DOLL_COUNT = 72;
+    private static final int MAX_DOLL_COUNT = 78;
 
     private static void registerAllSpecialTooltips() {
         registerSpecialTooltips("doll_0", "author_ysbb");
@@ -32,6 +32,12 @@ public class ModRegisterEvent {
         registerSpecialTooltips("doll_69", "sponsors_guriformes");
         registerSpecialTooltips("doll_70", "sponsors_kupurrra");
         registerSpecialTooltips("doll_71", "sponsors_tanyeng");
+        registerSpecialTooltips("doll_72", "sponsors_airsamafurry");
+        registerSpecialTooltips("doll_73", "sponsors_corleonejing");
+        registerSpecialTooltips("doll_74", "sponsors_kuriyamayasura");
+        registerSpecialTooltips("doll_75", "sponsors_miomilost");
+        registerSpecialTooltips("doll_76", "sponsors_nekonymph");
+        registerSpecialTooltips("doll_77", "sponsors_puerkimiko");
     }
 
     @SubscribeEvent

@@ -1,0 +1,9 @@
+{
+  "credit": "Made by YSBB with Blockbench",
+  "render_type": "cutout",
+  "texture_size": [32, 32],
+  "textures": {
+    "particle": "kaleidoscope_doll:block/doll_machine"
+  },
+  "elements": []
+}

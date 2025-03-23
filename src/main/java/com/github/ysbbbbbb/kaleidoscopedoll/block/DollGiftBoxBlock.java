@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
@@ -32,8 +33,7 @@ public class DollGiftBoxBlock extends HorizontalDirectionalBlock {
     private static final VoxelShape SHAPE = Block.box(1.0d, 0.0d, 1.0d, 15.0d, 15.0d, 15.0d);
 
     public DollGiftBoxBlock() {
-        super(BlockBehaviour.Properties.of()
-                .instrument(NoteBlockInstrument.BASEDRUM)
+        super(BlockBehaviour.Properties.of(Material.WOOL)
                 .sound(SoundType.WOOL)
                 .strength(0f, 10f)
                 .noOcclusion());

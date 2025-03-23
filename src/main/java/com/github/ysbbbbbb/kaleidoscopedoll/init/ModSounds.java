@@ -11,5 +11,5 @@ public class ModSounds {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, KaleidoscopeDoll.MOD_ID);
 
     public static RegistryObject<SoundEvent> DUCK_TOY = SOUND_EVENTS.register("block.duck_toy",
-            () -> SoundEvent.createFixedRangeEvent(new ResourceLocation(KaleidoscopeDoll.MOD_ID, "block.duck_toy"), 16));
+            () -> new SoundEvent(new ResourceLocation(KaleidoscopeDoll.MOD_ID, "block.duck_toy"), 16));
 }

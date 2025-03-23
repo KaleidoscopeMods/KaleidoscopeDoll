@@ -29,6 +29,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -41,8 +42,7 @@ public class DollMachineBlock extends HorizontalDirectionalBlock {
     private static final BooleanProperty LOTTERY_IN_PROGRESS = BooleanProperty.create("lottery_in_progress");
 
     public DollMachineBlock() {
-        super(BlockBehaviour.Properties.of().ignitedByLava()
-                .instrument(NoteBlockInstrument.BASS)
+        super(BlockBehaviour.Properties.of(Material.STONE)
                 .sound(SoundType.COPPER)
                 .strength(8f, 10f)
                 .lightLevel(s -> 2)

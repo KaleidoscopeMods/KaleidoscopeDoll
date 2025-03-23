@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -29,8 +29,7 @@ public class DollBlock extends HorizontalDirectionalBlock {
     private static final VoxelShape SHAPE = Block.box(2.0d, 0.0d, 2.0d, 14.0d, 12.0d, 14.0d);
 
     public DollBlock() {
-        super(BlockBehaviour.Properties.of()
-                .instrument(NoteBlockInstrument.BASEDRUM)
+        super(BlockBehaviour.Properties.of(Material.WOOL)
                 .sound(SoundType.WOOL).strength(0f, 10f)
                 .noOcclusion());
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.SOUTH));

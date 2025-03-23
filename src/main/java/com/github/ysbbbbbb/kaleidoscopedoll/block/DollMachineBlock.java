@@ -8,10 +8,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -28,21 +28,21 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Random;
 
 public class DollMachineBlock extends HorizontalDirectionalBlock {
     private static final VoxelShape SHAPE = Block.box(1.0d, 0.0d, 1.0d, 15.0d, 24.0d, 15.0d);
     private static final BooleanProperty LOTTERY_IN_PROGRESS = BooleanProperty.create("lottery_in_progress");
 
     public DollMachineBlock() {
-        super(BlockBehaviour.Properties.of().ignitedByLava()
-                .instrument(NoteBlockInstrument.BASS)
+        super(BlockBehaviour.Properties.of(Material.STONE)
                 .sound(SoundType.COPPER)
                 .strength(8f, 10f)
                 .lightLevel(s -> 2)
@@ -70,13 +70,13 @@ public class DollMachineBlock extends HorizontalDirectionalBlock {
     }
 
     @Override
-    public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, RandomSource random) {
+    public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, Random random) {
         if (blockstate.getValue(LOTTERY_IN_PROGRESS)) {
             dropGiftBox(world, blockstate, pos, random);
         }
     }
 
-    public void dropGiftBox(ServerLevel world, BlockState blockstate, BlockPos pos, RandomSource random) {
+    public void dropGiftBox(ServerLevel world, BlockState blockstate, BlockPos pos, Random random) {
         int x = pos.getX();
         int y = pos.getY();
         int z = pos.getZ();
@@ -119,6 +119,6 @@ public class DollMachineBlock extends HorizontalDirectionalBlock {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> tooltip, TooltipFlag pFlag) {
-        tooltip.add(Component.translatable("tooltip.kaleidoscope_doll.doll_machine").withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(new TranslatableComponent("tooltip.kaleidoscope_doll.doll_machine").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

@@ -1,27 +1,36 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.init;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
-import com.github.ysbbbbbb.kaleidoscopedoll.event.ModRegisterEvent;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraftforge.registries.DeferredRegister;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
-public class ModCreativeTabs {
-    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, KaleidoscopeDoll.MOD_ID);
+public class ModCreativeTabs extends CreativeModeTab {
+    public static final CreativeModeTab TAB = new ModCreativeTabs();
     private static final ResourceLocation ICON_ID = new ResourceLocation(KaleidoscopeDoll.MOD_ID, "doll_52");
 
-    public static RegistryObject<CreativeModeTab> DOLL_TAB = TABS.register("doll", () -> CreativeModeTab.builder()
-            .title(Component.translatable("item_group.kaleidoscope_doll.doll.name"))
-            .icon(() -> ForgeRegistries.ITEMS.getValue(ICON_ID).getDefaultInstance())
-            .displayItems((par, output) -> {
-                output.accept(ModItems.DOLL_MACHINE.get());
-                output.accept(ModItems.PURPLE_DOLL_GIFT_BOX.get());
-                output.accept(ModItems.GREEN_DOLL_GIFT_BOX.get());
-                output.accept(ModItems.YELLOW_DOLL_GIFT_BOX.get());
-                ModRegisterEvent.DOLL_ITEMS.forEach(output::accept);
-            }).build());
+    private final Component displayName;
+    private ItemStack icon;
+
+    public ModCreativeTabs() {
+        super("kaleidoscope_doll.doll");
+        this.displayName = new TranslatableComponent("item_group.kaleidoscope_doll.doll.name");
+    }
+
+    @Override
+    public ItemStack makeIcon() {
+        if (icon == null) {
+            icon = ForgeRegistries.ITEMS.getValue(ICON_ID).getDefaultInstance();
+        }
+
+        return icon;
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return displayName;
+    }
 }

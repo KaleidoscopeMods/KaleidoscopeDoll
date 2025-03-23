@@ -2,6 +2,7 @@ package com.github.ysbbbbbb.kaleidoscopedoll.item;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -13,11 +14,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import static com.github.ysbbbbbb.kaleidoscopedoll.init.ModCreativeTabs.TAB;
+
 public class DollItem extends BlockItem {
     private final String langKey;
 
     public DollItem(Block block, String langKey) {
-        super(block, new Item.Properties());
+        super(block, new Item.Properties().tab(TAB));
         this.langKey = "tooltip.kaleidoscope_doll.doll." + langKey;
     }
 
@@ -28,6 +31,6 @@ public class DollItem extends BlockItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
-        list.add(Component.translatable(this.langKey).withStyle(ChatFormatting.DARK_GRAY));
+        list.add(new TranslatableComponent(this.langKey).withStyle(ChatFormatting.DARK_GRAY));
     }
 }

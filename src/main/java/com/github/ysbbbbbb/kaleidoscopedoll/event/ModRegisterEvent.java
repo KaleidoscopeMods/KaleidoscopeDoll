@@ -9,7 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -21,13 +20,11 @@ import java.util.stream.IntStream;
 @Mod.EventBusSubscriber(modid = KaleidoscopeDoll.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModRegisterEvent {
     public static final Map<ResourceLocation, DollBlock> DOLL_BLOCKS = Maps.newHashMap();
+    public static final Map<ResourceLocation, String> SPECIAL_TOOLTIPS = Maps.newHashMap();
     public static final Set<Item> DOLL_ITEMS = Sets.newLinkedHashSet();
-    private static final int MAX_DOLL_COUNT = 72;
-    private static final Map<ResourceLocation, String> SPECIAL_TOOLTIPS = Maps.newHashMap();
-    private static boolean SPECICAL_TOOLTIP_REGISTER = false;
+    private static final int MAX_DOLL_COUNT = 78;
 
     private static void registerAllSpecialTooltips() {
-//        if (!SPECICAL_TOOLTIP_REGISTER) {
         registerSpecialTooltips("doll_0", "author_ysbb");
         registerSpecialTooltips("doll_1", "author_tartaric_acid");
         registerSpecialTooltips("doll_67", "author_abert_cat");
@@ -36,9 +33,12 @@ public class ModRegisterEvent {
         registerSpecialTooltips("doll_69", "sponsors_guriformes");
         registerSpecialTooltips("doll_70", "sponsors_kupurrra");
         registerSpecialTooltips("doll_71", "sponsors_tanyeng");
-
-//            SPECICAL_TOOLTIP_REGISTER = true;
-//        }
+        registerSpecialTooltips("doll_72", "sponsors_airsamafurry");
+        registerSpecialTooltips("doll_73", "sponsors_corleonejing");
+        registerSpecialTooltips("doll_74", "sponsors_kuriyamayasura");
+        registerSpecialTooltips("doll_75", "sponsors_miomilost");
+        registerSpecialTooltips("doll_76", "sponsors_nekonymph");
+        registerSpecialTooltips("doll_77", "sponsors_puerkimiko");
     }
 
     @SubscribeEvent

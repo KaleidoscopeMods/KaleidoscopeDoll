@@ -1,5 +1,6 @@
 {
-  "item_group.kaleidoscope_doll.doll.name": "森罗物语：玩偶",
+  "item_group.kaleidoscope_doll.vanilla_doll.name": "森罗物语：原版玩偶",
+  "item_group.kaleidoscope_doll.player_doll.name": "森罗物语：作者和捐赠者",
   "block.kaleidoscope_doll.doll_machine": "玩偶抽奖机",
   "block.kaleidoscope_doll.purple_doll_gift_box": "紫色玩偶礼品盒",
   "block.kaleidoscope_doll.green_doll_gift_box": "绿色玩偶礼品盒",
@@ -15,5 +16,11 @@
   "tooltip.kaleidoscope_doll.doll.author_cr_019": "作者：CR_019",
   "tooltip.kaleidoscope_doll.doll.sponsors_guriformes": "捐赠者：guriformes",
   "tooltip.kaleidoscope_doll.doll.sponsors_kupurrra": "捐赠者：Kupurrra",
-  "tooltip.kaleidoscope_doll.doll.sponsors_tanyeng": "捐赠者：tanyeng"
+  "tooltip.kaleidoscope_doll.doll.sponsors_tanyeng": "捐赠者：tanyeng",
+  "tooltip.kaleidoscope_doll.doll.sponsors_airsamafurry": "捐赠者：tanyeng",
+  "tooltip.kaleidoscope_doll.doll.sponsors_corleonejing": "捐赠者：CorleoneJing",
+  "tooltip.kaleidoscope_doll.doll.sponsors_kuriyamayasura": "捐赠者：KuriyamaYasura",
+  "tooltip.kaleidoscope_doll.doll.sponsors_miomilost": "捐赠者：MiomiLost",
+  "tooltip.kaleidoscope_doll.doll.sponsors_nekonymph": "捐赠者：nekonymph",
+  "tooltip.kaleidoscope_doll.doll.sponsors_puerkimiko": "捐赠者：puerkimiko"
 }

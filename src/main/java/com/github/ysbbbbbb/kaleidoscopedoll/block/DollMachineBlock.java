@@ -14,6 +14,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,12 +22,16 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
@@ -38,8 +43,10 @@ import java.util.List;
 import java.util.Random;
 
 public class DollMachineBlock extends HorizontalDirectionalBlock {
-    private static final VoxelShape SHAPE = Block.box(1.0d, 0.0d, 1.0d, 15.0d, 24.0d, 15.0d);
+    private static final VoxelShape SHAPE_UPPER = Block.box(1.0d, 0.0d, 1.0d, 15.0d, 8.0d, 15.0d);
+    private static final VoxelShape SHAPE = Block.box(1.0d, 0.0d, 1.0d, 15.0d, 16.0d, 15.0d);
     private static final BooleanProperty LOTTERY_IN_PROGRESS = BooleanProperty.create("lottery_in_progress");
+    public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
     public DollMachineBlock() {
         super(BlockBehaviour.Properties.of(Material.STONE)
@@ -47,7 +54,45 @@ public class DollMachineBlock extends HorizontalDirectionalBlock {
                 .strength(8f, 10f)
                 .lightLevel(s -> 2)
                 .noOcclusion());
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LOTTERY_IN_PROGRESS, false));
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(LOTTERY_IN_PROGRESS, false)
+                .setValue(HALF, DoubleBlockHalf.LOWER));
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+        DoubleBlockHalf blockHalf = state.getValue(HALF);
+        if (facing.getAxis() == Direction.Axis.Y && blockHalf == DoubleBlockHalf.LOWER == (facing == Direction.UP)) {
+            boolean condition = facingState.is(this) && facingState.getValue(HALF) != blockHalf;
+            return condition ? state.setValue(FACING, facingState.getValue(FACING)).setValue(LOTTERY_IN_PROGRESS, facingState.getValue(LOTTERY_IN_PROGRESS)) : Blocks.AIR.defaultBlockState();
+        } else {
+            boolean condition = blockHalf == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !state.canSurvive(level, currentPos);
+            return condition ? Blocks.AIR.defaultBlockState() : super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+        }
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockPos clickedPos = context.getClickedPos();
+        Level level = context.getLevel();
+        if (clickedPos.getY() < level.getMaxBuildHeight() - 1 && level.getBlockState(clickedPos.above()).canBeReplaced(context)) {
+            return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection()).setValue(HALF, DoubleBlockHalf.LOWER);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, LivingEntity entity, ItemStack pStack) {
+        pLevel.setBlock(pPos.above(), pState.setValue(HALF, DoubleBlockHalf.UPPER), 3);
+    }
+
+    @Override
+    public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
+        BlockPos blockpos = pPos.below();
+        BlockState blockstate = pLevel.getBlockState(blockpos);
+        return pState.getValue(HALF) == DoubleBlockHalf.LOWER ? blockstate.isFaceSturdy(pLevel, blockpos, Direction.UP) : blockstate.is(this);
     }
 
     @Override
@@ -103,18 +148,17 @@ public class DollMachineBlock extends HorizontalDirectionalBlock {
     }
 
     @Override
-    public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-    }
-
-    @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        if (blockState.getValue(HALF) == DoubleBlockHalf.LOWER) {
+            return SHAPE;
+        } else {
+            return SHAPE_UPPER;
+        }
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, LOTTERY_IN_PROGRESS);
+        builder.add(FACING, LOTTERY_IN_PROGRESS, HALF);
     }
 
     @Override

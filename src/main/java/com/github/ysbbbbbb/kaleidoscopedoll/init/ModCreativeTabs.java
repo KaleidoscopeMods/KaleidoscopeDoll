@@ -14,19 +14,19 @@ public class ModCreativeTabs extends CreativeModeTab {
     public static final CreativeModeTab PLAYER_DOLL_TAB = new ModCreativeTabs("player_doll", PLAYER_ICON_ID);
 
     private final Component displayName;
-    private final ResourceLocation icon_id;
+    private final ResourceLocation iconId;
     private ItemStack icon;
 
     public ModCreativeTabs(String tabName, ResourceLocation iconId) {
         super(String.format("kaleidoscope_doll.doll.%s", tabName));
-        this.icon_id = iconId;
+        this.iconId = iconId;
         this.displayName = Component.translatable(String.format("item_group.kaleidoscope_doll.%s.name", tabName));
     }
 
     @Override
     public ItemStack makeIcon() {
         if (icon == null) {
-            icon = ForgeRegistries.ITEMS.getValue(icon_id).getDefaultInstance();
+            icon = ForgeRegistries.ITEMS.getValue(iconId).getDefaultInstance();
         }
 
         return icon;

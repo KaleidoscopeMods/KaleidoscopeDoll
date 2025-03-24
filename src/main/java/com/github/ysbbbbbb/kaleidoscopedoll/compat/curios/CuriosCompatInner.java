@@ -10,7 +10,6 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 
 public class CuriosCompatInner {
-
     @OnlyIn(Dist.CLIENT)
     static void registerRenderer(EntityRenderersEvent.AddLayers event) {
         if (event.getSkin("default") instanceof PlayerRenderer playerRenderer) {
@@ -24,6 +23,5 @@ public class CuriosCompatInner {
     static void registerDollItemPredicate() {
         CuriosApi.registerCurioPredicate(new ResourceLocation(KaleidoscopeDoll.MOD_ID, "doll_item"),
                 slotResult -> slotResult.stack().getItem() instanceof DollItem);
-
     }
 }

@@ -6,8 +6,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.fml.ModList;
 
 public class CuriosCompat {
-
-    public static final String ID = "curios";
+    private static final String ID = "curios";
     private static final boolean IS_LOADED;
 
     static {
@@ -26,5 +25,4 @@ public class CuriosCompat {
             CuriosCompatInner.registerDollItemPredicate();
         }
     }
-
 }

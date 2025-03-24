@@ -9,10 +9,8 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = KaleidoscopeDoll.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class AddEntityLayersEvent {
-
     @SubscribeEvent
     public static void addEntityLayers(EntityRenderersEvent.AddLayers event) {
         CuriosCompat.addEntityLayers(event);
     }
-
 }

@@ -3,10 +3,12 @@ package com.github.ysbbbbbb.kaleidoscopedoll.datagen;
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraftforge.common.data.ForgeAdvancementProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -27,5 +29,10 @@ public class DataGenerators {
         vanillaPack.addProvider(packOutput ->
                 new TagItem(packOutput, registries, blockTagsProvider.contentsGetter(), KaleidoscopeDoll.MOD_ID, existingFileHelper));
         generator.addProvider(event.includeServer(), new ModRecipeProvider(generator));
+
+        generator.addProvider(true, new ForgeAdvancementProvider(
+                pack, registries, existingFileHelper,
+                Collections.singletonList(new AdvancementGenerator())
+        ));
     }
 }

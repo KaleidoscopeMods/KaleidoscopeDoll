@@ -11,9 +11,12 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 
+import static com.github.ysbbbbbb.kaleidoscopedoll.event.ModRegisterEvent.DOLL_ITEMS;
+
 
 public class TagItem extends ItemTagsProvider {
     public static final TagKey<Item> DOLL_MACHINE_TOKENS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("doll_machine_tokens"));
+    public static final TagKey<Item> CURIOS_HEAD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("curios", "head"));
 
     public TagItem(DataGenerator dataGenerator, BlockTagsProvider blockTagsProvider, String modId, @Nullable ExistingFileHelper existingFileHelper) {
         super(dataGenerator, blockTagsProvider, modId, existingFileHelper);
@@ -22,5 +25,9 @@ public class TagItem extends ItemTagsProvider {
     @Override
     protected void addTags() {
         this.tag(DOLL_MACHINE_TOKENS).add(Items.DIAMOND.asItem());
+
+        for (Item dollItem : DOLL_ITEMS) {
+            this.tag(CURIOS_HEAD).add(dollItem);
+        }
     }
 }

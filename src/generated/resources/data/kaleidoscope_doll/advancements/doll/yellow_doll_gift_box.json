@@ -1,0 +1,39 @@
+{
+  "parent": "kaleidoscope_doll:doll/doll_machine",
+  "criteria": {
+    "yellow_doll_gift_box": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "kaleidoscope_doll:yellow_doll_gift_box"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "kaleidoscope_doll:textures/advancement/background.png",
+    "description": {
+      "translate": "advancements.kaleidoscope_doll.doll.yellow_doll_gift_box.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "kaleidoscope_doll:yellow_doll_gift_box"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.kaleidoscope_doll.doll.yellow_doll_gift_box.title"
+    }
+  },
+  "requirements": [
+    [
+      "yellow_doll_gift_box"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

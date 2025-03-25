@@ -1,6 +1,7 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.client.event;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
+import com.github.ysbbbbbb.kaleidoscopedoll.event.ModRegisterEvent;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModBlocks;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -14,5 +15,10 @@ public class ClientEvent {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> ItemBlockRenderTypes.setRenderLayer(ModBlocks.DOLL_MACHINE.get(), RenderType.cutout()));
+        event.enqueueWork(() -> {
+            ModRegisterEvent.DOLL_BLOCKS.forEach((resourceLocation, dollBlock) -> {
+                ItemBlockRenderTypes.setRenderLayer(dollBlock, RenderType.cutout());
+            });
+        });
     }
 }

@@ -1,6 +1,7 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.init;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
+import com.github.ysbbbbbb.kaleidoscopedoll.block.DollBlock;
 import com.github.ysbbbbbb.kaleidoscopedoll.block.DollGiftBoxBlock;
 import com.github.ysbbbbbb.kaleidoscopedoll.block.DollMachineBlock;
 import net.minecraft.world.level.block.Block;

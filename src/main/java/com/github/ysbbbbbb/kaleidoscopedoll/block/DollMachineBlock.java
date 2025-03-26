@@ -24,14 +24,12 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.*;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -82,6 +80,23 @@ public class DollMachineBlock extends HorizontalDirectionalBlock {
     }
 
     @Override
+    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide && player.isCreative()) {
+            DoubleBlockHalf value = state.getValue(HALF);
+            if (value == DoubleBlockHalf.UPPER) {
+                BlockPos below = pos.below();
+                BlockState belowState = level.getBlockState(below);
+                if (belowState.is(state.getBlock()) && belowState.getValue(HALF) == DoubleBlockHalf.LOWER) {
+                    BlockState blockState = belowState.getFluidState().is(Fluids.WATER) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
+                    level.setBlock(below, blockState, Block.UPDATE_SUPPRESS_DROPS | Block.UPDATE_ALL);
+                    level.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, below, Block.getId(belowState));
+                }
+            }
+        }
+        super.playerWillDestroy(level, pos, state, player);
+    }
+
+    @Override
     public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, LivingEntity entity, ItemStack pStack) {
         pLevel.setBlock(pPos.above(), pState.setValue(HALF, DoubleBlockHalf.UPPER), 3);
     }
@@ -97,7 +112,7 @@ public class DollMachineBlock extends HorizontalDirectionalBlock {
     public InteractionResult use(BlockState blockstate, Level world, BlockPos pos, Player entity, InteractionHand hand, BlockHitResult hit) {
         if (entity.getItemInHand(hand).is(TagItem.DOLL_MACHINE_TOKENS) && !blockstate.getValue(LOTTERY_IN_PROGRESS)) {
             int x = pos.getX();
-            int y = pos.getY();
+            int y = blockstate.getValue(HALF) == DoubleBlockHalf.LOWER ? pos.getY() : pos.getY() - 1;
             int z = pos.getZ();
             entity.getItemInHand(hand).shrink(1);
             world.setBlockAndUpdate(pos, blockstate.setValue(LOTTERY_IN_PROGRESS, true));
@@ -121,10 +136,11 @@ public class DollMachineBlock extends HorizontalDirectionalBlock {
 
     public void dropGiftBox(ServerLevel world, BlockState blockstate, BlockPos pos, RandomSource random) {
         int x = pos.getX();
-        int y = pos.getY();
+        int y = blockstate.getValue(HALF) == DoubleBlockHalf.LOWER ? pos.getY() : pos.getY() - 1;
         int z = pos.getZ();
 
-        world.sendParticles(ParticleTypes.ANGRY_VILLAGER.getType(), x, y + 1.8, z, 10, 0.1, 0.1, 0.1, 0);
+        world.sendParticles(ParticleTypes.HAPPY_VILLAGER.getType(), x + 0.5, y + 1.8, z + 0.5,
+                10, 0.5, 0.5, 0.5, 0.5);
         world.playSound(null, x, y, z, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.BLOCKS, 1f, 1f);
         world.setBlockAndUpdate(pos, blockstate.setValue(LOTTERY_IN_PROGRESS, false));
 

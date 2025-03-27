@@ -21,7 +21,7 @@ public class ModRegisterEvent {
     public static final Map<ResourceLocation, DollBlock> DOLL_BLOCKS = Maps.newHashMap();
     public static final Map<ResourceLocation, String> SPECIAL_TOOLTIPS = Maps.newHashMap();
     public static final Set<Item> DOLL_ITEMS = Sets.newLinkedHashSet();
-    private static final int MAX_DOLL_COUNT = 95;
+    private static final int MAX_DOLL_COUNT = 105;
 
     private static void registerAllSpecialTooltips() {
         registerSpecialTooltips("doll_0", "author_ysbb");
@@ -30,7 +30,7 @@ public class ModRegisterEvent {
         registerSpecialTooltips("doll_68", "author_cr_019");
 
         registerSpecialTooltips("doll_69", "sponsors_guriformes");
-        registerSpecialTooltips("doll_70", "sponsors_kupurrra");
+        registerSpecialTooltips("doll_70", "sponsors_passer1ne");
         registerSpecialTooltips("doll_71", "sponsors_tanyeng");
         registerSpecialTooltips("doll_72", "sponsors_airsamafurry");
         registerSpecialTooltips("doll_73", "sponsors_corleonejing");
@@ -55,6 +55,16 @@ public class ModRegisterEvent {
         registerSpecialTooltips("doll_92", "sponsors_solareclipseg");
         registerSpecialTooltips("doll_93", "sponsors_zombiec1107");
         registerSpecialTooltips("doll_94", "sponsors__moepus_");
+        registerSpecialTooltips("doll_95", "sponsors_ackrf");
+        registerSpecialTooltips("doll_96", "sponsors_chuanchengzi");
+        registerSpecialTooltips("doll_97", "sponsors_deltaex001");
+        registerSpecialTooltips("doll_98", "sponsors_elyasrosedale");
+        registerSpecialTooltips("doll_99", "sponsors_faustduck");
+        registerSpecialTooltips("doll_100", "sponsors_lixu223");
+        registerSpecialTooltips("doll_101", "sponsors_kupurrra");
+        registerSpecialTooltips("doll_102", "sponsors_thjnd");
+        registerSpecialTooltips("doll_103", "sponsors_variant_dk");
+        registerSpecialTooltips("doll_104", "sponsors_yuxiaowan");
     }
 
     @SubscribeEvent

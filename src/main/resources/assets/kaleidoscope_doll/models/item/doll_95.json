@@ -2,7 +2,7 @@
   "credit": "by YSBB  2025",
   "texture_size": [64, 64],
   "textures": {
-    "1": "kaleidoscope_doll:block/doll/doll_70",
+    "1": "kaleidoscope_doll:block/doll/doll_95",
     "particle": "block/white_wool"
   },
   "elements": [
@@ -52,19 +52,19 @@
       },
       "faces": {
         "north": {
-          "uv": [10, 1.75, 12, 3.75],
+          "uv": [10, 2, 12, 4],
           "texture": "#1"
         },
         "east": {
-          "uv": [8, 1.75, 10, 3.75],
+          "uv": [8, 2, 10, 4],
           "texture": "#1"
         },
         "south": {
-          "uv": [14, 1.75, 16, 3.75],
+          "uv": [14, 2, 16, 4],
           "texture": "#1"
         },
         "west": {
-          "uv": [12, 1.75, 14, 3.75],
+          "uv": [12, 2, 14, 4],
           "texture": "#1"
         },
         "up": {
@@ -73,6 +73,20 @@
         },
         "down": {
           "uv": [14, 0, 12, 2],
+          "texture": "#1"
+        }
+      }
+    }, {
+      "from": [12, 9, 7],
+      "to": [12, 12, 11],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [10, 9, 9]
+      },
+      "faces": {
+        "east": {
+          "uv": [5.5, 4.75, 6.5, 5.5],
           "texture": "#1"
         }
       }
@@ -165,7 +179,7 @@
           "texture": "#1"
         },
         "south": {
-          "uv": [2.5, 6.5, 2.975, 7.9375],
+          "uv": [2.25, 6.5, 2.975, 7.9375],
           "texture": "#1"
         },
         "west": {
@@ -311,34 +325,6 @@
           "texture": "#1"
         }
       }
-    }, {
-      "from": [3.25, 4, 7.75],
-      "to": [11.25, 9, 7.75],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [3.25, 4, 5.75]
-      },
-      "faces": {
-        "north": {
-          "uv": [13.25, 5.5, 15.25, 6.75],
-          "texture": "#1"
-        }
-      }
-    }, {
-      "from": [3.5, 1, 12.75],
-      "to": [11.5, 6, 12.75],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [3.5, 1, 10.75]
-      },
-      "faces": {
-        "south": {
-          "uv": [10, 4.5, 12, 5.75],
-          "texture": "#1"
-        }
-      }
     }
   ],
   "display": {
@@ -384,17 +370,17 @@
       "name": "Head",
       "origin": [8, 24, 8],
       "color": 0,
-      "children": [0, 1]
+      "children": [0, 1, 2]
     }, {
       "name": "Body",
       "origin": [8, 24, 8],
       "color": 0,
-      "children": [2]
+      "children": [3]
     }, {
       "name": "RightArm",
       "origin": [13, 22, 8],
       "color": 0,
-      "children": [3, 4, 5, 6]
+      "children": [4, 5, 6, 7]
     }, {
       "name": "LeftArm",
       "origin": [3, 22, 8],
@@ -404,13 +390,13 @@
       "name": "RightLeg",
       "origin": [9.9, 12, 8],
       "color": 0,
-      "children": [7]
+      "children": [8]
     }, {
       "name": "LeftLeg",
       "origin": [6.1, 12, 8],
       "color": 0,
-      "children": [8]
-    }, 9, 10
+      "children": [9]
+    }
   ],
   "render_type": "cutout"
 }

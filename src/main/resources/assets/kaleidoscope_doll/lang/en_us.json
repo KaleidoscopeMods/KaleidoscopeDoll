@@ -9,10 +9,13 @@
   "advancements.kaleidoscope_doll.doll.purple_doll_gift_box.description": "Monster creature dolls can be drawn",
   "advancements.kaleidoscope_doll.doll.yellow_doll_gift_box.title": "Yellow Doll Gift Box",
   "advancements.kaleidoscope_doll.doll.yellow_doll_gift_box.description": "Humanoid dolls can be drawn",
+  "advancements.kaleidoscope_doll.doll.full_collection.title": "Little Collectors",
+  "advancements.kaleidoscope_doll.doll.full_collection.description": "Get all kinds of vanilla dolls",
   "advancements.kaleidoscope_doll.doll.credits.title": "Sponsors Doll",
   "advancements.kaleidoscope_doll.doll.credits.description": "Crafted in a stone cutter using white wool",
   "item_group.kaleidoscope_doll.vanilla_doll.name": "Kaleidoscope Doll: Vanilla",
   "item_group.kaleidoscope_doll.player_doll.name": "Kaleidoscope Doll: Author & Sponsors",
+  "item.kaleidoscope_doll.doll_icon": "Kaleidoscope Doll",
   "block.kaleidoscope_doll.doll_machine": "Doll Machine",
   "block.kaleidoscope_doll.purple_doll_gift_box": "Purple Doll Gift Box",
   "block.kaleidoscope_doll.green_doll_gift_box": "Green Doll Gift Box",
@@ -61,5 +64,13 @@
   "tooltip.kaleidoscope_doll.doll.sponsors_lixu223": "Sponsors: LIXU223",
   "tooltip.kaleidoscope_doll.doll.sponsors_thjnd": "Sponsors: ThJnd",
   "tooltip.kaleidoscope_doll.doll.sponsors_variant_dk": "Sponsors: Variant_DK",
-  "tooltip.kaleidoscope_doll.doll.sponsors_yuxiaowan": "Sponsors: yuxiaowan"
+  "tooltip.kaleidoscope_doll.doll.sponsors_yuxiaowan": "Sponsors: yuxiaowan",
+  "tooltip.kaleidoscope_doll.doll.sponsors_bigpear5231": "Sponsors: Bigpear5231",
+  "tooltip.kaleidoscope_doll.doll.sponsors_idlersnacl": "Sponsors: IdlersNaCl",
+  "tooltip.kaleidoscope_doll.doll.sponsors_kekmc123": "Sponsors: KEKmc123",
+  "tooltip.kaleidoscope_doll.doll.sponsors_kizunahovene": "Sponsors: KizunaHovene",
+  "tooltip.kaleidoscope_doll.doll.sponsors_linx": "Sponsors: Linx",
+  "tooltip.kaleidoscope_doll.doll.sponsors_linx_su": "Sponsors: Linx_su",
+  "tooltip.kaleidoscope_doll.doll.sponsors_wyx0714": "Sponsors: Wyx0714",
+  "tooltip.kaleidoscope_doll.doll.sponsors_xheya_3u3": "Sponsors: XHeYa_3u3"
 }

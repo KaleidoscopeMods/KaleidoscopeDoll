@@ -11,21 +11,37 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 
+import static com.github.ysbbbbbb.kaleidoscopedoll.event.ModRegisterEvent.SPECIAL_TOOLTIPS;
+
 public class ModCreativeTabs {
-    private static final ResourceLocation ICON_ID = ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "doll_52");
-    private static final ResourceKey<CreativeModeTab> DOLL_TAB = ResourceKey.create(Registries.CREATIVE_MODE_TAB,
-            ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "doll"));
+    private static final ResourceLocation VANILLA_ICON_ID = ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "doll_52");
+    private static final ResourceLocation PLAYER_ICON_ID = ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "doll_0");
+    private static final ResourceKey<CreativeModeTab> VANILLA_DOLL_TAB = ResourceKey.create(Registries.CREATIVE_MODE_TAB,
+            ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "vanilla_doll"));
+    private static final ResourceKey<CreativeModeTab> PLAYER_DOLL_TAB = ResourceKey.create(Registries.CREATIVE_MODE_TAB,
+            ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "player_doll"));
 
     public static void registerTabs() {
-        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, DOLL_TAB, FabricItemGroup.builder()
-                .title(Component.translatable("item_group.kaleidoscope_doll.doll.name"))
-                .icon(() -> BuiltInRegistries.ITEM.get(ICON_ID).getDefaultInstance())
+        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, VANILLA_DOLL_TAB, FabricItemGroup.builder()
+                .title(Component.translatable("item_group.kaleidoscope_doll.vanilla_doll.name"))
+                .icon(() -> BuiltInRegistries.ITEM.get(VANILLA_ICON_ID).getDefaultInstance())
                 .displayItems((par, output) -> {
                     output.accept(ModItems.DOLL_MACHINE);
                     output.accept(ModItems.PURPLE_DOLL_GIFT_BOX);
                     output.accept(ModItems.GREEN_DOLL_GIFT_BOX);
                     output.accept(ModItems.YELLOW_DOLL_GIFT_BOX);
-                    ModRegisterEvent.DOLL_ITEMS.forEach(output::accept);
+                    ModRegisterEvent.DOLL_ITEMS.stream()
+                            .filter(item -> !SPECIAL_TOOLTIPS.containsKey(BuiltInRegistries.ITEM.getKey(item)))
+                            .forEach(output::accept);
+                }).build());
+
+        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, PLAYER_DOLL_TAB, FabricItemGroup.builder()
+                .title(Component.translatable("item_group.kaleidoscope_doll.player_doll.name"))
+                .icon(() -> BuiltInRegistries.ITEM.get(PLAYER_ICON_ID).getDefaultInstance())
+                .displayItems((par, output) -> {
+                    ModRegisterEvent.DOLL_ITEMS.stream()
+                            .filter(item -> SPECIAL_TOOLTIPS.containsKey(BuiltInRegistries.ITEM.getKey(item)))
+                            .forEach(output::accept);
                 }).build());
     }
 }

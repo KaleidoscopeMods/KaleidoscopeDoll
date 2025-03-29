@@ -57,11 +57,6 @@ public class DollBlock extends HorizontalDirectionalBlock {
     }
 
     @Override
-    public String getDescriptionId() {
-        return "block.kaleidoscope_doll.doll";
-    }
-
-    @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return SHAPE;
     }

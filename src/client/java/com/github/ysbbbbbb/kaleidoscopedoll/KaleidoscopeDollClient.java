@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.RenderType;
 public class KaleidoscopeDollClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.DOLL_MACHINE, RenderType.translucent());
-        ModRegisterEvent.DOLL_BLOCKS.values().forEach(b -> BlockRenderLayerMap.INSTANCE.putBlock(b, RenderType.translucent()));
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.DOLL_MACHINE, RenderType.cutout());
+        ModRegisterEvent.DOLL_BLOCKS.values().forEach(b -> BlockRenderLayerMap.INSTANCE.putBlock(b, RenderType.cutout()));
     }
 }

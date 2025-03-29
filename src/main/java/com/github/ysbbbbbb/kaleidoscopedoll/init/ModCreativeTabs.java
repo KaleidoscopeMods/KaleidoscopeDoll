@@ -11,18 +11,33 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
+import static com.github.ysbbbbbb.kaleidoscopedoll.event.ModRegisterEvent.SPECIAL_TOOLTIPS;
+
+
 public class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, KaleidoscopeDoll.MOD_ID);
-    private static final ResourceLocation ICON_ID = ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "doll_52");
+    private static final ResourceLocation VANILLA_ICON_ID = ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "doll_52");
+    private static final ResourceLocation PLAYER_ICON_ID = ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "doll_0");
 
-    public static Supplier<CreativeModeTab> DOLL_TAB = TABS.register("doll", () -> CreativeModeTab.builder()
-            .title(Component.translatable("item_group.kaleidoscope_doll.doll.name"))
-            .icon(() -> BuiltInRegistries.ITEM.getValue(ICON_ID).getDefaultInstance())
+    public static Supplier<CreativeModeTab> VANILLA_DOLL_TAB = TABS.register("vanilla_doll", () -> CreativeModeTab.builder()
+            .title(Component.translatable("item_group.kaleidoscope_doll.vanilla_doll.name"))
+            .icon(() -> BuiltInRegistries.ITEM.getValue(VANILLA_ICON_ID).getDefaultInstance())
             .displayItems((par, output) -> {
                 output.accept(ModItems.DOLL_MACHINE.get());
                 output.accept(ModItems.PURPLE_DOLL_GIFT_BOX.get());
                 output.accept(ModItems.GREEN_DOLL_GIFT_BOX.get());
                 output.accept(ModItems.YELLOW_DOLL_GIFT_BOX.get());
-                ModRegisterEvent.DOLL_ITEMS.forEach(output::accept);
+                ModRegisterEvent.DOLL_ITEMS.stream()
+                        .filter(item -> !SPECIAL_TOOLTIPS.containsKey(BuiltInRegistries.ITEM.getKey(item)))
+                        .forEach(output::accept);
+            }).build());
+
+    public static Supplier<CreativeModeTab> PLAYER_DOLL_TAB = TABS.register("player_doll", () -> CreativeModeTab.builder()
+            .title(Component.translatable("item_group.kaleidoscope_doll.player_doll.name"))
+            .icon(() -> BuiltInRegistries.ITEM.getValue(PLAYER_ICON_ID).getDefaultInstance())
+            .displayItems((par, output) -> {
+                ModRegisterEvent.DOLL_ITEMS.stream()
+                        .filter(item -> SPECIAL_TOOLTIPS.containsKey(BuiltInRegistries.ITEM.getKey(item)))
+                        .forEach(output::accept);
             }).build());
 }

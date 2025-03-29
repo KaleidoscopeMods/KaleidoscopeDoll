@@ -32,6 +32,11 @@ public class DollItem extends BlockItem {
     }
 
     @Override
+    public Component getName(ItemStack stack) {
+        return new TranslatableComponent("block.kaleidoscope_doll.doll");
+    }
+
+    @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
         list.add(new TranslatableComponent(this.langKey).withStyle(ChatFormatting.DARK_GRAY));
     }
@@ -41,7 +46,7 @@ public class DollItem extends BlockItem {
         ResourceLocation resourceLocation = ForgeRegistries.ITEMS.getKey(this);
         if (SPECIAL_TOOLTIPS.containsKey(resourceLocation) && creativeModeTab.equals(PLAYER_DOLL_TAB)) {
             this.getBlock().fillItemCategory(creativeModeTab, itemStacks);
-        } else if (!SPECIAL_TOOLTIPS.containsKey(resourceLocation) && creativeModeTab.equals(VANILLA_DOLL_TAB)){
+        } else if (!SPECIAL_TOOLTIPS.containsKey(resourceLocation) && creativeModeTab.equals(VANILLA_DOLL_TAB)) {
             this.getBlock().fillItemCategory(creativeModeTab, itemStacks);
         }
     }

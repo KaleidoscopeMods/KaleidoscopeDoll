@@ -31,6 +31,11 @@ public class DollItem extends BlockItem {
     }
 
     @Override
+    public Component getName(ItemStack stack) {
+        return Component.translatable("block.kaleidoscope_doll.doll");
+    }
+
+    @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
         list.add(Component.translatable(this.langKey).withStyle(ChatFormatting.DARK_GRAY));
     }

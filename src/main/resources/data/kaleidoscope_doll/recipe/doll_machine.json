@@ -7,15 +7,9 @@
     "aca"
   ],
   "key": {
-    "a": {
-      "tag": "forge:ingots/copper"
-    },
-    "b": {
-      "item": "minecraft:jukebox"
-    },
-    "c": {
-      "item": "minecraft:oxidized_copper"
-    }
+    "a": "#c:ingots/copper",
+    "b": "minecraft:jukebox",
+    "c": "minecraft:oxidized_copper"
   },
   "result": {
     "id": "kaleidoscope_doll:doll_machine",

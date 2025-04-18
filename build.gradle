@@ -51,6 +51,10 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    // 优先本地 libs 文件夹
+    flatDir {
+        dir 'libs'
+    }
     maven {
         // location of the maven that hosts JEI files since January 2023
         name = "Jared's maven"
@@ -76,7 +80,11 @@ dependencies {
 
     compileOnly fg.deobf("mezz.jei:jei-1.20.1-common-api:${jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-1.20.1-forge-api:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.20.1-forge:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-1.20.1-forge:${jei_version}")
+
+    compileOnly fg.deobf("libs:emi-forge:${emi_version}:api")
+    compileOnly fg.deobf("libs:emi-forge:${emi_version}")
+    runtimeOnly fg.deobf("libs:emi-forge:${emi_version}")
 
     runtimeOnly fg.deobf("maven.modrinth:touhou-little-maid:1.2.1-forge,1.20.1")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.9.1+1.20.1")

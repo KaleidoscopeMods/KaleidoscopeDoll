@@ -35,5 +35,6 @@ public class DataGenerators {
                 Collections.singletonList(new AdvancementGenerator())
         ));
         generator.addProvider(event.includeClient(), new ItemModelGenerator(pack, existingFileHelper));
+        generator.addProvider(event.includeClient(), new BlockStateGenerator(pack, existingFileHelper));
     }
 }

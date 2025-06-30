@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "kaleidoscope_doll:block/doll/doll_27",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "kaleidoscope_doll:block/doll/doll_27"
+    },
+    "facing=south": {
+      "model": "kaleidoscope_doll:block/doll/doll_27",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "kaleidoscope_doll:block/doll/doll_27",
+      "y": 270
+    }
+  }
+}

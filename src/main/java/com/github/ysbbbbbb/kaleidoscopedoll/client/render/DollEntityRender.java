@@ -11,6 +11,8 @@ import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
@@ -37,14 +39,16 @@ public class DollEntityRender extends EntityRenderer<DollEntity> {
         poseStack.translate(translation.x, translation.y, translation.z);
 
         // 应用 Y 轴旋转（基于实体的 yaw）
-        float pitchRadians = (float) Math.toRadians(-dollEntity.getXRot());
-        if (dollEntity.getVehicle() != null) {
-            float vehicleYaw = dollEntity.getVehicle().getVisualRotationYInDegrees();
+        Entity vehicle = dollEntity.getVehicle();
+        if (vehicle != null) {
+            float vehicleYaw = Mth.lerp(partialTick, vehicle.yRotO, vehicle.getYRot());
             poseStack.mulPose(Axis.YP.rotationDegrees(-vehicleYaw));
         } else {
+            entityYaw = Mth.lerp(partialTick, dollEntity.yRotO, dollEntity.getYRot());
             poseStack.mulPose(Axis.YP.rotationDegrees(-entityYaw));
         }
-        poseStack.mulPose(Axis.XP.rotation(pitchRadians));
+        float pitchRadians = Mth.lerp(partialTick, dollEntity.xRotO, dollEntity.getXRot());
+        poseStack.mulPose(Axis.XP.rotationDegrees(pitchRadians));
 
         // 应用缩放变换
         Vector3f scale = dollEntity.getDisplayScale();

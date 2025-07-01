@@ -16,6 +16,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -64,13 +65,29 @@ public class DollEntity extends Entity {
         // 调用父类的基础 tick 逻辑
         super.tick();
 
-        // 渲染丢出去的拖尾粒子
         if (this.onGround() || this.isInWater() || this.isInLava()) {
+            // 如果在地面、水中或岩浆中，重置丢出状态
             this.inThrowing = false;
+        } else if (this.getVehicle() == null && this.getPassengers().isEmpty() && this.getDeltaMovement().length() > 0.5) {
+            // 如果没有乘坐其他实体且有足够速度，附加 360 度托马斯大回旋
+            float rotationSpeed = Mth.randomBetween(level().random, 3, 5);
+            // 随机方向
+            float yRotSpeed = this.getUUID().getLeastSignificantBits() % 2 == 0 ? rotationSpeed : -rotationSpeed;
+            float xRotSpeed = this.getUUID().getMostSignificantBits() % 2 == 0 ? rotationSpeed : -rotationSpeed;
+            this.setYRot((this.getYRot() + yRotSpeed) % 360);
+            this.setXRot((this.getXRot() + xRotSpeed) % 360);
         }
+
         if (this.inThrowing && this.level() instanceof ServerLevel serverLevel) {
+            // 渲染丢出去的拖尾粒子
             serverLevel.sendParticles(ParticleTypes.GLOW, this.getX(), this.getY() + 0.25, this.getZ(),
                     3, 0.1, 0.1, 0.1, 0.2);
+        }
+
+        // 碰撞击退检测
+        // 仅在 2 tick 后开始检测，避免初始时触碰到丢玩偶的玩家
+        if (tickCount > 2) {
+            this.checkCollisionKnockback();
         }
 
         // 记录上一刻的位置（用于插值渲染）
@@ -174,6 +191,11 @@ public class DollEntity extends Entity {
     @Override
     protected BlockPos getBlockPosBelowThatAffectsMyMovement() {
         return this.getOnPos(0.999999F);
+    }
+
+    @Override
+    public boolean shouldRenderAtSqrDistance(double pDistance) {
+        return pDistance < 128 * 128;
     }
 
     @Override
@@ -302,5 +324,48 @@ public class DollEntity extends Entity {
 
     public long getBounceTime() {
         return bounceTime;
+    }
+
+    private void checkCollisionKnockback() {
+        // 仅在服务器端进行击退处理
+        if (this.level().isClientSide) {
+            return;
+        }
+
+        // 获取玩偶当前速度
+        Vec3 dollVelocity = this.getDeltaMovement();
+        double dollSpeed = dollVelocity.length();
+
+        // 只有当玩偶速度达到 0.25 以上时才进行击退检测
+        if (dollSpeed < 0.25) {
+            return;
+        }
+
+        // 检查与玩偶碰撞的实体
+        for (Entity entity : this.level().getEntities(this, this.getBoundingBox().inflate(0.2), e -> e != this && e.isAlive() && e.isPickable())) {
+            // 计算从玩偶到目标实体的方向向量
+            Vec3 knockbackDirection = this.getDeltaMovement().normalize();
+
+            // 击退强度基于玩偶的速度
+            double knockbackStrength = Math.min(dollSpeed * 0.4, 1);
+
+            // 计算击退向量，保持一定的垂直分量
+            Vec3 knockbackVector = new Vec3(
+                    knockbackDirection.x * knockbackStrength,
+                    Math.max(0.2, knockbackDirection.y * knockbackStrength * 0.5),
+                    knockbackDirection.z * knockbackStrength
+            );
+
+            // 应用击退效果
+            entity.setDeltaMovement(entity.getDeltaMovement().add(knockbackVector));
+            entity.hasImpulse = true;
+
+            // 生成击中粒子效果
+            if (this.level() instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(ParticleTypes.CRIT,
+                        entity.getX(), entity.getY() + entity.getBbHeight() * 0.5, entity.getZ(),
+                        5, 0.2, 0.2, 0.2, 0.1);
+            }
+        }
     }
 }

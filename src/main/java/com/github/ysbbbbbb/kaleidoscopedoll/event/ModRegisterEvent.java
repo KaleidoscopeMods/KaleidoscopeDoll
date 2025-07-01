@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
 
 @Mod.EventBusSubscriber(modid = KaleidoscopeDoll.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModRegisterEvent {
-    public static final Map<ResourceLocation, DollBlock> DOLL_BLOCKS = Maps.newHashMap();
+    public static final Map<ResourceLocation, DollBlock> DOLL_BLOCKS = Maps.newLinkedHashMap();
     public static final Map<ResourceLocation, String> SPECIAL_TOOLTIPS = Maps.newHashMap();
     public static final Set<Item> DOLL_ITEMS = Sets.newLinkedHashSet();
     private static final int MAX_DOLL_COUNT = 276;

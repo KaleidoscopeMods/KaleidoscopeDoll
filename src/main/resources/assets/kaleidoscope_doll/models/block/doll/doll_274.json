@@ -1,8 +1,8 @@
 {
 	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
-	"texture_size": [64, 64],
 	"render_type": "cutout",
+	"texture_size": [64, 64],
 	"textures": {
 		"1": "kaleidoscope_doll:block/doll/doll_274",
 		"particle": "block/white_wool"
@@ -206,9 +206,9 @@
 			}
 		},
 		{
-			"from": [5.27344, 7.83594, 4.64063],
-			"to": [7.21875, 8.82813, 4.64063],
-			"rotation": {"angle": 0, "axis": "y", "origin": [6.21875, 7.91016, 3.64063]},
+			"from": [5.26344, 7.82594, 4.50563],
+			"to": [7.22875, 8.83813, 4.52563],
+			"rotation": {"angle": 0, "axis": "y", "origin": [6.21875, 7.91016, 3.51563]},
 			"faces": {
 				"north": {"uv": [11.5, 13.75, 11.98633, 13.99805], "texture": "#1"},
 				"east": {"uv": [0, 0, 0, 0.24805], "texture": "#1"},
@@ -219,9 +219,9 @@
 			}
 		},
 		{
-			"from": [8.83984, 7.83594, 4.64063],
-			"to": [10.78516, 8.82813, 4.64063],
-			"rotation": {"angle": 0, "axis": "y", "origin": [9.78516, 7.91016, 3.64063]},
+			"from": [8.82984, 7.82594, 4.50563],
+			"to": [10.79516, 8.83813, 4.52563],
+			"rotation": {"angle": 0, "axis": "y", "origin": [9.78516, 7.91016, 3.51563]},
 			"faces": {
 				"north": {"uv": [11.5, 13.75, 11.98633, 13.99805], "texture": "#1"},
 				"east": {"uv": [0, 0, 0, 0.24805], "texture": "#1"},
@@ -462,6 +462,44 @@
 			}
 		}
 	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [-9, 155, -3],
+			"translation": [0.5, 4, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [162.6, 67.03, -171.79],
+			"translation": [0.5, 4, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"ground": {
+			"translation": [0, 2, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"gui": {
+			"rotation": [30, -135, 0],
+			"translation": [0, 0.25, 0],
+			"scale": [0.84, 0.84, 0.84]
+		},
+		"head": {
+			"translation": [0, 14.5, 0]
+		},
+		"fixed": {
+			"rotation": [2, 0, 0],
+			"translation": [0, 0, -2.5]
+		}
+	},
 	"groups": [
 		{
 			"name": "bone",

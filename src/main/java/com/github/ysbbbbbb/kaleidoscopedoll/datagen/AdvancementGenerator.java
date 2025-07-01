@@ -25,7 +25,7 @@ import static com.github.ysbbbbbb.kaleidoscopedoll.event.ModRegisterEvent.SPECIA
 public class AdvancementGenerator implements ForgeAdvancementProvider.AdvancementGenerator {
     @Override
     public void generate(HolderLookup.Provider registries, Consumer<Advancement> saver, ExistingFileHelper existingFileHelper) {
-        Advancement root = make(ModItems.DOLL_ICON.get(), "root")
+        Advancement root = make(ForgeRegistries.ITEMS.getValue(id("doll_52")), "root")
                 .requirements(RequirementsStrategy.OR)
                 .addCriterion("tick", PlayerTrigger.TriggerInstance.tick())
                 .save(saver, id("doll/root"), existingFileHelper);
@@ -48,7 +48,7 @@ public class AdvancementGenerator implements ForgeAdvancementProvider.Advancemen
                 .addCriterion("credits", PlayerTrigger.TriggerInstance.tick())
                 .save(saver, id("doll/credits"), existingFileHelper);
 
-        Advancement.Builder fullCollection = makeChallenge(ForgeRegistries.ITEMS.getValue(id("doll_61")), "full_collection").parent(yellowGiftBox)
+        Advancement.Builder fullCollection = makeChallenge(ForgeRegistries.ITEMS.getValue(id("doll_5")), "full_collection").parent(yellowGiftBox)
                 .requirements(RequirementsStrategy.AND);
         ModRegisterEvent.DOLL_ITEMS.stream()
                 .filter(item -> !SPECIAL_TOOLTIPS.containsKey(ForgeRegistries.ITEMS.getKey(item)))

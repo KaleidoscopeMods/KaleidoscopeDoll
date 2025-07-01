@@ -1,10 +1,7 @@
 package com.github.ysbbbbbb.kaleidoscopedoll;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.config.GeneralConfig;
-import com.github.ysbbbbbb.kaleidoscopedoll.init.ModBlocks;
-import com.github.ysbbbbbb.kaleidoscopedoll.init.ModCreativeTabs;
-import com.github.ysbbbbbb.kaleidoscopedoll.init.ModItems;
-import com.github.ysbbbbbb.kaleidoscopedoll.init.ModSounds;
+import com.github.ysbbbbbb.kaleidoscopedoll.init.*;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -27,5 +24,7 @@ public class KaleidoscopeDoll {
         ModItems.ITEMS.register(modEventBus);
         ModCreativeTabs.TABS.register(modEventBus);
         ModSounds.SOUND_EVENTS.register(modEventBus);
+        ModEntities.ENTITY_TYPES.register(modEventBus);
+        ModRecipes.RECIPE_SERIALIZERS.register(modEventBus);
     }
 }

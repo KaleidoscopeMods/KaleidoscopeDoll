@@ -11,11 +11,15 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class EntityDollSubtype implements IIngredientSubtypeInterpreter<ItemStack> {
     @Override
     public String apply(ItemStack itemStack, UidContext context) {
-        Block block = DollEntityItem.getBlockFromItemStack(itemStack);
-        ResourceLocation key = ForgeRegistries.BLOCKS.getKey(block);
-        if (key == null) {
+        if (context == UidContext.Ingredient) {
             return IIngredientSubtypeInterpreter.NONE;
+        } else {
+            Block block = DollEntityItem.getBlockFromItemStack(itemStack);
+            ResourceLocation key = ForgeRegistries.BLOCKS.getKey(block);
+            if (key == null) {
+                return IIngredientSubtypeInterpreter.NONE;
+            }
+            return key.toString();
         }
-        return key.toString();
     }
 }

@@ -1,8 +1,8 @@
 {
 	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
-	"texture_size": [64, 64],
 	"render_type": "cutout",
+	"texture_size": [64, 64],
 	"textures": {
 		"1": "kaleidoscope_doll:block/doll/doll_272",
 		"particle": "block/white_wool"
@@ -925,20 +925,6 @@
 				"up": {"uv": [9, 9.25, 9.75, 8], "texture": "#1"},
 				"down": {"uv": [8.25, 9, 9, 10.25], "texture": "#1"}
 			}
-		},
-		{
-			"name": "Left Leg",
-			"from": [4.25, 0.1, 1.75],
-			"to": [7.25, 3.1, 6.75],
-			"rotation": {"angle": 22.5, "axis": "y", "origin": [8.75, 7.7625, 6.57871]},
-			"faces": {
-				"north": {"uv": [3.75, 10, 4.5, 10.75], "texture": "#1"},
-				"east": {"uv": [9, 9.25, 10.25, 10], "texture": "#1"},
-				"south": {"uv": [4.5, 10, 5.25, 10.75], "texture": "#1"},
-				"west": {"uv": [9.5, 0, 10.75, 0.75], "texture": "#1"},
-				"up": {"uv": [10.25, 2, 9.5, 0.75], "texture": "#1"},
-				"down": {"uv": [10.25, 4, 9.5, 5.25], "texture": "#1"}
-			}
 		}
 	],
 	"display": {
@@ -1146,7 +1132,7 @@
 			"name": "RightLeg",
 			"origin": [9.9, 12, 8],
 			"color": 0,
-			"children": [83, 84, 85, 86]
+			"children": [83, 84, 85]
 		},
 		{
 			"name": "LeftLeg",

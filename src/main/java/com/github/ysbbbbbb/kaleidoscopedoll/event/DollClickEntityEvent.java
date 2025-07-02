@@ -1,6 +1,7 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.event;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
+import com.github.ysbbbbbb.kaleidoscopedoll.config.GeneralConfig;
 import com.github.ysbbbbbb.kaleidoscopedoll.entity.DollEntity;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModItems;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollEntityItem;
@@ -23,7 +24,7 @@ public class DollClickEntityEvent {
         Player player = event.getEntity();
         ItemStack mainHandItem = player.getMainHandItem();
 
-        if (mainHandItem.is(ModItems.DOLL_ENTITY_ITEM.get())) {
+        if (mainHandItem.is(ModItems.DOLL_ENTITY_ITEM.get()) && GeneralConfig.DOLL_CAN_MOUNT_ENTITIES.get()) {
             // 检查骑乘层数
             int ridingLayers = getRidingLayers(target);
             if (ridingLayers >= MAX_RIDING_LAYERS) {

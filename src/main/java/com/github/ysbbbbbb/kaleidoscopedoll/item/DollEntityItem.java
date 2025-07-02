@@ -1,6 +1,7 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.item;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.client.render.DollEntityItemRender;
+import com.github.ysbbbbbb.kaleidoscopedoll.config.GeneralConfig;
 import com.github.ysbbbbbb.kaleidoscopedoll.entity.DollEntity;
 import com.github.ysbbbbbb.kaleidoscopedoll.event.ModRegisterEvent;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModBlocks;
@@ -149,7 +150,7 @@ public class DollEntityItem extends Item {
         ItemStack itemStack = player.getItemInHand(hand);
 
         // 如果玩家蹲下，则进入投掷模式
-        if (player.isShiftKeyDown()) {
+        if (player.isShiftKeyDown() && GeneralConfig.DOLL_CAN_BE_THROWN.get()) {
             player.startUsingItem(hand);
             return InteractionResultHolder.consume(itemStack);
         }
@@ -164,7 +165,7 @@ public class DollEntityItem extends Item {
         int useTime = this.getUseDuration(stack) - timeLeft;
 
         // 如果使用时间达到要求，则投掷
-        if (useTime >= THROW_DURATION) {
+        if (useTime >= THROW_DURATION && GeneralConfig.DOLL_CAN_BE_THROWN.get()) {
             int strength = useTime - THROW_DURATION;
             throwDollEntity(level, entity, stack, strength);
         }

@@ -1,5 +1,6 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.entity;
 
+import com.github.ysbbbbbb.kaleidoscopedoll.config.GeneralConfig;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModEntities;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModSounds;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollEntityItem;
@@ -78,7 +79,7 @@ public class DollEntity extends Entity {
             this.setXRot((this.getXRot() + xRotSpeed) % 360);
         }
 
-        if (this.inThrowing && this.level() instanceof ServerLevel serverLevel) {
+        if (this.inThrowing && this.level() instanceof ServerLevel serverLevel && GeneralConfig.DOLL_THROW_PARTICLE_EFFECT.get()) {
             // 渲染丢出去的拖尾粒子
             serverLevel.sendParticles(ParticleTypes.GLOW, this.getX(), this.getY() + 0.25, this.getZ(),
                     3, 0.1, 0.1, 0.1, 0.2);
@@ -86,7 +87,7 @@ public class DollEntity extends Entity {
 
         // 碰撞击退检测
         // 仅在 2 tick 后开始检测，避免初始时触碰到丢玩偶的玩家
-        if (tickCount > 2) {
+        if (tickCount > 2 && GeneralConfig.DOLL_CAN_KNOCKBACK_ENTITIES.get()) {
             this.checkCollisionKnockback();
         }
 
@@ -99,18 +100,22 @@ public class DollEntity extends Entity {
         FluidType fluidType = this.getMaxHeightFluidType();
         Vec3 movement = this.getDeltaMovement();
         // 流体影响高度
-        float fluidHeight = this.getEyeHeight() - 0.1F;
+        double fluidHeight = 1.0E-5;
 
         // 流体中的运动逻辑
         if (!fluidType.isAir() && this.getFluidTypeHeight(fluidType) > fluidHeight) {
-            // 流体摩擦阻力，岩浆阻力更大
-            double frictionFactor = this.isInLava() ? 0.9 : 0.95;
-            // 轻微上浮力
-            double floatingFactor = movement.y < 0.06 ? 5.0E-4 : 0;
+            double frictionFactor = 0;
+            double floatingFactor = 0;
+            if (GeneralConfig.DOLL_AFFECTED_BY_WATER.get()) {
+                // 流体摩擦阻力，岩浆阻力更大
+                frictionFactor = this.isInLava() ? 0.9 : 0.95;
+                // 轻微上浮力
+                floatingFactor = movement.y < 0.06 ? 5.0E-4 : 0;
+            }
             this.setDeltaMovement(movement.x * frictionFactor, movement.y + floatingFactor, movement.z * frictionFactor);
         } else if (!this.isNoGravity()) {
             // 不在流体中且有重力时，应用重力
-            double gravity = 0.04;
+            double gravity = GeneralConfig.DOLL_AFFECTED_BY_GRAVITY.get() ? 0.04 : 0;
             this.setDeltaMovement(movement.add(0, -gravity, 0));
         }
 
@@ -139,7 +144,9 @@ public class DollEntity extends Entity {
         }
 
         // 水流推动检测
-        this.hasImpulse |= this.updateInWaterStateAndDoFluidPushing();
+        if (GeneralConfig.DOLL_AFFECTED_BY_WATER.get()) {
+            this.hasImpulse |= this.updateInWaterStateAndDoFluidPushing();
+        }
 
         // 服务端检查运动变化（用于网络同步）
         if (!this.level().isClientSide) {
@@ -347,7 +354,7 @@ public class DollEntity extends Entity {
             Vec3 knockbackDirection = this.getDeltaMovement().normalize();
 
             // 击退强度基于玩偶的速度
-            double knockbackStrength = Math.min(dollSpeed * 0.4, 1);
+            double knockbackStrength = Math.min(dollSpeed * 0.4, 1) * GeneralConfig.DOLL_KNOCKBACK_FORCE.get();
 
             // 计算击退向量，保持一定的垂直分量
             Vec3 knockbackVector = new Vec3(

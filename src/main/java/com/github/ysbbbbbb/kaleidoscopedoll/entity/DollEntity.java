@@ -215,8 +215,9 @@ public class DollEntity extends Entity {
                 this.kill();
                 this.markHurt();
                 this.dropItem(source.getEntity());
+                return true;
             }
-            return true;
+            return false;
         }
     }
 

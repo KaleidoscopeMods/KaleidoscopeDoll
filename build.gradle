@@ -65,10 +65,30 @@ repositories {
         name = "Modrinth"
         url = "https://api.modrinth.com/maven"
     }
+    maven {
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
+        content {
+            includeGroup "mezz.jei"
+            includeGroup "vazkii.patchouli"
+        }
+    }
+    maven {
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+        content {
+            includeGroup "mezz.jei"
+            includeGroup "vazkii.patchouli"
+        }
+    }
 }
 
 dependencies {
-    implementation "maven.modrinth:jei:19.7.0.92-neoforge"
+    compileOnly("mezz.jei:jei-1.21.1-common-api:19.8.4.110")
+    compileOnly("mezz.jei:jei-1.21.1-neoforge-api:19.8.4.110")
+    runtimeOnly("mezz.jei:jei-1.21.1-neoforge:19.8.4.110")
+
+    compileOnly "maven.modrinth:emi:1.1.10+1.21+neoforge"
 }
 
 // 用于 neoforge.mods 里替换那一堆 ${xxxx}

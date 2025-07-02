@@ -12,59 +12,134 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class DollBlock extends HorizontalDirectionalBlock {
+@SuppressWarnings("deprecation")
+public class DollBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
     private static final MapCodec<DollBlock> CODEC = simpleCodec(prop -> new DollBlock());
-    private static final VoxelShape SHAPE = Block.box(2.0d, 0.0d, 2.0d, 14.0d, 12.0d, 14.0d);
+    private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    private static final VoxelShape DOLL_SHAPE = Block.box(2.0d, 0.0d, 2.0d, 14.0d, 12.0d, 14.0d);
+
+    private static final double PARTICLE_OFFSET_RANGE = 0.25;
+    private static final double PARTICLE_HEIGHT_OFFSET = 1.0;
+    private static final double PARTICLE_HEIGHT_VARIANCE = 0.2;
+    private static final float NOTE_COLOR_DIVISOR = 24.0F;
+    private static final int MAX_NOTE_COLORS = 4;
+
+    private static final float BASE_VOLUME = 1.0f;
+    private static final float PITCH_VARIANCE = 0.5f;
+    private static final float BASE_PITCH = 0.75f;
 
     public DollBlock() {
         super(BlockBehaviour.Properties.of()
                 .instrument(NoteBlockInstrument.BASEDRUM)
-                .sound(SoundType.WOOL).strength(0f, 10f)
+                .sound(SoundType.WOOL)
+                .strength(0f, 10f)
                 .noOcclusion());
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.SOUTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.SOUTH)
+                .setValue(WATERLOGGED, false));
     }
 
     @Override
-    public InteractionResult useWithoutItem(BlockState pState, Level level, BlockPos pos, Player pPlayer, BlockHitResult pHit) {
+    public BlockState updateShape(BlockState currentState, Direction direction, BlockState neighborState,
+                                  LevelAccessor level, BlockPos currentPos, BlockPos neighborPos) {
+        if (currentState.getValue(WATERLOGGED)) {
+            level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+        }
+        return super.updateShape(currentState, direction, neighborState, level, currentPos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState blockState) {
+        return blockState.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(blockState);
+    }
+
+    @Override
+    public InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player,
+                                            BlockHitResult hitResult) {
         if (level instanceof ServerLevel serverLevel) {
-            Vec3 notePos = Vec3.atBottomCenterOf(pos).add(
-                    level.getRandom().nextFloat() / 2 - 0.25,
-                    1 + level.getRandom().nextFloat() / 5,
-                    level.getRandom().nextFloat() / 2 - 0.25
-            );
-            float color = level.getRandom().nextInt(4) / 24.0F;
-            serverLevel.sendParticles(ParticleTypes.NOTE, notePos.x(), notePos.y(), notePos.z(), 0, color, 0, 0, 1);
-            serverLevel.playSound(null, pos, ModSounds.DUCK_TOY.get(), SoundSource.BLOCKS, 1.0f, level.random.nextFloat() * 0.5f + 0.75f);
+            // 播放粒子效果
+            spawnNoteParticles(serverLevel, blockPos);
+            // 播放音效
+            playDollSound(serverLevel, blockPos);
         }
         return InteractionResult.SUCCESS;
     }
 
-    @Override
-    public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+    /**
+     * 在玩偶位置生成音符粒子效果
+     */
+    private void spawnNoteParticles(ServerLevel serverLevel, BlockPos blockPos) {
+        Vec3 particlePosition = calculateParticlePosition(serverLevel, blockPos);
+        float noteColor = calculateNoteColor(serverLevel);
+
+        serverLevel.sendParticles(ParticleTypes.NOTE,
+                particlePosition.x(), particlePosition.y(), particlePosition.z(),
+                0, noteColor, 0, 0, 1);
+    }
+
+    /**
+     * 计算粒子生成位置，添加随机偏移
+     */
+    private Vec3 calculateParticlePosition(ServerLevel serverLevel, BlockPos blockPos) {
+        return Vec3.atBottomCenterOf(blockPos).add(
+                (serverLevel.getRandom().nextFloat() - 0.5) * PARTICLE_OFFSET_RANGE * 2,
+                PARTICLE_HEIGHT_OFFSET + serverLevel.getRandom().nextFloat() * PARTICLE_HEIGHT_VARIANCE,
+                (serverLevel.getRandom().nextFloat() - 0.5) * PARTICLE_OFFSET_RANGE * 2
+        );
+    }
+
+    /**
+     * 计算音符粒子的颜色
+     */
+    private float calculateNoteColor(ServerLevel serverLevel) {
+        return serverLevel.getRandom().nextInt(MAX_NOTE_COLORS) / NOTE_COLOR_DIVISOR;
+    }
+
+    /**
+     * 播放玩偶音效
+     */
+    private void playDollSound(ServerLevel serverLevel, BlockPos blockPos) {
+        float pitch = BASE_PITCH + serverLevel.random.nextFloat() * PITCH_VARIANCE;
+        serverLevel.playSound(null, blockPos, ModSounds.DUCK_TOY.get(),
+                SoundSource.BLOCKS, BASE_VOLUME, pitch);
     }
 
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        return SHAPE;
+    public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
+        FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
+        boolean isWaterlogged = fluidState.getType() == Fluids.WATER;
+
+        return this.defaultBlockState()
+                .setValue(FACING, context.getHorizontalDirection().getOpposite())
+                .setValue(WATERLOGGED, isWaterlogged);
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos blockPos, CollisionContext context) {
+        return DOLL_SHAPE;
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING, WATERLOGGED);
     }
 
     @Override

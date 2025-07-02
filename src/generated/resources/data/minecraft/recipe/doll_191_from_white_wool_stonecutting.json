@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "minecraft:white_wool"
+  },
+  "result": {
+    "count": 1,
+    "id": "kaleidoscope_doll:doll_191"
+  }
+}

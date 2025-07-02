@@ -18,6 +18,10 @@ loom {
     }
 }
 
+fabricApi {
+    configureDataGeneration()
+}
+
 repositories {
     exclusiveContent {
         forRepository {
@@ -56,7 +60,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     include(modImplementation("maven.modrinth:forge-config-api-port:${project.forge_config_api_port_version}"))
-    modRuntimeOnly("mezz.jei:jei-${project.minecraft_version}-fabric:${project.jei_version}")
+    modImplementation("mezz.jei:jei-${project.minecraft_version}-fabric:${project.jei_version}")
 }
 
 processResources {

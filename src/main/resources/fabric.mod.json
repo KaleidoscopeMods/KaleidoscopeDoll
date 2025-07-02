@@ -10,7 +10,13 @@
   "environment": "*",
   "entrypoints": {
     "main": ["com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll"],
-    "client": ["com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDollClient"]
+    "client": ["com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDollClient"],
+    "fabric-datagen": [
+      "com.github.ysbbbbbb.kaleidoscopedoll.datagen.DataGenerators"
+    ],
+    "jei_mod_plugin": [
+      "com.github.ysbbbbbb.kaleidoscopedoll.compat.jei.ModJEIPlugins"
+    ]
   },
   "mixins": [],
   "depends": {

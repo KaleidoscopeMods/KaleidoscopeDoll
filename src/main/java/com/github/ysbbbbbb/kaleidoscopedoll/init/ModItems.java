@@ -1,6 +1,7 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.init;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
+import com.github.ysbbbbbb.kaleidoscopedoll.item.DollEntityItem;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -13,6 +14,7 @@ public final class ModItems {
     public static final Item GREEN_DOLL_GIFT_BOX = new BlockItem(ModBlocks.GREEN_DOLL_GIFT_BOX, new Item.Properties());
     public static final Item YELLOW_DOLL_GIFT_BOX = new BlockItem(ModBlocks.YELLOW_DOLL_GIFT_BOX, new Item.Properties());
     public static final Item DOLL_ICON = new Item(new Item.Properties());
+    public static final Item DOLL_ENTITY_ITEM = new DollEntityItem();
 
     public static void registerItems() {
         Registry.register(BuiltInRegistries.ITEM, ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "doll_machine"), DOLL_MACHINE);
@@ -20,5 +22,6 @@ public final class ModItems {
         Registry.register(BuiltInRegistries.ITEM, ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "green_doll_gift_box"), GREEN_DOLL_GIFT_BOX);
         Registry.register(BuiltInRegistries.ITEM, ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "yellow_doll_gift_box"), YELLOW_DOLL_GIFT_BOX);
         Registry.register(BuiltInRegistries.ITEM, ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "doll_icon"), DOLL_ICON);
+        Registry.register(BuiltInRegistries.ITEM, ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "doll_entity_item"), DOLL_ENTITY_ITEM);
     }
 }

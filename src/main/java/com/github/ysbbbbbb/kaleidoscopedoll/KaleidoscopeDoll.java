@@ -1,10 +1,8 @@
 package com.github.ysbbbbbb.kaleidoscopedoll;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.config.GeneralConfig;
-import com.github.ysbbbbbb.kaleidoscopedoll.init.ModBlocks;
-import com.github.ysbbbbbb.kaleidoscopedoll.init.ModCreativeTabs;
-import com.github.ysbbbbbb.kaleidoscopedoll.init.ModItems;
-import com.github.ysbbbbbb.kaleidoscopedoll.init.ModSounds;
+import com.github.ysbbbbbb.kaleidoscopedoll.event.DollClickEntityEvent;
+import com.github.ysbbbbbb.kaleidoscopedoll.init.*;
 import com.mojang.logging.LogUtils;
 import fuzs.forgeconfigapiport.fabric.api.forge.v4.ForgeConfigRegistry;
 import net.fabricmc.api.ModInitializer;
@@ -22,5 +20,10 @@ public class KaleidoscopeDoll implements ModInitializer {
         ModItems.registerItems();
         ModCreativeTabs.registerTabs();
         ModSounds.registerSounds();
+        ModEntities.registerEntities();
+        ModRecipes.registerRecipe();
+        ModDataComponent.registerDataComponent();
+
+        new DollClickEntityEvent().onInitialize();
     }
 }

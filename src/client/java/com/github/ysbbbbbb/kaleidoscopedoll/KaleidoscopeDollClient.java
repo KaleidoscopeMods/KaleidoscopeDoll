@@ -2,8 +2,14 @@ package com.github.ysbbbbbb.kaleidoscopedoll;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.event.ModRegisterEvent;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModBlocks;
+import com.github.ysbbbbbb.kaleidoscopedoll.init.ModEntities;
+import com.github.ysbbbbbb.kaleidoscopedoll.init.ModItems;
+import com.github.ysbbbbbb.kaleidoscopedoll.render.DollEntityItemRender;
+import com.github.ysbbbbbb.kaleidoscopedoll.render.DollEntityRender;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.renderer.RenderType;
 
 public class KaleidoscopeDollClient implements ClientModInitializer {
@@ -11,5 +17,7 @@ public class KaleidoscopeDollClient implements ClientModInitializer {
     public void onInitializeClient() {
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.DOLL_MACHINE, RenderType.cutout());
         ModRegisterEvent.DOLL_BLOCKS.values().forEach(b -> BlockRenderLayerMap.INSTANCE.putBlock(b, RenderType.cutout()));
+        EntityRendererRegistry.register(ModEntities.DOLL, DollEntityRender::new);
+        BuiltinItemRendererRegistry.INSTANCE.register(ModItems.DOLL_ENTITY_ITEM, new DollEntityItemRender());
     }
 }

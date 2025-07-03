@@ -24,6 +24,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
@@ -33,6 +34,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.fluids.FluidType;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 import javax.annotation.Nullable;
@@ -243,7 +245,19 @@ public class DollEntity extends Entity {
     }
 
     @Override
+    public void rideTick() {
+        super.rideTick();
+        if (this.getVehicle() instanceof Phantom phantom) {
+            this.setXRot(-phantom.getXRot());
+        }
+    }
+
+    @Override
+    @NotNull
     protected Vec3 getPassengerAttachmentPoint(Entity entity, EntityDimensions dimensions, float partialTick) {
+        if (this.getVehicle() instanceof Phantom) {
+            return new Vec3(0, 0.625, 0);
+        }
         return new Vec3(0, 0.8125, 0);
     }
 

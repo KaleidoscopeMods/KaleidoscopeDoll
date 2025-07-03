@@ -4,7 +4,6 @@ import com.github.ysbbbbbb.kaleidoscopedoll.config.GeneralConfig;
 import com.github.ysbbbbbb.kaleidoscopedoll.entity.DollEntity;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModItems;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollEntityItem;
-import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -15,15 +14,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 
-public class DollClickEntityEvent implements ModInitializer {
+public class DollClickEntityEvent {
     private static final int MAX_RIDING_LAYERS = 5;
 
-    @Override
-    public void onInitialize() {
-        UseEntityCallback.EVENT.register(this::onUseEntity);
+    public static void register() {
+        UseEntityCallback.EVENT.register(DollClickEntityEvent::onUseEntity);
     }
 
-    private InteractionResult onUseEntity(Player player, Level level, InteractionHand hand, Entity entity, EntityHitResult hitResult) {
+    private static InteractionResult onUseEntity(Player player, Level level, InteractionHand hand, Entity entity, EntityHitResult hitResult) {
         ItemStack handItem = player.getItemInHand(hand);
 
         if (handItem.is(ModItems.DOLL_ENTITY_ITEM) && GeneralConfig.DOLL_CAN_MOUNT_ENTITIES.get()) {

@@ -24,6 +24,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
@@ -242,7 +243,18 @@ public class DollEntity extends Entity {
     }
 
     @Override
+    public void rideTick() {
+        super.rideTick();
+        if (this.getVehicle() instanceof Phantom phantom) {
+            this.setXRot(-phantom.getXRot());
+        }
+    }
+
+    @Override
     public double getMyRidingOffset() {
+        if (this.getVehicle() instanceof Phantom) {
+            return 0.125;
+        }
         return 0.3125;
     }
 

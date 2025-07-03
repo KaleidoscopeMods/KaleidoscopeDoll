@@ -2,6 +2,7 @@ package com.github.ysbbbbbb.kaleidoscopedoll;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.config.GeneralConfig;
 import com.github.ysbbbbbb.kaleidoscopedoll.event.DollClickEntityEvent;
+import com.github.ysbbbbbb.kaleidoscopedoll.event.PhantomSpawnEvent;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.*;
 import com.mojang.logging.LogUtils;
 import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
@@ -23,6 +24,7 @@ public class KaleidoscopeDoll implements ModInitializer {
         ModEntities.registerEntities();
         ModRecipes.registerRecipe();
 
-        new DollClickEntityEvent().onInitialize();
+        DollClickEntityEvent.register();
+        PhantomSpawnEvent.register();
     }
 }

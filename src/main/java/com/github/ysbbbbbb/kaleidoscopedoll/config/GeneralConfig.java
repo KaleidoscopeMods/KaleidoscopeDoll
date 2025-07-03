@@ -15,6 +15,9 @@ public class GeneralConfig {
     public static ForgeConfigSpec.DoubleValue DOLL_KNOCKBACK_FORCE;
     public static ForgeConfigSpec.BooleanValue DOLL_CAN_MOUNT_ENTITIES;
 
+    public static ForgeConfigSpec.BooleanValue ENABLE_PHANTOM_DOLL_SPAWN;
+    public static ForgeConfigSpec.DoubleValue PHANTOM_DOLL_SPAWN_CHANCE;
+
     public static ForgeConfigSpec init() {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
         builder.push("doll");
@@ -58,6 +61,12 @@ public class GeneralConfig {
         builder.comment("Whether dolls can be placed directly on other entities");
         builder.comment("玩偶是否可以直接放置在其他实体上");
         DOLL_CAN_MOUNT_ENTITIES = builder.define("DollCanMountEntities", true);
+
+        builder.comment("Enable dolls spawning on phantoms", "启用幻翼附带玩偶生成");
+        ENABLE_PHANTOM_DOLL_SPAWN = builder.define("EnablePhantomDollSpawn", true);
+
+        builder.comment("Chance for phantom to spawn with a doll", "幻翼附带玩偶的生成概率");
+        PHANTOM_DOLL_SPAWN_CHANCE = builder.defineInRange("PhantomDollSpawnChance", 0.03, 0.0, 1.0);
 
         builder.pop();
         return builder.build();

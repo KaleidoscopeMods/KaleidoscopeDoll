@@ -21,7 +21,7 @@ public class ModRegisterEvent {
     public static final Map<ResourceLocation, DollBlock> DOLL_BLOCKS = Maps.newLinkedHashMap();
     public static final Map<ResourceLocation, String> SPECIAL_TOOLTIPS = Maps.newHashMap();
     public static final Set<Item> DOLL_ITEMS = Sets.newLinkedHashSet();
-    private static final int MAX_DOLL_COUNT = 276;
+    private static final int MAX_DOLL_COUNT = 326;
 
     private static void registerAllSpecialTooltips() {
         registerSpecialTooltips("doll_0", "author_ysbb");
@@ -236,6 +236,56 @@ public class ModRegisterEvent {
         registerSpecialTooltips("doll_273","sponsors_mobile_mercury");
         registerSpecialTooltips("doll_274","sponsors_siromizu");
         registerSpecialTooltips("doll_275","sponsors_godzilla");
+        registerSpecialTooltips("doll_276","sponsors_acompaffer");
+        registerSpecialTooltips("doll_277","sponsors_ayasekou");
+        registerSpecialTooltips("doll_278","sponsors_bluesunshinecat");
+        registerSpecialTooltips("doll_279","sponsors_bnndxg");
+        registerSpecialTooltips("doll_280","sponsors_cn_shemmgdf");
+        registerSpecialTooltips("doll_281","sponsors_craneoftomorrow");
+        registerSpecialTooltips("doll_282","sponsors_creakingy");
+        registerSpecialTooltips("doll_283","sponsors_cyanleaf_ike");
+        registerSpecialTooltips("doll_284","sponsors_duskymintgear");
+        registerSpecialTooltips("doll_285","sponsors_enfluenza666");
+        registerSpecialTooltips("doll_286","sponsors_feapoi");
+        registerSpecialTooltips("doll_287","sponsors_fengbengqing_");
+        registerSpecialTooltips("doll_288","sponsors_fumoya1225");
+        registerSpecialTooltips("doll_289","sponsors_fzin");
+        registerSpecialTooltips("doll_290","sponsors_gaobai_");
+        registerSpecialTooltips("doll_291","sponsors_jiugeziqaq");
+        registerSpecialTooltips("doll_292","sponsors_kami_scarlet");
+        registerSpecialTooltips("doll_293","sponsors_koisparrow");
+        registerSpecialTooltips("doll_294","sponsors_kong_bai_ya");
+        registerSpecialTooltips("doll_295","sponsors_kumu_kia");
+        registerSpecialTooltips("doll_296","sponsors_lanxingyu520");
+        registerSpecialTooltips("doll_297","sponsors_lilyt_t");
+        registerSpecialTooltips("doll_298","sponsors_managerteaa");
+        registerSpecialTooltips("doll_299","sponsors_mar_lei");
+        registerSpecialTooltips("doll_300","sponsors_meng_kong");
+        registerSpecialTooltips("doll_301","sponsors_pandatomatoo");
+        registerSpecialTooltips("doll_302","sponsors_qfmx");
+        registerSpecialTooltips("doll_303","sponsors_qianyu7");
+        registerSpecialTooltips("doll_304","sponsors_qing_qiu_awa");
+        registerSpecialTooltips("doll_305","sponsors_qqquuuppp");
+        registerSpecialTooltips("doll_306","sponsors_sansenen_lemon");
+        registerSpecialTooltips("doll_307","sponsors_sf2403");
+        registerSpecialTooltips("doll_308","sponsors_snowstar233");
+        registerSpecialTooltips("doll_309","sponsors_snow_camellia");
+        registerSpecialTooltips("doll_310","sponsors_sunkenkeep");
+        registerSpecialTooltips("doll_311","sponsors_xiazhao01");
+        registerSpecialTooltips("doll_312","sponsors_xuehuren1");
+        registerSpecialTooltips("doll_313","sponsors_yagaoo00");
+        registerSpecialTooltips("doll_314","sponsors_yystrawberry0");
+        registerSpecialTooltips("doll_315","sponsors_z_mauthor");
+        registerSpecialTooltips("doll_316","sponsors_mingheshuimu");
+        registerSpecialTooltips("doll_317","sponsors_kehuishoulaji");
+        registerSpecialTooltips("doll_318","sponsors_liangzimaoeh");
+        registerSpecialTooltips("doll_319","sponsors_lumiya");
+        registerSpecialTooltips("doll_320","sponsors_miru_0v0");
+        registerSpecialTooltips("doll_321","sponsors_qianyue");
+        registerSpecialTooltips("doll_322","sponsors_zaocha_lanmaoczh");
+        registerSpecialTooltips("doll_323","sponsors_lfly_a");
+        registerSpecialTooltips("doll_324","sponsors_lfly_b");
+        registerSpecialTooltips("doll_325","sponsors_stormsulfur");
     }
 
     @SubscribeEvent

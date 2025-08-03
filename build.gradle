@@ -95,6 +95,8 @@ dependencies {
     compileOnly fg.deobf("libs:emi-forge:${emi_version}")
     //runtimeOnly fg.deobf("libs:emi-forge:${emi_version}")
 
+    implementation fg.deobf("maven.modrinth:jade:11.13.1+forge")
+
     runtimeOnly fg.deobf('curse.maven:touhou-little-maid-355044:6613821-sources-6613853')
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.9.1+1.20.1")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.9.1+1.20.1:api")

@@ -22,5 +22,7 @@ public class ItemModelGenerator extends ItemModelProvider {
             }
             withExistingParent(key.getPath(), modLoc("block/doll/" + key.getPath()));
         });
+
+        withExistingParent("computer", modLoc("block/computer"));
     }
 }

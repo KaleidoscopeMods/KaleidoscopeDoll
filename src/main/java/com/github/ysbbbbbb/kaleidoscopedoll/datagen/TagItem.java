@@ -9,6 +9,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -69,6 +70,11 @@ public class TagItem extends ItemTagsProvider {
      * 2 级玩偶，能够通过 2 级代币在抽奖机中抽取
      */
     public static final TagKey<Item> TIER_2_DOLLS = itemTagKey("tier_2_dolls");
+
+    /**
+     * 用电脑合成玩偶时需要的代币
+     */
+    public static final TagKey<Item> COMPUTER_TOKENS = itemTagKey("computer_tokens");
 
     public TagItem(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,
                    CompletableFuture<TagLookup<Block>> blockTags, String modId,
@@ -132,5 +138,7 @@ public class TagItem extends ItemTagsProvider {
                 .filter(item -> ForgeRegistries.ITEMS.getResourceKey(item)
                         .map(k -> !tier1Dolls.contains(k) && !tier2Dolls.contains(k)).orElse(false))
                 .toArray(Item[]::new));
+
+        this.tag(COMPUTER_TOKENS).addTag(ItemTags.WOOL);
     }
 }

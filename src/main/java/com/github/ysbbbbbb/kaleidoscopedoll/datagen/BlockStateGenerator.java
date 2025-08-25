@@ -2,6 +2,7 @@ package com.github.ysbbbbbb.kaleidoscopedoll.datagen;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
 import com.github.ysbbbbbb.kaleidoscopedoll.event.ModRegisterEvent;
+import com.github.ysbbbbbb.kaleidoscopedoll.init.ModBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -23,5 +24,7 @@ public class BlockStateGenerator extends BlockStateProvider {
             ResourceLocation location = modLoc("block/doll/" + key.getPath());
             horizontalBlock(block, models().getExistingFile(location));
         });
+
+        horizontalBlock(ModBlocks.COMPUTER.get(), models().getExistingFile(modLoc("block/computer")));
     }
 }

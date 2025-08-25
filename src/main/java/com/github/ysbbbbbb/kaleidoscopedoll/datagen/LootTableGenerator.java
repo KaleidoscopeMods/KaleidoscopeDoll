@@ -26,6 +26,8 @@ public class LootTableGenerator {
 
             LootTable.Builder table = createSinglePropConditionTable(ModBlocks.DOLL_MACHINE.get(), DollMachineBlock.HALF, DoubleBlockHalf.LOWER);
             this.add(ModBlocks.DOLL_MACHINE.get(), table);
+
+            dropSelf(ModBlocks.COMPUTER.get());
         }
 
         @Override

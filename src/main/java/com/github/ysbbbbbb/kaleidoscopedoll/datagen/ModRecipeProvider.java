@@ -1,8 +1,12 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.datagen;
 
+import com.github.ysbbbbbb.kaleidoscopedoll.init.ModItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.world.item.Items;
 
 import java.util.function.Consumer;
 
@@ -13,6 +17,14 @@ public class ModRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
-        // 移除切石机配方，因为它很难用
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModItems.COMPUTER.get())
+                .pattern("III")
+                .pattern("IRI")
+                .pattern("SSS")
+                .define('I', Items.IRON_INGOT)
+                .define('R', Items.REDSTONE)
+                .define('S', Items.SMOOTH_STONE)
+                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+                .save(consumer);
     }
 }

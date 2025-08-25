@@ -27,5 +27,6 @@ public class KaleidoscopeDoll {
         ModSounds.SOUND_EVENTS.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModRecipes.RECIPE_SERIALIZERS.register(modEventBus);
+        ModContainer.CONTAINER_TYPE.register(modEventBus);
     }
 }

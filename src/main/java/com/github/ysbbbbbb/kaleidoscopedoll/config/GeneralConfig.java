@@ -3,10 +3,6 @@ package com.github.ysbbbbbb.kaleidoscopedoll.config;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class GeneralConfig {
-    public static ForgeConfigSpec.IntValue YELLOW_DOLL_GIFT_BOX_WEIGHT;
-    public static ForgeConfigSpec.IntValue GREEN_DOLL_GIFT_BOX_WEIGHT;
-    public static ForgeConfigSpec.IntValue PURPLE_DOLL_GIFT_BOX_WEIGHT;
-
     public static ForgeConfigSpec.BooleanValue DOLL_CAN_BE_THROWN;
     public static ForgeConfigSpec.BooleanValue DOLL_AFFECTED_BY_WATER;
     public static ForgeConfigSpec.BooleanValue DOLL_AFFECTED_BY_GRAVITY;
@@ -21,18 +17,6 @@ public class GeneralConfig {
     public static ForgeConfigSpec init() {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
         builder.push("doll");
-
-        builder.comment("Yellow gift box weights, yellow gift boxes can draw out vanilla humanoids doll");
-        builder.comment("黄色礼品盒权重，黄色礼品盒可以抽出原版人形生物玩偶");
-        YELLOW_DOLL_GIFT_BOX_WEIGHT = builder.defineInRange("YellowDollGiftBoxWeight", 10, 0, 100);
-
-        builder.comment("Green gift box weights, green gift boxes can draw out vanilla neutral friendly mobs doll");
-        builder.comment("绿色礼品盒权重，绿色礼品盒可以抽出原版中立友好生物玩偶");
-        GREEN_DOLL_GIFT_BOX_WEIGHT = builder.defineInRange("GreenDollGiftBoxWeight", 10, 0, 100);
-
-        builder.comment("Purple gift box weights, purple gift boxes can draw out vanilla hostile mobs doll");
-        builder.comment("紫色礼品盒权重，紫色礼品盒可以抽出原版敌对生物玩偶");
-        PURPLE_DOLL_GIFT_BOX_WEIGHT = builder.defineInRange("PurpleDollGiftBoxWeight", 80, 0, 100);
 
         builder.comment("Whether dolls can be thrown by players");
         builder.comment("玩偶是否可以被玩家丢出");

@@ -1,5 +1,7 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.block;
 
+import com.github.ysbbbbbb.kaleidoscopedoll.block.entity.DollGiftBoxBlockEntiy;
+import com.google.common.collect.Lists;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,20 +17,24 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class DollGiftBoxBlock extends HorizontalDirectionalBlock {
+public class DollGiftBoxBlock extends HorizontalDirectionalBlock implements EntityBlock {
     private static final VoxelShape SHAPE = Block.box(1.0d, 0.0d, 1.0d, 15.0d, 15.0d, 15.0d);
 
     public DollGiftBoxBlock() {
@@ -70,5 +76,23 @@ public class DollGiftBoxBlock extends HorizontalDirectionalBlock {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> tooltip, TooltipFlag pFlag) {
         tooltip.add(Component.translatable("tooltip.kaleidoscope_doll.doll_gift_box").withStyle(ChatFormatting.DARK_GRAY));
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return new DollGiftBoxBlockEntiy(pPos, pState);
+    }
+
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder lootParamsBuilder) {
+        List<ItemStack> drops = Lists.newArrayList(super.getDrops(state, lootParamsBuilder));
+        BlockEntity parameter = lootParamsBuilder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
+        if (parameter instanceof DollGiftBoxBlockEntiy giftBox) {
+            ItemStack stack = giftBox.getDollItemStack();
+            if (!stack.isEmpty()) {
+                drops.add(stack);
+            }
+        }
+        return drops;
     }
 }

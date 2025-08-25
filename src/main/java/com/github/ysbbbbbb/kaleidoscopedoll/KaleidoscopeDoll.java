@@ -21,6 +21,7 @@ public class KaleidoscopeDoll {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, GeneralConfig.init());
 
         ModBlocks.BLOCKS.register(modEventBus);
+        ModBlocks.BLOCK_ENTITIES.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
         ModCreativeTabs.TABS.register(modEventBus);
         ModSounds.SOUND_EVENTS.register(modEventBus);

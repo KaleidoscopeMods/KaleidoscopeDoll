@@ -1,5 +1,6 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.item.crafting;
 
+import com.github.ysbbbbbb.kaleidoscopedoll.datagen.TagItem;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModRecipes;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollEntityItem;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollItem;
@@ -11,7 +12,6 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.Tags;
 
 public class DollEntityCraftingRecipe extends CustomRecipe {
     public DollEntityCraftingRecipe(ResourceLocation id, CraftingBookCategory category) {
@@ -21,7 +21,7 @@ public class DollEntityCraftingRecipe extends CustomRecipe {
     @Override
     public boolean matches(CraftingContainer container, Level level) {
         boolean hasDollItem = false;
-        boolean hasSlimeBall = false;
+        boolean hasBlockToEntityItem = false;
         int itemCount = 0;
 
         for (int i = 0; i < container.getContainerSize(); i++) {
@@ -30,15 +30,15 @@ public class DollEntityCraftingRecipe extends CustomRecipe {
                 itemCount++;
                 if (stack.getItem() instanceof DollItem) {
                     hasDollItem = true;
-                } else if (stack.is(Tags.Items.SLIMEBALLS)) {
-                    hasSlimeBall = true;
+                } else if (stack.is(TagItem.BLOCK_DOLLS_TO_ENTITY_ITEM)) {
+                    hasBlockToEntityItem = true;
                 } else {
                     return false;
                 }
             }
         }
 
-        return itemCount == 2 && hasDollItem && hasSlimeBall;
+        return itemCount == 2 && hasDollItem && hasBlockToEntityItem;
     }
 
     @Override

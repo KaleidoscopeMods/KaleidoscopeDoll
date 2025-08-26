@@ -1,7 +1,9 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.entity;
 
+import com.github.ysbbbbbb.kaleidoscopedoll.client.gui.TweaksToolScreen;
 import com.github.ysbbbbbb.kaleidoscopedoll.config.GeneralConfig;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModEntities;
+import com.github.ysbbbbbb.kaleidoscopedoll.init.ModItems;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModSounds;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollEntityItem;
 import net.minecraft.core.BlockPos;
@@ -23,6 +25,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.monster.Phantom;
@@ -33,8 +36,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkHooks;
 import org.joml.Vector3f;
 
@@ -194,6 +200,14 @@ public class DollEntity extends Entity {
 
     @Override
     public InteractionResult interact(Player player, InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        if (itemStack.is(ModItems.TWEAKS_TOOL.get())) {
+            if (level().isClientSide) {
+                DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> TweaksToolScreen::openScreen);
+            }
+            return InteractionResult.SUCCESS;
+        }
+
         long time = this.bounceTime - System.currentTimeMillis();
         if (time > 0) {
             return InteractionResult.PASS;
@@ -387,6 +401,21 @@ public class DollEntity extends Entity {
 
     public void setDropFromPhantom(boolean dropFromPhantom) {
         this.dropFromPhantom = dropFromPhantom;
+    }
+
+    @Override
+    public void setRot(float yRot, float xRot) {
+        super.setRot(yRot, xRot);
+    }
+
+    @Override
+    protected AABB makeBoundingBox() {
+        Vector3f displayScale = this.getDisplayScale();
+        EntityDimensions dimensions = this.getType().getDimensions();
+        float width = Math.max(Math.abs(displayScale.x), Math.abs(displayScale.z));
+        float height = Math.abs(displayScale.y);
+        dimensions = dimensions.scale(width, height);
+        return dimensions.makeBoundingBox(this.getX(), this.getY(), this.getZ());
     }
 
     private void checkCollisionKnockback() {

@@ -6,6 +6,7 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 
 import java.util.function.Consumer;
@@ -25,6 +26,15 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('R', Items.REDSTONE)
                 .define('S', Items.SMOOTH_STONE)
                 .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.TWEAKS_TOOL.get())
+                .pattern(" W ")
+                .pattern(" W ")
+                .pattern(" S ")
+                .define('W', ItemTags.WOOL)
+                .define('S', Items.STICK)
+                .unlockedBy("has_wool", has(ItemTags.WOOL))
                 .save(consumer);
     }
 }

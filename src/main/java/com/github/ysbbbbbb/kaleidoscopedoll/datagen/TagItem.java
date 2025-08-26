@@ -121,14 +121,16 @@ public class TagItem extends ItemTagsProvider {
                 dollItem("doll_17"),
                 dollItem("doll_34"),
                 dollItem("doll_35"),
-                dollItem("doll_66")
+                dollItem("doll_66"),
+                dollItem("doll_326")
         );
         this.tag(TIER_1_DOLLS).add(tier1Dolls.toArray(new ResourceKey[0]));
 
         List<ResourceKey<Item>> tier2Dolls = Lists.newArrayList(
                 dollItem("doll_3"),
                 dollItem("doll_11"),
-                dollItem("doll_21")
+                dollItem("doll_21"),
+                dollItem("doll_327")
         );
         this.tag(TIER_2_DOLLS).add(tier2Dolls.toArray(new ResourceKey[0]));
 

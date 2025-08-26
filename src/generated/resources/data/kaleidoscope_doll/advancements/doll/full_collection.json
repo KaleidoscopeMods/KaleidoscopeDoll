@@ -301,6 +301,54 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "doll_326": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "kaleidoscope_doll:doll_326"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "doll_327": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "kaleidoscope_doll:doll_327"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "doll_328": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "kaleidoscope_doll:doll_328"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "doll_329": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "kaleidoscope_doll:doll_329"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "doll_33": {
       "conditions": {
         "items": [
@@ -993,6 +1041,18 @@
     ],
     [
       "doll_66"
+    ],
+    [
+      "doll_326"
+    ],
+    [
+      "doll_327"
+    ],
+    [
+      "doll_328"
+    ],
+    [
+      "doll_329"
     ]
   ],
   "rewards": {

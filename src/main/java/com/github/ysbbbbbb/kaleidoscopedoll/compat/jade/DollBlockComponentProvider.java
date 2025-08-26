@@ -21,11 +21,12 @@ public enum DollBlockComponentProvider implements IBlockComponentProvider {
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig pluginConfig) {
         Block block = accessor.getBlock();
         ResourceLocation key = ForgeRegistries.BLOCKS.getKey(block);
-        if (key == null || !ModRegisterEvent.SPECIAL_TOOLTIPS.containsKey(key)) {
+        if (key == null) {
             return;
         }
-        String text = ModRegisterEvent.SPECIAL_TOOLTIPS.getOrDefault(key, "vanilla");
-        tooltip.add(Component.translatable("tooltip.kaleidoscope_doll.doll." + text).withStyle(ChatFormatting.AQUA));
+        String vanillaDesc = ModRegisterEvent.VANILLA_TOOLTIPS.getOrDefault(key, "vanilla");
+        String specialDesc = ModRegisterEvent.SPECIAL_TOOLTIPS.getOrDefault(key, vanillaDesc);
+        tooltip.add(Component.translatable("tooltip.kaleidoscope_doll.doll." + specialDesc).withStyle(ChatFormatting.AQUA));
     }
 
     @Override

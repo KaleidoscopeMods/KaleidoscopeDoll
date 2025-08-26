@@ -157,8 +157,13 @@ public class ComputerMenuScreen extends AbstractContainerScreen<ComputerMenu> {
         this.searchField.render(graphics, x, y, partialTicks);
         if (!this.searchField.isFocused() && this.searchField.getValue().isEmpty()) {
             graphics.drawString(font, Component.translatable("gui.kaleidoscope_doll.computer.search")
-                            .withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC),
+                            .withStyle(ChatFormatting.GRAY),
                     this.leftPos + 9, this.topPos + 102, 0xFFFFFF, false);
+        }
+
+        if (this.isHovering(108, 98, 16, 16, x, y)
+            && this.hoveredSlot != null && !this.hoveredSlot.hasItem()) {
+            graphics.renderTooltip(this.font, Component.translatable("tooltip.kaleidoscope_doll.computer.input"), x, y);
         }
 
         this.renderTooltip(graphics, x, y);

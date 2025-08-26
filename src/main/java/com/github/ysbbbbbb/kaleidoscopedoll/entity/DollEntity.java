@@ -48,9 +48,20 @@ public class DollEntity extends Entity {
     public static final String TAG_BLOCK_STATE = "doll_block_state";
     private static final String TAG_SCALE = "doll_scale";
     private static final String TAG_TRANSLATION = "doll_translation";
+    private static final String TAG_DROP_FROM_PHANTOM = "drop_from_phantom";
+    private static final String TAG_DROP_FROM_PHANTOM_TIME = "drop_from_phantom_time";
 
     private boolean inThrowing = false;
     private long bounceTime = 0;
+
+    /**
+     * 用来标记是否是从幻翼上掉下来的，如果玩家x分钟内没有捡起，则自然消失
+     */
+    private boolean dropFromPhantom = false;
+    /**
+     * 计时器，单位 tick
+     */
+    private int dropFromPhantomTick = 0;
 
     public DollEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
@@ -66,6 +77,21 @@ public class DollEntity extends Entity {
     public void tick() {
         // 调用父类的基础 tick 逻辑
         super.tick();
+
+        // 先判断存活
+        // 没有骑在幻翼上时才会计数
+        if (this.dropFromPhantom && GeneralConfig.PHANTOM_DOLL_EXIST_TICKS.get() > 0
+            && !(this.getVehicle() instanceof Phantom)) {
+            this.dropFromPhantomTick++;
+            if (this.dropFromPhantomTick >= GeneralConfig.PHANTOM_DOLL_EXIST_TICKS.get()) {
+                if (this.level() instanceof ServerLevel serverLevel) {
+                    serverLevel.sendParticles(ParticleTypes.POOF, this.getRandomX(1), this.getRandomY(), this.getRandomZ(1),
+                            20, 0.2, 0.2, 0.2, 0.02);
+                }
+                this.discard();
+                return;
+            }
+        }
 
         if (this.onGround() || this.isInWater() || this.isInLava()) {
             // 如果在地面、水中或岩浆中，重置丢出状态
@@ -285,6 +311,12 @@ public class DollEntity extends Entity {
         if (tag.contains(TAG_TRANSLATION)) {
             setDisplayTranslation(readVector3f(tag.getCompound(TAG_TRANSLATION)));
         }
+        if (tag.contains(TAG_DROP_FROM_PHANTOM)) {
+            this.dropFromPhantom = tag.getBoolean(TAG_DROP_FROM_PHANTOM);
+        }
+        if (tag.contains(TAG_DROP_FROM_PHANTOM_TIME)) {
+            this.dropFromPhantomTick = tag.getInt(TAG_DROP_FROM_PHANTOM_TIME);
+        }
     }
 
     @Override
@@ -295,6 +327,13 @@ public class DollEntity extends Entity {
         }
         tag.put(TAG_SCALE, writeVector3f(getDisplayScale()));
         tag.put(TAG_TRANSLATION, writeVector3f(getDisplayTranslation()));
+        tag.putBoolean(TAG_DROP_FROM_PHANTOM, this.dropFromPhantom);
+        tag.putInt(TAG_DROP_FROM_PHANTOM_TIME, this.dropFromPhantomTick);
+    }
+
+    public void removePhantomRecord(CompoundTag tag) {
+        tag.remove(TAG_DROP_FROM_PHANTOM);
+        tag.remove(TAG_DROP_FROM_PHANTOM_TIME);
     }
 
     private Vector3f readVector3f(CompoundTag tag) {
@@ -344,6 +383,10 @@ public class DollEntity extends Entity {
 
     public long getBounceTime() {
         return bounceTime;
+    }
+
+    public void setDropFromPhantom(boolean dropFromPhantom) {
+        this.dropFromPhantom = dropFromPhantom;
     }
 
     private void checkCollisionKnockback() {

@@ -70,6 +70,7 @@ public class DollEntityItem extends Item {
 
         CompoundTag entityTag = new CompoundTag();
         entity.addAdditionalSaveData(entityTag);
+        entity.removePhantomRecord(entityTag);
 
         CompoundTag stackTag = stack.getOrCreateTag();
         stackTag.put(TAG_DOLL_ENTITY, entityTag);

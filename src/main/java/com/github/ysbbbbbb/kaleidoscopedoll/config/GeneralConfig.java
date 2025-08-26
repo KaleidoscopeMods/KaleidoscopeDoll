@@ -13,6 +13,7 @@ public class GeneralConfig {
 
     public static ForgeConfigSpec.BooleanValue ENABLE_PHANTOM_DOLL_SPAWN;
     public static ForgeConfigSpec.DoubleValue PHANTOM_DOLL_SPAWN_CHANCE;
+    public static ForgeConfigSpec.IntValue PHANTOM_DOLL_EXIST_TICKS;
 
     public static ForgeConfigSpec init() {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -51,6 +52,9 @@ public class GeneralConfig {
 
         builder.comment("Chance for phantom to spawn with a doll", "幻翼附带玩偶的生成概率");
         PHANTOM_DOLL_SPAWN_CHANCE = builder.defineInRange("PhantomDollSpawnChance", 0.03, 0.0, 1.0);
+
+        builder.comment("Ticks for phantom spawned doll to exist, set to 0 to disable despawn", "幻翼附带玩偶的存在时间，设为 -1 则不会消失");
+        PHANTOM_DOLL_EXIST_TICKS = builder.defineInRange("PhantomDollExistTicks", 3600, -1, Integer.MAX_VALUE);
 
         builder.pop();
         return builder.build();

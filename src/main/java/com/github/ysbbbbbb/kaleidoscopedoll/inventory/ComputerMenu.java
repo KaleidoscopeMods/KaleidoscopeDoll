@@ -133,6 +133,5 @@ public class ComputerMenu extends AbstractContainerMenu {
     public void removed(Player player) {
         super.removed(player);
         ItemHandlerHelper.giveItemToPlayer(player, input.getStackInSlot(0));
-        ItemHandlerHelper.giveItemToPlayer(player, output.getStackInSlot(0));
     }
 }

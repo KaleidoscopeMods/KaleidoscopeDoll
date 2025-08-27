@@ -1,6 +1,7 @@
 {
 	"credit": "by YSBB  2025",
 	"texture_size": [64, 64],
+	"render_type": "cutout",
 	"textures": {
 		"1": "kaleidoscope_doll:block/doll/doll_210"
 	},

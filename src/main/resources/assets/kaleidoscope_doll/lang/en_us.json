@@ -38,6 +38,8 @@
   "tooltip.kaleidoscope_doll.doll_gift_box": "Destroy and get the doll",
   "tooltip.kaleidoscope_doll.computer": "Right-click to use the computer to transform the wool into the player doll",
   "tooltip.kaleidoscope_doll.computer.input": "Put in wool for crafting",
+  "tooltip.kaleidoscope_doll.tweaks_tool.1": "- Right-click the entity doll to adjust size, position, and rotation",
+  "tooltip.kaleidoscope_doll.tweaks_tool.2": "- Hold Shift or Ctrl to adjust button faster in GUI",
   "subtitle.kaleidoscope_doll.block.duck_toy": "Duck Toy Sound",
   "tooltip.kaleidoscope_doll.doll.vanilla": "Vanilla",
   "tooltip.kaleidoscope_doll.doll.wine_fox": "Wine Fox",

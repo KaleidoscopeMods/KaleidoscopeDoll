@@ -5,6 +5,8 @@
 ![Minecraft](https://img.shields.io/badge/Minecraft-Java%20Edition-brightgreen)
 ![Forge](https://img.shields.io/badge/Forge%20|%20Neoforge%20|%20Fabric-1.20.1%20|%201.21.1-orange)
 ![License](https://img.shields.io/badge/License-BSD%203%20Clause%20|%20All%20Rights%20Reserved-red)
+![CurseForge](https://img.shields.io/curseforge/dt/1233277?logo=curseforge&label=CurseForge)
+![Modrinth](https://img.shields.io/modrinth/dt/vQLjjxNs?logo=modrinth&label=Modrinth)
 
 ## Introduction
 
@@ -42,6 +44,11 @@ The mod includes extensive configuration options to customize your experience:
 - **Doll Physics**: Enable/disable gravity, water effects, and collision
 - **Throwing Mechanics**: Control if dolls can be thrown and their physics
 - **Visual Effects**: Toggle particle effects and visual feedback
+
+# Gallery
+![img](https://cdn.modrinth.com/data/vQLjjxNs/images/ac32d1d70def7dbc77f27e749acc3b8da8c8d973.jpeg)
+![img](https://cdn.modrinth.com/data/vQLjjxNs/images/88545381154e36510b69bfc970dd5455c8846cca.jpeg)
+![img](https://cdn.modrinth.com/data/vQLjjxNs/images/d0d8420fa38941aa7666f24ad5948bb28d2ea402.jpeg)
 
 ## License
 This project's code is licensed under the **BSD 3 Clause** license.    

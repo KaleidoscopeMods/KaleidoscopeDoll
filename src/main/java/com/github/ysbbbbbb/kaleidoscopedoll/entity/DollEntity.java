@@ -24,10 +24,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -36,7 +33,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fluids.FluidType;
@@ -68,9 +64,15 @@ public class DollEntity extends Entity {
      * 计时器，单位 tick
      */
     private int dropFromPhantomTick = 0;
+    /**
+     * 用于碰撞击退的计数器，防止无限制左脚踩右脚上天
+     */
+    private int knockbackCount = 0;
+    private int lastKnockbackTick = 0;
 
     public DollEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
+        this.refreshDimensions();
     }
 
     public DollEntity(Level level, double x, double y, double z, float yaw) {
@@ -314,6 +316,14 @@ public class DollEntity extends Entity {
     }
 
     @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
+        if (DATA_SCALE.equals(pKey)) {
+            this.refreshDimensions();
+        }
+        super.onSyncedDataUpdated(pKey);
+    }
+
+    @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         if (tag.contains(TAG_BLOCK_STATE)) {
             HolderLookup<Block> lookup = this.level().holderLookup(Registries.BLOCK);
@@ -375,7 +385,7 @@ public class DollEntity extends Entity {
     }
 
     public void setDisplayScale(Vector3f scale) {
-        this.entityData.set(DATA_SCALE, scale);
+        this.entityData.set(DATA_SCALE, scale, true);
     }
 
     public Vector3f getDisplayTranslation() {
@@ -383,7 +393,7 @@ public class DollEntity extends Entity {
     }
 
     public void setDisplayTranslation(Vector3f translation) {
-        this.entityData.set(DATA_TRANSLATION, translation);
+        this.entityData.set(DATA_TRANSLATION, translation, true);
     }
 
     @Override
@@ -409,13 +419,12 @@ public class DollEntity extends Entity {
     }
 
     @Override
-    protected AABB makeBoundingBox() {
+    public EntityDimensions getDimensions(Pose pose) {
         Vector3f displayScale = this.getDisplayScale();
-        EntityDimensions dimensions = this.getType().getDimensions();
+        EntityDimensions dimensions = super.getDimensions(pose);
         float width = Math.max(Math.abs(displayScale.x), Math.abs(displayScale.z));
         float height = Math.abs(displayScale.y);
-        dimensions = dimensions.scale(width, height);
-        return dimensions.makeBoundingBox(this.getX(), this.getY(), this.getZ());
+        return dimensions.scale(width, height);
     }
 
     private void checkCollisionKnockback() {
@@ -433,13 +442,28 @@ public class DollEntity extends Entity {
             return;
         }
 
+        // 每次击退后增加计数器，最多允许击退 5 次，之后需要玩偶停下来重置
+        if (this.knockbackCount >= 5) {
+            // 记录最后的碰撞 tick，用来重置计数器
+            if (this.tickCount - this.lastKnockbackTick > 20) {
+                this.knockbackCount = 0;
+            }
+            this.lastKnockbackTick = this.tickCount;
+            return;
+        }
+
         // 检查与玩偶碰撞的实体
-        for (Entity entity : this.level().getEntities(this, this.getBoundingBox().inflate(0.2), e -> e != this && e.isAlive() && e.isPickable())) {
+        for (Entity entity : this.level().getEntities(this, this.getBoundingBox().inflate(0.2),
+                e -> e != this && e.isAlive() && e.isPickable())) {
             // 计算从玩偶到目标实体的方向向量
             Vec3 knockbackDirection = this.getDeltaMovement().normalize();
 
-            // 击退强度基于玩偶的速度
-            double knockbackStrength = Math.min(dollSpeed * 0.4, 1) * GeneralConfig.DOLL_KNOCKBACK_FORCE.get();
+            // 击退强度基于玩偶的速度和玩偶的大小
+            // 玩偶越大击退效果越差
+            double sizeNumber = 0.75 / Math.max(this.getBbWidth(), this.getBbHeight());
+            double knockbackStrength = Math.min(dollSpeed * 0.4, 1)
+                                       * Math.min(sizeNumber * sizeNumber, 1)
+                                       * GeneralConfig.DOLL_KNOCKBACK_FORCE.get();
 
             // 计算击退向量，保持一定的垂直分量
             Vec3 knockbackVector = new Vec3(
@@ -449,8 +473,16 @@ public class DollEntity extends Entity {
             );
 
             // 应用击退效果
-            entity.setDeltaMovement(entity.getDeltaMovement().add(knockbackVector));
+            Vec3 speed = entity.getDeltaMovement().add(knockbackVector);
+            // 限制最大速度，防止过快，我们依据玩偶大小做最大速度限制
+            double maxSpeed = Math.min(sizeNumber * sizeNumber, 1);
+            if (speed.length() > maxSpeed) {
+                speed = speed.normalize().scale(maxSpeed);
+            }
+
+            entity.setDeltaMovement(speed);
             entity.hasImpulse = true;
+            this.knockbackCount++;
 
             // 生成击中粒子效果
             if (this.level() instanceof ServerLevel serverLevel) {

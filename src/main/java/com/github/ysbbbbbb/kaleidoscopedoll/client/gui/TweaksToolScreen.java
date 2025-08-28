@@ -155,7 +155,6 @@ public class TweaksToolScreen extends Screen {
 
     private void sendTweaksMessage() {
         // 需要对缩放做限制
-
         NetworkHandler.CHANNEL.sendToServer(new DollTweakersMessage(entityId, scale, translation, rotation));
     }
 

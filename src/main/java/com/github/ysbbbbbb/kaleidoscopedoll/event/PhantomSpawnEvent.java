@@ -48,6 +48,7 @@ public class PhantomSpawnEvent {
         doll.setDisplayBlockState(randomBlock.defaultBlockState());
         doll.setPos(phantom.getX(), phantom.getY() + 0.35, phantom.getZ());
         doll.setYRot(phantom.getYRot());
+        doll.setDropFromPhantom(true);
 
         // 将玩偶附加到幻翼上
         level.addFreshEntity(doll);

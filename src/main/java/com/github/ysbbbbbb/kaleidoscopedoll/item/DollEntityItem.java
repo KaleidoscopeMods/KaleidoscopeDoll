@@ -68,6 +68,7 @@ public class DollEntityItem extends Item {
 
         CompoundTag entityTag = new CompoundTag();
         entity.addAdditionalSaveData(entityTag);
+        entity.removePhantomRecord(entityTag);
 
         stack.set(ModDataComponent.TAG_DOLL_ENTITY, entityTag);
     }
@@ -113,7 +114,7 @@ public class DollEntityItem extends Item {
     }
 
     @Override
-    @SuppressWarnings("all")
+    @SuppressWarnings("removal")
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
             private DollEntityItemRender render = null;
@@ -257,7 +258,7 @@ public class DollEntityItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltips, TooltipFlag isAdvanced) {
-        tooltips.add(Component.translatable("item.kaleidoscopedoll.doll_entity_item.throw.tooltip").withStyle(ChatFormatting.GRAY));
-        tooltips.add(Component.translatable("item.kaleidoscopedoll.doll_entity_item.place.tooltip").withStyle(ChatFormatting.GRAY));
+        tooltips.add(Component.translatable("item.kaleidoscopedoll.doll_entity_item.throw.tooltip").withStyle(ChatFormatting.DARK_GRAY));
+        tooltips.add(Component.translatable("item.kaleidoscopedoll.doll_entity_item.place.tooltip").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

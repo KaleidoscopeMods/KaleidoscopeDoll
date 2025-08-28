@@ -25,6 +25,8 @@ public class ModCreativeTabs {
             .icon(() -> BuiltInRegistries.ITEM.get(VANILLA_ICON_ID).getDefaultInstance())
             .displayItems((par, output) -> {
                 output.accept(ModItems.DOLL_MACHINE.get());
+                output.accept(ModItems.COMPUTER.get());
+                output.accept(ModItems.TWEAKS_TOOL.get());
                 output.accept(ModItems.PURPLE_DOLL_GIFT_BOX.get());
                 output.accept(ModItems.GREEN_DOLL_GIFT_BOX.get());
                 output.accept(ModItems.YELLOW_DOLL_GIFT_BOX.get());

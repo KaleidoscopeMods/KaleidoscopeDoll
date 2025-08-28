@@ -1,20 +1,18 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.block;
 
-import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
-import com.github.ysbbbbbb.kaleidoscopedoll.config.GeneralConfig;
+import com.github.ysbbbbbb.kaleidoscopedoll.block.entity.DollMachineBlockEntity;
+import com.github.ysbbbbbb.kaleidoscopedoll.datagen.TagItem;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModItems;
+import com.github.ysbbbbbb.kaleidoscopedoll.item.GiftBoxItem;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -30,6 +28,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.*;
@@ -38,16 +37,16 @@ import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class DollMachineBlock extends HorizontalDirectionalBlock {
+public class DollMachineBlock extends HorizontalDirectionalBlock implements EntityBlock {
     private static final MapCodec<DollMachineBlock> CODEC = simpleCodec(prop -> new DollMachineBlock());
     private static final VoxelShape SHAPE_UPPER = Block.box(1.0d, 0.0d, 1.0d, 15.0d, 8.0d, 15.0d);
     private static final VoxelShape SHAPE = Block.box(1.0d, 0.0d, 1.0d, 15.0d, 16.0d, 15.0d);
     private static final BooleanProperty LOTTERY_IN_PROGRESS = BooleanProperty.create("lottery_in_progress");
     private static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
-    private static final TagKey<Item> DOLL_MACHINE_TOKENS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "doll_machine_tokens"));
 
     public DollMachineBlock() {
         super(Properties.of().ignitedByLava()
@@ -117,11 +116,18 @@ public class DollMachineBlock extends HorizontalDirectionalBlock {
 
     @Override
     public ItemInteractionResult useItemOn(ItemStack stack, BlockState blockstate, Level world, BlockPos pos, Player entity, InteractionHand hand, BlockHitResult hit) {
-        if (stack.is(DOLL_MACHINE_TOKENS) && !blockstate.getValue(LOTTERY_IN_PROGRESS)) {
+        ItemStack itemInHand = entity.getItemInHand(hand);
+        if (itemInHand.is(TagItem.MACHINE_TOKENS) && !blockstate.getValue(LOTTERY_IN_PROGRESS)) {
             int x = pos.getX();
             int y = blockstate.getValue(HALF) == DoubleBlockHalf.LOWER ? pos.getY() : pos.getY() - 1;
             int z = pos.getZ();
-            stack.shrink(1);
+
+            // 触发 te
+            BlockPos tePos = new BlockPos(x, y, z);
+            if (world.getBlockEntity(tePos) instanceof DollMachineBlockEntity te) {
+                te.onTokensClicked(itemInHand, world);
+            }
+
             world.setBlockAndUpdate(pos, blockstate.setValue(LOTTERY_IN_PROGRESS, true));
             world.playSound(null, pos, SoundEvents.LARGE_AMETHYST_BUD_PLACE, SoundSource.BLOCKS, 4f, 2f);
             if (world instanceof ServerLevel serverLevel) {
@@ -151,21 +157,32 @@ public class DollMachineBlock extends HorizontalDirectionalBlock {
         world.playSound(null, x, y, z, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.BLOCKS, 1f, 1f);
         world.setBlockAndUpdate(pos, blockstate.setValue(LOTTERY_IN_PROGRESS, false));
 
-        int yellowCount = GeneralConfig.YELLOW_DOLL_GIFT_BOX_WEIGHT.get();
-        int greenCount = yellowCount + GeneralConfig.GREEN_DOLL_GIFT_BOX_WEIGHT.get();
-        int totalCount = greenCount + GeneralConfig.PURPLE_DOLL_GIFT_BOX_WEIGHT.get();
-        int count = random.nextInt(0, totalCount);
-
-        ItemEntity item;
-        if (count <= yellowCount) {
-            item = new ItemEntity(world, x + 0.5, y + 1.8, z + 0.5, ModItems.YELLOW_DOLL_GIFT_BOX.get().getDefaultInstance());
-        } else if (count <= greenCount) {
-            item = new ItemEntity(world, x + 0.5, y + 1.8, z + 0.5, ModItems.GREEN_DOLL_GIFT_BOX.get().getDefaultInstance());
-        } else {
-            item = new ItemEntity(world, x + 0.5, y + 1.8, z + 0.5, ModItems.PURPLE_DOLL_GIFT_BOX.get().getDefaultInstance());
+        // 触发 te
+        BlockPos tePos = new BlockPos(x, y, z);
+        ItemStack result = ItemStack.EMPTY;
+        int tier = 0;
+        if (world.getBlockEntity(tePos) instanceof DollMachineBlockEntity te) {
+            tier = te.getTier();
+            result = te.onFinishLottery();
         }
-        item.setPickUpDelay(10);
-        world.addFreshEntity(item);
+        if (result.isEmpty()) {
+            return;
+        }
+
+        Item item;
+        if (tier == 0) {
+            item = ModItems.GREEN_DOLL_GIFT_BOX.get();
+        } else if (tier == 1) {
+            item = ModItems.YELLOW_DOLL_GIFT_BOX.get();
+        } else {
+            item = ModItems.PURPLE_DOLL_GIFT_BOX.get();
+        }
+
+        ItemStack gift = new ItemStack(item);
+        GiftBoxItem.setDoll(result, gift, world);
+        ItemEntity itemEntity = new ItemEntity(world, x + 0.5, y + 1.8, z + 0.5, gift);
+        itemEntity.setPickUpDelay(10);
+        world.addFreshEntity(itemEntity);
     }
 
     @Override
@@ -190,5 +207,13 @@ public class DollMachineBlock extends HorizontalDirectionalBlock {
     @Override
     protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
         return CODEC;
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        if (pState.getValue(HALF) == DoubleBlockHalf.LOWER) {
+            return new DollMachineBlockEntity(pPos, pState);
+        }
+        return null;
     }
 }

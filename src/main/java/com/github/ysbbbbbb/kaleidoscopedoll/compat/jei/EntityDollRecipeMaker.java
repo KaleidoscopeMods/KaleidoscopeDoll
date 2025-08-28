@@ -1,5 +1,6 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.compat.jei;
 
+import com.github.ysbbbbbb.kaleidoscopedoll.datagen.TagItem;
 import com.github.ysbbbbbb.kaleidoscopedoll.event.ModRegisterEvent;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollEntityItem;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollItem;
@@ -27,8 +28,8 @@ public class EntityDollRecipeMaker {
             }
 
             Ingredient inputDoll = Ingredient.of(item);
-            Ingredient slimeBall = Ingredient.of(Tags.Items.SLIME_BALLS);
-            NonNullList<Ingredient> inputs = NonNullList.of(Ingredient.EMPTY, inputDoll, slimeBall);
+            Ingredient blockToEntityItem = Ingredient.of(TagItem.BLOCK_DOLLS_TO_ENTITY_ITEM);
+            NonNullList<Ingredient> inputs = NonNullList.of(Ingredient.EMPTY, inputDoll, blockToEntityItem);
 
             BlockState dollState = dollItem.getBlock().defaultBlockState();
             ItemStack output = DollEntityItem.createItemWithBlockState(dollState);

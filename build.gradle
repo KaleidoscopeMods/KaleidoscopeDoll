@@ -89,6 +89,8 @@ dependencies {
     runtimeOnly("mezz.jei:jei-1.21.1-neoforge:19.8.4.110")
 
     compileOnly "maven.modrinth:emi:1.1.10+1.21+neoforge"
+
+    implementation "maven.modrinth:jade:15.10.3+neoforge"
 }
 
 // 用于 neoforge.mods 里替换那一堆 ${xxxx}

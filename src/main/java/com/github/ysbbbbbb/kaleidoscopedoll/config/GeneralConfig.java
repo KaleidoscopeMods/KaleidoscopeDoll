@@ -18,22 +18,11 @@ public class GeneralConfig {
 
     public static ModConfigSpec.BooleanValue ENABLE_PHANTOM_DOLL_SPAWN;
     public static ModConfigSpec.DoubleValue PHANTOM_DOLL_SPAWN_CHANCE;
+    public static ModConfigSpec.IntValue PHANTOM_DOLL_EXIST_TICKS;
 
     public static ModConfigSpec init() {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
         builder.push("doll");
-
-        builder.comment("Yellow gift box weights, yellow gift boxes can draw out vanilla humanoids doll");
-        builder.comment("黄色礼品盒权重，黄色礼品盒可以抽出原版人形生物玩偶");
-        YELLOW_DOLL_GIFT_BOX_WEIGHT = builder.defineInRange("YellowDollGiftBoxWeight", 10, 0, 100);
-
-        builder.comment("Green gift box weights, green gift boxes can draw out vanilla neutral friendly mobs doll");
-        builder.comment("绿色礼品盒权重，绿色礼品盒可以抽出原版中立友好生物玩偶");
-        GREEN_DOLL_GIFT_BOX_WEIGHT = builder.defineInRange("GreenDollGiftBoxWeight", 10, 0, 100);
-
-        builder.comment("Purple gift box weights, purple gift boxes can draw out vanilla hostile mobs doll");
-        builder.comment("紫色礼品盒权重，紫色礼品盒可以抽出原版敌对生物玩偶");
-        PURPLE_DOLL_GIFT_BOX_WEIGHT = builder.defineInRange("PurpleDollGiftBoxWeight", 80, 0, 100);
 
         builder.comment("Whether dolls can be thrown by players");
         builder.comment("玩偶是否可以被玩家丢出");
@@ -68,6 +57,9 @@ public class GeneralConfig {
 
         builder.comment("Chance for phantom to spawn with a doll", "幻翼附带玩偶的生成概率");
         PHANTOM_DOLL_SPAWN_CHANCE = builder.defineInRange("PhantomDollSpawnChance", 0.03, 0.0, 1.0);
+
+        builder.comment("Ticks for phantom spawned doll to exist, set to 0 to disable despawn", "幻翼附带玩偶的存在时间，设为 -1 则不会消失");
+        PHANTOM_DOLL_EXIST_TICKS = builder.defineInRange("PhantomDollExistTicks", 3600, -1, Integer.MAX_VALUE);
 
         builder.pop();
         return builder.build();

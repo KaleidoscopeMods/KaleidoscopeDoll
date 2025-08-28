@@ -19,5 +19,7 @@ public class ItemModelGenerator extends ItemModelProvider {
             ResourceLocation key = BuiltInRegistries.ITEM.getKey(item);
             withExistingParent(key.getPath(), modLoc("block/doll/" + key.getPath()));
         });
+
+        withExistingParent("computer", modLoc("block/computer"));
     }
 }

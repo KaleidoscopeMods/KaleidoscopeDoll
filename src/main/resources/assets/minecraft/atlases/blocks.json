@@ -1,0 +1,8 @@
+{
+  "sources": [
+    {
+      "type": "single",
+      "resource": "kaleidoscope_doll:slot/computer_output_slot"
+    }
+  ]
+}

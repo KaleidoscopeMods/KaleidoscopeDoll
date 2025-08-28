@@ -94,7 +94,7 @@ public class DollMachineBlockEntity extends BlockEntity {
 
         ListTag dollsTag = new ListTag();
         for (int i = 0; i < availableDolls.size(); i++) {
-            List<ResourceLocation> dolls = availableDolls.get(i);
+            List<ResourceLocation> dolls = availableDolls.getOrDefault(i, Lists.newArrayList());
             ListTag listTag = new ListTag();
             for (ResourceLocation doll : dolls) {
                 listTag.add(StringTag.valueOf(doll.toString()));

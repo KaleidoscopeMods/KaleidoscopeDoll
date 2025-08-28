@@ -1,11 +1,10 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.item;
 
-import net.minecraft.core.component.DataComponents;
+import com.github.ysbbbbbb.kaleidoscopedoll.init.ModBlocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 
@@ -19,6 +18,6 @@ public class GiftBoxItem extends BlockItem {
     public static void setDoll(ItemStack doll, ItemStack giftBox, LevelAccessor accessor) {
         CompoundTag compoundTag = new CompoundTag();
         compoundTag.put(NBT_DOLL_ITEMSTACK, doll.save(accessor.registryAccess()));
-        giftBox.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(compoundTag));
+        setBlockEntityData(giftBox, ModBlocks.DOLL_GIFT_BOX_BE.get(), compoundTag);
     }
 }

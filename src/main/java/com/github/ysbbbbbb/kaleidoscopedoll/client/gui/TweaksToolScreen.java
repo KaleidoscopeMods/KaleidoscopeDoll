@@ -120,6 +120,15 @@ public class TweaksToolScreen extends Screen {
             this.rotation.y += (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y + 22, 20, 20).build());
+
+        // 重置
+        this.addRenderableWidget(Button.builder(Component.translatable("controls.reset"), button -> {
+            float yRot = this.getMinecraft().player == null ? 0 : this.getMinecraft().player.getYRot();
+            this.scale.set(1);
+            this.translation.set(0);
+            this.rotation.set(0, yRot + 180);
+            this.sendTweaksMessage();
+        }).bounds(x + 140, y - 22, 100, 20).build());
     }
 
     @Override
@@ -146,7 +155,6 @@ public class TweaksToolScreen extends Screen {
 
     private void sendTweaksMessage() {
         // 需要对缩放做限制
-
         NetworkHandler.CHANNEL.sendToServer(new DollTweakersMessage(entityId, scale, translation, rotation));
     }
 

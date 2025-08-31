@@ -270,7 +270,7 @@ public class DollEntityItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltips, TooltipFlag isAdvanced) {
-        tooltips.add(Component.translatable("item.kaleidoscopedoll.doll_entity_item.throw.tooltip").withStyle(ChatFormatting.GRAY));
-        tooltips.add(Component.translatable("item.kaleidoscopedoll.doll_entity_item.place.tooltip").withStyle(ChatFormatting.GRAY));
+        tooltips.add(Component.translatable("item.kaleidoscopedoll.doll_entity_item.throw.tooltip").withStyle(ChatFormatting.DARK_GRAY));
+        tooltips.add(Component.translatable("item.kaleidoscopedoll.doll_entity_item.place.tooltip").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

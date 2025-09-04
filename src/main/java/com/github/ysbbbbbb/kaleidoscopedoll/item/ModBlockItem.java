@@ -1,8 +1,7 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.item;
 
-import net.minecraft.ChatFormatting;
+import com.github.ysbbbbbb.kaleidoscopedoll.block.IModBlock;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -11,22 +10,12 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.function.Consumer;
 
-public class DollItem extends BlockItem {
-    private final String langKey;
+public class ModBlockItem<T extends Block & IModBlock> extends BlockItem {
+    private final T block;
 
-    public DollItem(Block block, Properties properties, String langKey) {
+    public ModBlockItem(T block, Properties properties) {
         super(block, properties);
-        this.langKey = "tooltip.kaleidoscope_doll.doll." + langKey;
-    }
-
-    @Override
-    public EquipmentSlot getEquipmentSlot(ItemStack stack) {
-        return EquipmentSlot.HEAD;
-    }
-
-    @Override
-    public Component getName(ItemStack stack) {
-        return Component.translatable("block.kaleidoscope_doll.doll");
+        this.block = block;
     }
 
     @Override
@@ -38,6 +27,6 @@ public class DollItem extends BlockItem {
         Consumer<Component> tooltipAdder,
         TooltipFlag flag
     ) {
-        tooltipAdder.accept(Component.translatable(this.langKey).withStyle(ChatFormatting.DARK_GRAY));
+        this.block.appendHoverText(tooltipAdder);
     }
 }

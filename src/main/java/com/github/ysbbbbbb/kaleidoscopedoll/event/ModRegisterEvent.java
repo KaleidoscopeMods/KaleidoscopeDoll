@@ -22,7 +22,7 @@ public class ModRegisterEvent {
     public static final Map<ResourceLocation, String> VANILLA_TOOLTIPS = Maps.newHashMap();
     public static final Map<ResourceLocation, String> SPECIAL_TOOLTIPS = Maps.newHashMap();
     public static final Set<Item> DOLL_ITEMS = Sets.newLinkedHashSet();
-    private static final int MAX_DOLL_COUNT = 458;
+    private static final int MAX_DOLL_COUNT = 488;
 
     private static void registerAllVanillaTooltips() {
         registerVanillaTooltips("doll_328", "wine_fox");
@@ -420,6 +420,36 @@ public class ModRegisterEvent {
         registerSpecialTooltips("doll_455", "sponsors_nanayu");
         registerSpecialTooltips("doll_456", "sponsors_wenquxin");
         registerSpecialTooltips("doll_457", "sponsors_wuyu");
+        registerSpecialTooltips("doll_458", "sponsors_bennu_taozi");
+        registerSpecialTooltips("doll_459", "sponsors_b_eibao");
+        registerSpecialTooltips("doll_460", "sponsors_chcnscls");
+        registerSpecialTooltips("doll_461", "sponsors_chenyin_yezhu");
+        registerSpecialTooltips("doll_462", "sponsors_cheshiremiao");
+        registerSpecialTooltips("doll_463", "sponsors_dafeimao");
+        registerSpecialTooltips("doll_464", "sponsors_elex7310");
+        registerSpecialTooltips("doll_465", "sponsors_eliceouo");
+        registerSpecialTooltips("doll_466", "sponsors_frozenmissouri");
+        registerSpecialTooltips("doll_467", "sponsors_hhtmey");
+        registerSpecialTooltips("doll_468", "sponsors_ilovematlab");
+        registerSpecialTooltips("doll_469", "sponsors_ironhorus0v0");
+        registerSpecialTooltips("doll_470", "sponsors_kiuesakura");
+        registerSpecialTooltips("doll_471", "sponsors_kun_he_qaq");
+        registerSpecialTooltips("doll_472", "sponsors_licheng77");
+        registerSpecialTooltips("doll_473", "sponsors_miranda_meow");
+        registerSpecialTooltips("doll_474", "sponsors_panni1787");
+        registerSpecialTooltips("doll_475", "sponsors_potatoisllk");
+        registerSpecialTooltips("doll_476", "sponsors_potato_chip_cat");
+        registerSpecialTooltips("doll_477", "sponsors_qioubiaa");
+        registerSpecialTooltips("doll_478", "sponsors_qwq4611");
+        registerSpecialTooltips("doll_479", "sponsors_skymoyuyo");
+        registerSpecialTooltips("doll_480", "sponsors_wushi517");
+        registerSpecialTooltips("doll_481", "sponsors_zigongggg");
+        registerSpecialTooltips("doll_482", "sponsors_huafazixi");
+        registerSpecialTooltips("doll_483", "sponsors_molvyyf6607");
+        registerSpecialTooltips("doll_484", "sponsors_music0kirby");
+        registerSpecialTooltips("doll_485", "sponsors_tanglizi");
+        registerSpecialTooltips("doll_486", "sponsors_chengxiangjiehebu_wangzi");
+        registerSpecialTooltips("doll_487", "sponsors_qiongjin");
     }
 
     @SubscribeEvent

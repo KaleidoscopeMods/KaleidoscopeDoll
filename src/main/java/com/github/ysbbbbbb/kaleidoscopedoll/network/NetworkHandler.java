@@ -1,6 +1,7 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.network;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
+import com.github.ysbbbbbb.kaleidoscopedoll.network.message.ComputerDollClickMessage;
 import com.github.ysbbbbbb.kaleidoscopedoll.network.message.DollTweakersMessage;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkDirection;
@@ -17,6 +18,8 @@ public class NetworkHandler {
 
     public static void init() {
         CHANNEL.registerMessage(0, DollTweakersMessage.class, DollTweakersMessage::encode, DollTweakersMessage::decode, DollTweakersMessage::handle,
+                Optional.of(NetworkDirection.PLAY_TO_SERVER));
+        CHANNEL.registerMessage(1, ComputerDollClickMessage.class, ComputerDollClickMessage::encode, ComputerDollClickMessage::decode, ComputerDollClickMessage::handle,
                 Optional.of(NetworkDirection.PLAY_TO_SERVER));
     }
 }

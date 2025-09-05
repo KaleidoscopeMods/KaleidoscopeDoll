@@ -9,7 +9,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -86,17 +85,14 @@ public class ComputerMenu extends AbstractContainerMenu {
         }
     }
 
-    @Override
-    public boolean clickMenuButton(Player player, int id) {
+    public boolean clickDollButton(ItemStack doll) {
         ItemStack stack = this.input.getStackInSlot(0);
-        if (id > 0 && stack.is(TagItem.COMPUTER_TOKENS)) {
-            ItemStack item = Item.byId(id).getDefaultInstance();
-            if (item.is(TagItem.PLAYER_DOLLS)) {
-                this.output.setStackInSlot(0, item);
-                return true;
-            }
+        // 防止作弊，必须检查一次 doll 是否是 TagItem.PLAYER_DOLLS
+        if (stack.is(TagItem.COMPUTER_TOKENS) && doll.is(TagItem.PLAYER_DOLLS)) {
+            this.output.setStackInSlot(0, doll);
+            return true;
         }
-        return super.clickMenuButton(player, id);
+        return false;
     }
 
     @Override

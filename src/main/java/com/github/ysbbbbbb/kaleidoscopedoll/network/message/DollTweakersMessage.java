@@ -15,7 +15,7 @@ import org.joml.Vector3f;
 
 public final class DollTweakersMessage implements CustomPacketPayload {
     public static final Type<DollTweakersMessage> TYPE = new Type<>(
-            ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "beacon_absorb")
+            ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "doll_tweakers")
     );
     public static final StreamCodec<ByteBuf, DollTweakersMessage> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.VAR_INT, msg -> msg.entityId,

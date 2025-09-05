@@ -3,6 +3,7 @@ package com.github.ysbbbbbb.kaleidoscopedoll.client.gui;
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
 import com.github.ysbbbbbb.kaleidoscopedoll.datagen.TagItem;
 import com.github.ysbbbbbb.kaleidoscopedoll.inventory.ComputerMenu;
+import com.github.ysbbbbbb.kaleidoscopedoll.network.message.ComputerDollClickMessage;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.ChatFormatting;
@@ -18,6 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -83,11 +85,7 @@ public class ComputerMenuScreen extends AbstractContainerScreen<ComputerMenu> {
             int y = yPos + (i / 8) * yOffset;
             this.addRenderableWidget(new DollButton(x, y, item.getDefaultInstance(), button -> {
                 button.setFocused(!button.isFocused());
-                if (this.minecraft == null || this.minecraft.gameMode == null) {
-                    return;
-                }
-                // 通过物品 ID 传递合成信息
-                this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, Item.getId(item));
+                PacketDistributor.sendToServer(new ComputerDollClickMessage(item.getDefaultInstance()));
             }));
         }
     }

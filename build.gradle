@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'idea'
-    id 'net.neoforged.moddev' version '2.0.78'
+    id 'net.neoforged.moddev' version '2.0.107'
 }
 
 version = mod_version
@@ -50,8 +50,12 @@ neoForge {
             programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
         }
 
+        var isJbr = System.getProperty('java.vm.vendor').contains('JetBrains')
         configureEach {
             systemProperty 'forge.logging.markers', 'REGISTRIES'
+            if (isJbr) {
+                jvmArgument "-XX:+AllowEnhancedClassRedefinition"
+            }
             logLevel = org.slf4j.event.Level.DEBUG
         }
     }

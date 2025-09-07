@@ -1,8 +1,8 @@
 {
   "credit": "by YSBB  2025",
   "textures": {
-    "1": "kaleidoscope_doll:block/doll/doll_477",
-    "particle": "block/white_wool"
+    "0": "kaleidoscope_doll:block/doll/doll_477",
+    "particle": "kaleidoscope_doll:block/doll/doll_477"
   },
   "elements": [
     {

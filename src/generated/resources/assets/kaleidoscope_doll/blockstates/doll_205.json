@@ -1,19 +1,43 @@
 {
-  "variants": {
-    "facing=east": {
-      "model": "kaleidoscope_doll:block/doll/doll_205",
-      "y": 90
+  "multipart": [
+    {
+      "apply": {
+        "model": "kaleidoscope_doll:block/doll/doll_205",
+        "uvlock": true
+      },
+      "when": {
+        "facing": "north"
+      }
     },
-    "facing=north": {
-      "model": "kaleidoscope_doll:block/doll/doll_205"
+    {
+      "apply": {
+        "model": "kaleidoscope_doll:block/doll/doll_205",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "facing": "east"
+      }
     },
-    "facing=south": {
-      "model": "kaleidoscope_doll:block/doll/doll_205",
-      "y": 180
+    {
+      "apply": {
+        "model": "kaleidoscope_doll:block/doll/doll_205",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "facing": "south"
+      }
     },
-    "facing=west": {
-      "model": "kaleidoscope_doll:block/doll/doll_205",
-      "y": 270
+    {
+      "apply": {
+        "model": "kaleidoscope_doll:block/doll/doll_205",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "facing": "west"
+      }
     }
-  }
+  ]
 }

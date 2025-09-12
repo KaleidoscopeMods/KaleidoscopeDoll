@@ -1,0 +1,12 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "kaleidoscope_doll:block/doll_machine"
+      },
+      "when": {
+        "half": "lower"
+      }
+    }
+  ]
+}

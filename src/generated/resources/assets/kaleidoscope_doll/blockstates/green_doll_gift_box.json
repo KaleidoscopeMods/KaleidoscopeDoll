@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "kaleidoscope_doll:block/green_doll_gift_box"
+      }
+    }
+  ]
+}

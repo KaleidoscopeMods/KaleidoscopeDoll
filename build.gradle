@@ -70,9 +70,27 @@ neoForge {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    // 优先本地 libs 文件夹
+    flatDir {
+        dir 'libs'
+    }
+    maven {
+        // location of the maven that hosts JEI files since January 2023
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+    }
     maven {
         name = "Modrinth"
         url = "https://api.modrinth.com/maven"
+    }
+    maven {
+        name = "Curios"
+        url = uri("https://maven.theillusivec4.top/")
     }
 }
 

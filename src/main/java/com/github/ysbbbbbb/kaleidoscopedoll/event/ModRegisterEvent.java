@@ -22,19 +22,26 @@ public class ModRegisterEvent {
     public static final Map<ResourceLocation, String> VANILLA_TOOLTIPS = Maps.newHashMap();
     public static final Map<ResourceLocation, String> SPECIAL_TOOLTIPS = Maps.newHashMap();
     public static final Set<Item> DOLL_ITEMS = Sets.newLinkedHashSet();
-    private static final int MAX_DOLL_COUNT = 488;
+    // 作者栏只记录 ID
+    public static final Set<ResourceLocation> AUTHOR_DOLLS = Sets.newHashSet();
+    private static final int MAX_DOLL_COUNT = 602;
 
     private static void registerAllVanillaTooltips() {
         registerVanillaTooltips("doll_328", "wine_fox");
         registerVanillaTooltips("doll_329", "dokimobs_warden");
     }
 
-    private static void registerAllSpecialTooltips() {
-        registerSpecialTooltips("doll_0", "author_ysbb");
-        registerSpecialTooltips("doll_1", "author_tartaric_acid");
-        registerSpecialTooltips("doll_67", "author_abert_cat");
-        registerSpecialTooltips("doll_68", "author_cr_019");
+    private static void registerAuthorTooltips() {
+        registerAuthorTooltips("doll_0", "author_ysbb");
+        registerAuthorTooltips("doll_1", "author_tartaric_acid");
+        registerAuthorTooltips("doll_67", "author_abert_cat");
+        registerAuthorTooltips("doll_68", "author_cr_019");
+        registerAuthorTooltips("doll_599", "author_bzdxg");
+        registerAuthorTooltips("doll_600", "author_mly");
+        registerAuthorTooltips("doll_601", "author_yca");
+    }
 
+    private static void registerAllSpecialTooltips() {
         registerSpecialTooltips("doll_69", "sponsors_guriformes");
         registerSpecialTooltips("doll_70", "sponsors_passer1ne");
         registerSpecialTooltips("doll_71", "sponsors_tanyeng");
@@ -221,7 +228,7 @@ public class ModRegisterEvent {
         registerSpecialTooltips("doll_252", "sponsors_woaijiaying123");
         registerSpecialTooltips("doll_253", "sponsors_wuyu_owo");
         registerSpecialTooltips("doll_254", "sponsors_xiaaopenng");
-        registerSpecialTooltips("doll_255", "sponsors_ximo_xiaomo");
+        registerSpecialTooltips("doll_255", "sponsors_kongling");
         registerSpecialTooltips("doll_256", "sponsors_xxx");
         registerSpecialTooltips("doll_257", "sponsors_ye_qiufeng");
         registerSpecialTooltips("doll_258", "sponsors_yongfa");
@@ -450,11 +457,123 @@ public class ModRegisterEvent {
         registerSpecialTooltips("doll_485", "sponsors_tanglizi");
         registerSpecialTooltips("doll_486", "sponsors_chengxiangjiehebu_wangzi");
         registerSpecialTooltips("doll_487", "sponsors_qiongjin");
+        registerSpecialTooltips("doll_488", "sponsors_a777");
+        registerSpecialTooltips("doll_489", "sponsors_acalephcat");
+        registerSpecialTooltips("doll_490", "sponsors_adriensiscat");
+        registerSpecialTooltips("doll_491", "sponsors_aken_senritsu");
+        registerSpecialTooltips("doll_492", "sponsors_artillery_arc");
+        registerSpecialTooltips("doll_493", "sponsors_artist_li");
+        registerSpecialTooltips("doll_494", "sponsors_atsukko");
+        registerSpecialTooltips("doll_495", "sponsors_ayachiyuki");
+        registerSpecialTooltips("doll_496", "sponsors_ayato_cy");
+        registerSpecialTooltips("doll_497", "sponsors_azelava");
+        registerSpecialTooltips("doll_498", "sponsors_baiye907");
+        registerSpecialTooltips("doll_499", "sponsors_banzhuan_jun");
+        registerSpecialTooltips("doll_500", "sponsors_bksbwdw");
+        registerSpecialTooltips("doll_501", "sponsors_blood_fog");
+        registerSpecialTooltips("doll_502", "sponsors_bourbon115");
+        registerSpecialTooltips("doll_503", "sponsors_brokenfox233");
+        registerSpecialTooltips("doll_504", "sponsors_caffeineburst");
+        registerSpecialTooltips("doll_505", "sponsors_chunxue520");
+        registerSpecialTooltips("doll_506", "sponsors_cnzd");
+        registerSpecialTooltips("doll_507", "sponsors_cxp_114514");
+        registerSpecialTooltips("doll_508", "sponsors_dango517");
+        registerSpecialTooltips("doll_509", "sponsors_daskdkl");
+        registerSpecialTooltips("doll_510", "sponsors_dog_of_surtr");
+        registerSpecialTooltips("doll_511", "sponsors_domexie");
+        registerSpecialTooltips("doll_512", "sponsors_eggyolk_");
+        registerSpecialTooltips("doll_513", "sponsors_enchantress_dusk");
+        registerSpecialTooltips("doll_514", "sponsors_evannn_o");
+        registerSpecialTooltips("doll_515", "sponsors_evelyn0v0");
+        registerSpecialTooltips("doll_516", "sponsors_fcmc159");
+        registerSpecialTooltips("doll_517", "sponsors_fortenz_mtr");
+        registerSpecialTooltips("doll_518", "sponsors_fox_lingsan03");
+        registerSpecialTooltips("doll_519", "sponsors_frt_m");
+        registerSpecialTooltips("doll_520", "sponsors_godotcn");
+        registerSpecialTooltips("doll_521", "sponsors_guide");
+        registerSpecialTooltips("doll_522", "sponsors_guineapig_cavy");
+        registerSpecialTooltips("doll_523", "sponsors_guu1024");
+        registerSpecialTooltips("doll_524", "sponsors_heibaisamaquq");
+        registerSpecialTooltips("doll_525", "sponsors_hina_prime");
+        registerSpecialTooltips("doll_526", "sponsors_homeinbycool");
+        registerSpecialTooltips("doll_527", "sponsors_hoshikawarito");
+        registerSpecialTooltips("doll_528", "sponsors_ironhorus0v0");
+        registerSpecialTooltips("doll_529", "sponsors_jeifing");
+        registerSpecialTooltips("doll_530", "sponsors_jianxiangkui_123");
+        registerSpecialTooltips("doll_531", "sponsors_keyxeldesu");
+        registerSpecialTooltips("doll_532", "sponsors_klein_wyatt");
+        registerSpecialTooltips("doll_533", "sponsors_konojagada");
+        registerSpecialTooltips("doll_534", "sponsors_lagrangepoint19");
+        registerSpecialTooltips("doll_535", "sponsors_leostam");
+        registerSpecialTooltips("doll_536", "sponsors_lingyu_yx");
+        registerSpecialTooltips("doll_537", "sponsors_lwindy");
+        registerSpecialTooltips("doll_538", "sponsors_max__payne");
+        registerSpecialTooltips("doll_539", "sponsors_melina");
+        registerSpecialTooltips("doll_540", "sponsors_meng_xc");
+        registerSpecialTooltips("doll_541", "sponsors_misakimisakimei_1");
+        registerSpecialTooltips("doll_542", "sponsors_misakimisakimei_2");
+        registerSpecialTooltips("doll_543", "sponsors_moshen_gg");
+        registerSpecialTooltips("doll_544", "sponsors_moyu_ly");
+        registerSpecialTooltips("doll_545", "sponsors_mso_kn");
+        registerSpecialTooltips("doll_546", "sponsors_mucha_42");
+        registerSpecialTooltips("doll_547", "sponsors_mxrdls");
+        registerSpecialTooltips("doll_548", "sponsors_n1ne_3");
+        registerSpecialTooltips("doll_549", "sponsors_neko_sang");
+        registerSpecialTooltips("doll_550", "sponsors_nightbreezer");
+        registerSpecialTooltips("doll_551", "sponsors_nightzero0");
+        registerSpecialTooltips("doll_552", "sponsors_princeylove7");
+        registerSpecialTooltips("doll_553", "sponsors_purehearthikari");
+        registerSpecialTooltips("doll_554", "sponsors_qyhovo");
+        registerSpecialTooltips("doll_555", "sponsors_q__chen");
+        registerSpecialTooltips("doll_556", "sponsors_reinori");
+        registerSpecialTooltips("doll_557", "sponsors_rex59168");
+        registerSpecialTooltips("doll_558", "sponsors_rubyowo");
+        registerSpecialTooltips("doll_559", "sponsors_saltedfishcatqwq");
+        registerSpecialTooltips("doll_560", "sponsors_sepland");
+        registerSpecialTooltips("doll_561", "sponsors_table_s4lt");
+        registerSpecialTooltips("doll_562", "sponsors_theflarestar");
+        registerSpecialTooltips("doll_563", "sponsors_tracy_r_owo");
+        registerSpecialTooltips("doll_564", "sponsors_unreal_starry");
+        registerSpecialTooltips("doll_565", "sponsors_wangmingrui2");
+        registerSpecialTooltips("doll_566", "sponsors_water_melon520");
+        registerSpecialTooltips("doll_567", "sponsors_white_pige0n");
+        registerSpecialTooltips("doll_568", "sponsors_widio");
+        registerSpecialTooltips("doll_569", "sponsors_wzq__");
+        registerSpecialTooltips("doll_570", "sponsors_w_recluse");
+        registerSpecialTooltips("doll_571", "sponsors_xcs66");
+        registerSpecialTooltips("doll_572", "sponsors_xianlang");
+        registerSpecialTooltips("doll_573", "sponsors_xiaohu_qwq");
+        registerSpecialTooltips("doll_574", "sponsors_yi__yu");
+        registerSpecialTooltips("doll_575", "sponsors_yuesheng_cw");
+        registerSpecialTooltips("doll_576", "sponsors_yuliy6933");
+        registerSpecialTooltips("doll_577", "sponsors______link______");
+        registerSpecialTooltips("doll_578", "sponsors_qixi");
+        registerSpecialTooltips("doll_579", "sponsors_bushiaju");
+        registerSpecialTooltips("doll_580", "sponsors_wuyu_jixiangxinchun");
+        registerSpecialTooltips("doll_581", "sponsors_xiaomichirou");
+        registerSpecialTooltips("doll_582", "sponsors_bianting");
+        registerSpecialTooltips("doll_583", "sponsors_weishenghuqing");
+        registerSpecialTooltips("doll_584", "sponsors_sikalaite");
+        registerSpecialTooltips("doll_585", "sponsors_xingyeqibai");
+        registerSpecialTooltips("doll_586", "sponsors_pulikaite");
+        registerSpecialTooltips("doll_587", "sponsors_qilu");
+        registerSpecialTooltips("doll_588", "sponsors_zhishibeiyi");
+        registerSpecialTooltips("doll_589", "sponsors_niyu");
+        registerSpecialTooltips("doll_590", "sponsors_daowu");
+        registerSpecialTooltips("doll_591", "sponsors_meimoxiaojielindong");
+        registerSpecialTooltips("doll_592", "sponsors_ximo_xiaomo");
+        registerSpecialTooltips("doll_593", "sponsors_ximo_xiaomo");
+        registerSpecialTooltips("doll_594", "sponsors_ximo_xiaomo");
+        registerSpecialTooltips("doll_595", "sponsors_ximo_xiaomo");
+        registerSpecialTooltips("doll_596", "sponsors_cjxng");
+        registerSpecialTooltips("doll_597", "sponsors_new_wy");
+        registerSpecialTooltips("doll_598", "sponsors_yw_wen");
     }
 
     @SubscribeEvent
     public static void registerBlocks(RegisterEvent event) {
         registerAllVanillaTooltips();
+        registerAuthorTooltips();
         registerAllSpecialTooltips();
         // 批量注册玩偶
         if (event.getRegistryKey().equals(Registries.BLOCK)) {
@@ -481,6 +600,12 @@ public class ModRegisterEvent {
     private static void registerVanillaTooltips(String name, String tooltip) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, name);
         VANILLA_TOOLTIPS.put(id, tooltip);
+    }
+
+    private static void registerAuthorTooltips(String name, String tooltip) {
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, name);
+        SPECIAL_TOOLTIPS.put(id, tooltip);
+        AUTHOR_DOLLS.add(id);
     }
 
     private static void registerSpecialTooltips(String name, String tooltip) {

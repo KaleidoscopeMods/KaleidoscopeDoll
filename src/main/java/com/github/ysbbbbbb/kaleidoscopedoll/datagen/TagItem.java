@@ -33,6 +33,10 @@ public class TagItem extends ItemTagsProvider {
      */
     public static final TagKey<Item> PLAYER_DOLLS = itemTagKey("player_dolls");
     /**
+     * 作者玩偶，注意所有的作者玩偶也是玩家玩偶
+     */
+    public static final TagKey<Item> AUTHOR_DOLLS = itemTagKey("author_dolls");
+    /**
      * 所有本模组玩偶的 tag，因为方块形态玩偶都使用了不同的注册名
      */
     public static final TagKey<Item> ALL_DOLLS = itemTagKey("all_dolls");
@@ -99,6 +103,10 @@ public class TagItem extends ItemTagsProvider {
 
         this.tag(PLAYER_DOLLS).add(ModRegisterEvent.DOLL_ITEMS.stream()
                 .filter(item -> SPECIAL_TOOLTIPS.containsKey(ForgeRegistries.ITEMS.getKey(item)))
+                .toArray(Item[]::new));
+
+        this.tag(AUTHOR_DOLLS).add(ModRegisterEvent.DOLL_ITEMS.stream()
+                .filter(item -> ModRegisterEvent.AUTHOR_DOLLS.contains(ForgeRegistries.ITEMS.getKey(item)))
                 .toArray(Item[]::new));
 
         this.tag(ALL_DOLLS).add(ModRegisterEvent.DOLL_ITEMS.toArray(Item[]::new));

@@ -9,7 +9,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -86,17 +85,14 @@ public class ComputerMenu extends AbstractContainerMenu {
         }
     }
 
-    @Override
-    public boolean clickMenuButton(Player player, int id) {
+    public boolean clickDollButton(ItemStack doll) {
         ItemStack stack = this.input.getStackInSlot(0);
-        if (id > 0 && stack.is(TagItem.COMPUTER_TOKENS)) {
-            ItemStack item = Item.byId(id).getDefaultInstance();
-            if (item.is(TagItem.PLAYER_DOLLS)) {
-                this.output.setStackInSlot(0, item);
-                return true;
-            }
+        // 防止作弊，必须检查一次 doll 是否是 TagItem.PLAYER_DOLLS
+        if (stack.is(TagItem.COMPUTER_TOKENS) && doll.is(TagItem.PLAYER_DOLLS)) {
+            this.output.setStackInSlot(0, doll);
+            return true;
         }
-        return super.clickMenuButton(player, id);
+        return false;
     }
 
     @Override
@@ -109,6 +105,15 @@ public class ComputerMenu extends AbstractContainerMenu {
             if (index < 2) {
                 if (!this.moveItemStackTo(slotItem, 2, this.slots.size(), false)) {
                     return ItemStack.EMPTY;
+                }
+                // 点击的就是输出槽，并且转移成功了，此时输入槽扣除一个
+                if (index == 1) {
+                    ItemStack inputStack = input.getStackInSlot(0);
+                    if (!inputStack.isEmpty()) {
+                        // 输入槽物品数量减 1
+                        inputStack.shrink(1);
+                        input.setStackInSlot(0, inputStack);
+                    }
                 }
             } else if (!this.moveItemStackTo(slotItem, 0, 2, true)) {
                 return ItemStack.EMPTY;

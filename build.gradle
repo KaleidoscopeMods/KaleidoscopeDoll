@@ -20,7 +20,6 @@ minecraft {
                     "-XX:+IgnoreUnrecognizedVMOptions",
                     "-XX:+AllowEnhancedClassRedefinition"
             ]
-            workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             property 'mixin.env.remapRefMap', 'true'
@@ -33,16 +32,15 @@ minecraft {
         }
         client {
             property 'forge.enabledGameTestNamespaces', mod_id
+            workingDirectory project.file('run/client')
         }
         server {
             property 'forge.enabledGameTestNamespaces', mod_id
+            workingDirectory project.file('run/server')
             args '--nogui'
         }
-        gameTestServer {
-            property 'forge.enabledGameTestNamespaces', mod_id
-        }
         data {
-            workingDirectory project.file('run')
+            workingDirectory project.file('run/data')
             args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
         }
     }

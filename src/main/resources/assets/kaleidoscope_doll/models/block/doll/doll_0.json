@@ -99,7 +99,7 @@
 			"faces": {
 				"north": {"uv": [0.75, 8.25, 0, 9], "rotation": 180, "texture": "#0"},
 				"east": {"uv": [0, 4.75, 0.75, 6], "rotation": 270, "texture": "#0"},
-				"south": {"uv": [5.5, 8, 4.75, 7.25], "texture": "#0"},
+				"south": {"uv": [5, 8, 4.25, 7.25], "texture": "#0"},
 				"west": {"uv": [0, 4.75, 0.75, 6], "rotation": 90, "texture": "#0"},
 				"up": {"uv": [0, 4.75, 0.75, 6], "rotation": 180, "texture": "#0"},
 				"down": {"uv": [0, 4.75, 0.75, 6], "texture": "#0"}

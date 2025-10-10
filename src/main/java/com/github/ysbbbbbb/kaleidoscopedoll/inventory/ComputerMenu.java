@@ -106,6 +106,15 @@ public class ComputerMenu extends AbstractContainerMenu {
                 if (!this.moveItemStackTo(slotItem, 2, this.slots.size(), false)) {
                     return ItemStack.EMPTY;
                 }
+                // 点击的就是输出槽，并且转移成功了，此时输入槽扣除一个
+                if (index == 1) {
+                    ItemStack inputStack = input.getStackInSlot(0);
+                    if (!inputStack.isEmpty()) {
+                        // 输入槽物品数量减 1
+                        inputStack.shrink(1);
+                        input.setStackInSlot(0, inputStack);
+                    }
+                }
             } else if (!this.moveItemStackTo(slotItem, 0, 2, true)) {
                 return ItemStack.EMPTY;
             }

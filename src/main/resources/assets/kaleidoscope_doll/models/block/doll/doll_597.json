@@ -1,5 +1,4 @@
 {
-	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
 	"render_type": "cutout",
 	"textures": {
@@ -1273,6 +1272,12 @@
 				},
 				{
 					"name": "眼睛2",
+					"origin": [9, 5, 6],
+					"color": 0,
+					"children": []
+				},
+				{
+					"name": "眼睛2",
 					"origin": [7, 5, 6],
 					"color": 0,
 					"children": [16, 17]
@@ -1396,5 +1401,6 @@
 			"color": 0,
 			"children": [68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89]
 		}
-	]
+	],
+	"format_version": "1.21.6"
 }

@@ -4,6 +4,7 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"1": "kaleidoscope_doll:block/doll/doll_457",
+		"2": "kaleidoscope_doll:block/doll/wuyu_face",
 		"particle": "block/white_wool"
 	},
 	"elements": [
@@ -806,6 +807,20 @@
 				"up": {"uv": [15.25, 15.25, 16, 15.25], "texture": "#1"},
 				"down": {"uv": [15.25, 15.25, 16, 15.25], "texture": "#1"}
 			}
+		},
+		{
+			"name": "Head",
+			"from": [3.5, 15, 4.95],
+			"to": [11.5, 20, 4.95],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7.5, 10, 8.40742]},
+			"faces": {
+				"north": {"uv": [0, 6, 16, 16], "texture": "#2"},
+				"east": {"uv": [0, 2, 2, 4], "texture": "#2"},
+				"south": {"uv": [6, 2, 8, 4], "texture": "#2"},
+				"west": {"uv": [4, 2, 6, 4], "texture": "#2"},
+				"up": {"uv": [4, 2, 2, 0], "texture": "#2"},
+				"down": {"uv": [6, 0, 4, 2], "texture": "#2"}
+			}
 		}
 	],
 	"display": {
@@ -915,7 +930,8 @@
 		58,
 		59,
 		60,
-		61
+		61,
+		62
 	],
 	"format_version": "1.21.6"
 }

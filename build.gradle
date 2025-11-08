@@ -7,7 +7,7 @@ plugins {
 
 group = mod_group_id
 version = mod_version
-archivesBaseName = "kaleidoscopedoll-${minecraft_version}-forge"
+archivesBaseName = "kaleidoscopedoll"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 

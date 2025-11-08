@@ -1,9 +1,11 @@
 {
+	"format_version": "1.9.0",
 	"credit": "by YSBB  2025",
 	"texture_size": [64, 64],
+	"render_type": "cutout",
 	"textures": {
 		"1": "kaleidoscope_doll:block/doll/doll_574",
-		"2": "kaleidoscope_doll:block/doll/doll_574 _1",
+		"2": "kaleidoscope_doll:block/doll/doll_574_1",
 		"particle": "kaleidoscope_doll:block/doll/doll_574"
 	},
 	"elements": [

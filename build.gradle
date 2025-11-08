@@ -7,7 +7,7 @@ plugins {
 
 version = mod_version
 group = mod_group_id
-archivesBaseName = "kaleidoscopedoll-${minecraft_version}-neoforge"
+archivesBaseName = "kaleidoscopedoll"
 
 repositories {
     mavenLocal()

@@ -1,12 +1,12 @@
 {
 	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
-	"texture_size": [64, 64],
 	"render_type": "cutout",
+	"texture_size": [64, 64],
 	"textures": {
 		"1": "kaleidoscope_doll:block/doll/doll_615",
 		"2": "kaleidoscope_doll:block/doll/doll_615_2",
-		"particle": "kaleidoscope_doll:block/doll/doll_615"
+		"particle": "kaleidoscope_doll:block/doll/doll_615_2"
 	},
 	"elements": [
 		{
@@ -2031,7 +2031,7 @@
 			}
 		},
 		{
-			"from": [0.76, 9.41863, 1.6134],
+			"from": [0.76, 9.41863, 1.5134],
 			"to": [2.8025, 10.51113, 2.9434],
 			"rotation": {"angle": 45, "axis": "x", "origin": [0.2375, 9.87582, 3.07996]},
 			"faces": {
@@ -2044,7 +2044,7 @@
 			}
 		},
 		{
-			"from": [-1.8525, 9.41863, 1.6134],
+			"from": [-1.8525, 9.41863, 1.5134],
 			"to": [0.19, 10.51113, 2.9434],
 			"rotation": {"angle": 45, "axis": "x", "origin": [0.7125, 9.87582, 3.07996]},
 			"faces": {
@@ -2512,7 +2512,7 @@
 			}
 		},
 		{
-			"from": [13.1975, 9.41863, 1.6134],
+			"from": [13.1975, 9.41863, 1.5134],
 			"to": [15.24, 10.51113, 2.9434],
 			"rotation": {"angle": 45, "axis": "x", "origin": [15.7625, 9.87582, 3.07996]},
 			"faces": {
@@ -2525,7 +2525,7 @@
 			}
 		},
 		{
-			"from": [15.81, 9.41863, 1.6134],
+			"from": [15.81, 9.41863, 1.5134],
 			"to": [17.8525, 10.51113, 2.9434],
 			"rotation": {"angle": 45, "axis": "x", "origin": [15.2875, 9.87582, 3.07996]},
 			"faces": {

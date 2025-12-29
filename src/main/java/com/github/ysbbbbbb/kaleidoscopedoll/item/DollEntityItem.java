@@ -19,6 +19,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -139,7 +140,19 @@ public class DollEntityItem extends Item {
 
     public static void addCreativeTab(CreativeModeTab.Output output) {
         // 基础方块玩偶
-        ModRegisterEvent.DOLL_BLOCKS.values().forEach(block -> output.accept(createItemWithBlockState(block.defaultBlockState())));
+        ModRegisterEvent.DOLL_BLOCKS.values().forEach(block -> {
+            ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
+            if (!GeneralConfig.ENABLE_SPONSORED_DOLL.get()
+                && ModRegisterEvent.SPECIAL_TOOLTIPS.containsKey(id)
+                && !ModRegisterEvent.AUTHOR_DOLLS.contains(id)) {
+                // 赞助的玩偶跳过
+                return;
+            }
+
+            BlockState blockState = block.defaultBlockState();
+            ItemStack stack = createItemWithBlockState(blockState);
+            output.accept(stack);
+        });
         // 自定义玩偶
         ServerCustomDollLoader.getModels().forEach(id -> output.accept(createItemWithCustomDollId(id)));
     }

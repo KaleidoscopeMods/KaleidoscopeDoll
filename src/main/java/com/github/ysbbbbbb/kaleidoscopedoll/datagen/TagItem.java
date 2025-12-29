@@ -38,6 +38,10 @@ public class TagItem extends ItemTagsProvider {
      */
     public static final TagKey<Item> AUTHOR_DOLLS = itemTagKey("author_dolls");
     /**
+     * 赞助玩偶
+     */
+    public static final TagKey<Item> SPONSORED_DOLLS = itemTagKey("sponsored_dolls");
+    /**
      * 自定义玩偶
      */
     public static final TagKey<Item> CUSTOM_DOLLS = itemTagKey("custom_dolls");
@@ -112,6 +116,11 @@ public class TagItem extends ItemTagsProvider {
 
         this.tag(AUTHOR_DOLLS).add(ModRegisterEvent.DOLL_ITEMS.stream()
                 .filter(item -> ModRegisterEvent.AUTHOR_DOLLS.contains(BuiltInRegistries.ITEM.getKey(item)))
+                .toArray(Item[]::new));
+
+        this.tag(SPONSORED_DOLLS).add(ModRegisterEvent.DOLL_ITEMS.stream()
+                .filter(item -> SPECIAL_TOOLTIPS.containsKey(BuiltInRegistries.ITEM.getKey(item))
+                                && !ModRegisterEvent.AUTHOR_DOLLS.contains(BuiltInRegistries.ITEM.getKey(item)))
                 .toArray(Item[]::new));
 
         this.tag(CUSTOM_DOLLS).add(ModItems.CUSTOM_DOLL.get());

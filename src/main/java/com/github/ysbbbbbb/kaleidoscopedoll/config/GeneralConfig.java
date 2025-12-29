@@ -4,6 +4,8 @@ package com.github.ysbbbbbb.kaleidoscopedoll.config;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class GeneralConfig {
+    public static ModConfigSpec.BooleanValue ENABLE_SPONSORED_DOLL;
+
     public static ModConfigSpec.IntValue YELLOW_DOLL_GIFT_BOX_WEIGHT;
     public static ModConfigSpec.IntValue GREEN_DOLL_GIFT_BOX_WEIGHT;
     public static ModConfigSpec.IntValue PURPLE_DOLL_GIFT_BOX_WEIGHT;
@@ -23,6 +25,10 @@ public class GeneralConfig {
     public static ModConfigSpec init() {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
         builder.push("doll");
+
+        builder.comment("Whether to enable sponsored dolls");
+        builder.comment("是否启用赞助玩偶");
+        ENABLE_SPONSORED_DOLL = builder.define("EnableSponsoredDoll", true);
 
         builder.comment("Whether dolls can be thrown by players");
         builder.comment("玩偶是否可以被玩家丢出");

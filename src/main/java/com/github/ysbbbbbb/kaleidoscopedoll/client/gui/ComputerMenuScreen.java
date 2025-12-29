@@ -2,6 +2,7 @@ package com.github.ysbbbbbb.kaleidoscopedoll.client.gui;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
 import com.github.ysbbbbbb.kaleidoscopedoll.client.custom.CustomDollLoader;
+import com.github.ysbbbbbb.kaleidoscopedoll.config.GeneralConfig;
 import com.github.ysbbbbbb.kaleidoscopedoll.data.custom.ServerCustomDollLoader;
 import com.github.ysbbbbbb.kaleidoscopedoll.datagen.TagItem;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModItems;
@@ -98,7 +99,15 @@ public class ComputerMenuScreen extends AbstractContainerScreen<ComputerMenu> {
         this.dolls.addAll(StreamSupport.stream(tags.spliterator(), false)
                 .map(Holder::value)
                 .map(Item::getDefaultInstance)
-                .toList());
+                .filter(this::filterSponsoredDoll)
+                    .toList());
+    }
+
+    private boolean filterSponsoredDoll(ItemStack item) {
+        if (GeneralConfig.ENABLE_SPONSORED_DOLL.get()) {
+            return true;
+        }
+        return !item.is(TagItem.SPONSORED_DOLLS);
     }
 
     private void getSearchDolls(String searchText) {
@@ -116,7 +125,8 @@ public class ComputerMenuScreen extends AbstractContainerScreen<ComputerMenu> {
                 .map(Holder::value)
                 .filter(item -> doSearch(item, searchText))
                 .map(Item::getDefaultInstance)
-                .toList());
+                .filter(this::filterSponsoredDoll)
+                    .toList());
     }
 
     private boolean doSearch(Item item, String searchText) {

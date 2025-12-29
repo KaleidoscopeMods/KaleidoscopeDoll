@@ -1,6 +1,7 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.network;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.network.message.ComputerDollClickMessage;
+import com.github.ysbbbbbb.kaleidoscopedoll.network.message.CustomDollReloadMessage;
 import com.github.ysbbbbbb.kaleidoscopedoll.network.message.DollTweakersMessage;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -13,5 +14,7 @@ public class NetworkHandler {
 
         registrar.playToServer(DollTweakersMessage.TYPE, DollTweakersMessage.STREAM_CODEC, DollTweakersMessage::handle);
         registrar.playToServer(ComputerDollClickMessage.TYPE, ComputerDollClickMessage.STREAM_CODEC, ComputerDollClickMessage::handle);
+
+        registrar.playToClient(CustomDollReloadMessage.TYPE, CustomDollReloadMessage.STREAM_CODEC, CustomDollReloadMessage::handle);
     }
 }

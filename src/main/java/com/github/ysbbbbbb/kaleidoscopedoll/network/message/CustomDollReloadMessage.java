@@ -22,13 +22,17 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class CustomDollReloadMessage implements CustomPacketPayload {
-    public static final CustomPacketPayload.Type<CustomDollReloadMessage> TYPE = new Type<>(
-            ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "custom_doll_reload")
-    );
-    public static final StreamCodec<RegistryFriendlyByteBuf, CustomDollReloadMessage> STREAM_CODEC = StreamCodec.unit(new CustomDollReloadMessage());
+    public static final CustomDollReloadMessage INSTANCE = new CustomDollReloadMessage();
+    public static final CustomPacketPayload.Type<CustomDollReloadMessage> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "custom_doll_reload"));
+    public static final StreamCodec<RegistryFriendlyByteBuf, CustomDollReloadMessage> STREAM_CODEC = StreamCodec.unit(INSTANCE);
+
+    private CustomDollReloadMessage() {
+    }
 
     public static void handle(CustomDollReloadMessage message, IPayloadContext context) {
-        context.enqueueWork(CustomDollReloadMessage::onReload);
+        if (context.flow().isClientbound()) {
+            context.enqueueWork(CustomDollReloadMessage::onReload);
+        }
     }
 
     @OnlyIn(Dist.CLIENT)

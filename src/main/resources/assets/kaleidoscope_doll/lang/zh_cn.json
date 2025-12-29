@@ -36,6 +36,7 @@
   "entity.kaleidoscope_doll.doll": "玩偶",
   "config.jade.plugin_kaleidoscope_doll.doll_block": "方块玩偶",
   "config.jade.plugin_kaleidoscope_doll.doll_entity": "实体玩偶",
+  "message.kaleidoscope_doll.reload_sucess": "§6【§b森罗玩偶§6】 §e自定义模型重载成功！",
   "tooltip.kaleidoscope_doll.doll_machine": "使用铁锭，金锭或者钻石代币抽奖！",
   "tooltip.kaleidoscope_doll.doll_gift_box": "破坏后获取玩偶",
   "tooltip.kaleidoscope_doll.computer": "右击使用电脑，将羊毛转化为玩家玩偶",

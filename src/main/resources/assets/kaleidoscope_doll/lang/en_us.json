@@ -44,6 +44,7 @@
   "tooltip.kaleidoscope_doll.tweaks_tool.2": "- Hold Shift or Ctrl to adjust button faster in GUI",
   "tooltip.kaleidoscope_doll.custom.unknown": "Unknown Doll",
   "subtitle.kaleidoscope_doll.block.duck_toy": "Duck Toy Sound",
+  "message.kaleidoscope_doll.reload_sucess": "§6[§bKaleidoscope Doll§6] §eCustom dolls reloaded successfully!",
   "tooltip.kaleidoscope_doll.doll.vanilla": "Vanilla",
   "tooltip.kaleidoscope_doll.doll.wine_fox": "Wine Fox",
   "tooltip.kaleidoscope_doll.doll.dokimobs_warden": "Dokimob Warden",

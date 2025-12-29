@@ -108,8 +108,11 @@ public class CustomDollItem extends BlockItem {
         String modelId = getModelId(stack);
         if (modelId != null) {
             String locale = Minecraft.getInstance().getLanguageManager().getSelected();
-            String language = CustomDollLoader.getLanguage(locale, modelId);
-            list.add(Component.literal(language).withStyle(ChatFormatting.DARK_GRAY));
+            // 按照换行进行分割
+            String[] lines = CustomDollLoader.getLanguage(locale, modelId).split("\n");
+            for (String line : lines) {
+                list.add(Component.literal(line).withStyle(ChatFormatting.DARK_GRAY));
+            }
         } else {
             list.add(Component.translatable("tooltip.kaleidoscope_doll.custom.unknown").withStyle(ChatFormatting.DARK_GRAY));
         }

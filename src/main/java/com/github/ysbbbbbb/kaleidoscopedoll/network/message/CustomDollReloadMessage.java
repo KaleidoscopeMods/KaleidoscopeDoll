@@ -54,7 +54,9 @@ public class CustomDollReloadMessage implements CustomPacketPayload {
                 RegistryAccess registryAccess = level.registryAccess();
                 final CreativeModeTab.ItemDisplayParameters parameters =
                         new CreativeModeTab.ItemDisplayParameters(features, hasOperatorItemsTabPermissions, registryAccess);
+
                 ModCreativeTabs.CUSTOM_DOLL_TAB.get().buildContents(parameters);
+                ModCreativeTabs.ENTITY_DOLL_TAB.get().buildContents(parameters);
             }
         } catch (IOException e) {
             KaleidoscopeDoll.LOGGER.error("Failed to reload custom dolls", e);

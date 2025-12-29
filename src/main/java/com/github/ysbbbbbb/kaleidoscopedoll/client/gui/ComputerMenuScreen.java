@@ -2,6 +2,7 @@ package com.github.ysbbbbbb.kaleidoscopedoll.client.gui;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
 import com.github.ysbbbbbb.kaleidoscopedoll.client.custom.CustomDollLoader;
+import com.github.ysbbbbbb.kaleidoscopedoll.config.GeneralConfig;
 import com.github.ysbbbbbb.kaleidoscopedoll.data.custom.ServerCustomDollLoader;
 import com.github.ysbbbbbb.kaleidoscopedoll.datagen.TagItem;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModItems;
@@ -99,8 +100,16 @@ public class ComputerMenuScreen extends AbstractContainerScreen<ComputerMenu> {
             this.dolls.addAll(tags.getTag(TagItem.PLAYER_DOLLS)
                     .stream()
                     .map(Item::getDefaultInstance)
+                    .filter(this::filterSponsoredDoll)
                     .toList());
         }
+    }
+
+    private boolean filterSponsoredDoll(ItemStack item) {
+        if (GeneralConfig.ENABLE_SPONSORED_DOLL.get()) {
+            return true;
+        }
+        return !item.is(TagItem.SPONSORED_DOLLS);
     }
 
     private void getSearchDolls(String searchText) {
@@ -119,6 +128,7 @@ public class ComputerMenuScreen extends AbstractContainerScreen<ComputerMenu> {
             this.dolls.addAll(tag.stream()
                     .filter(item -> doSearch(item, searchText))
                     .map(Item::getDefaultInstance)
+                    .filter(this::filterSponsoredDoll)
                     .toList());
         }
     }

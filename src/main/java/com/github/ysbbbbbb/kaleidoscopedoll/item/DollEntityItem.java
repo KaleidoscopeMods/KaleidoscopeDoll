@@ -18,6 +18,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -34,6 +35,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
@@ -153,7 +155,19 @@ public class DollEntityItem extends Item {
 
     public static void addCreativeTab(CreativeModeTab.Output output) {
         // 基础方块玩偶
-        ModRegisterEvent.DOLL_BLOCKS.values().forEach(block -> output.accept(createItemWithBlockState(block.defaultBlockState())));
+        ModRegisterEvent.DOLL_BLOCKS.values().forEach(block -> {
+            ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
+            if (id != null && !GeneralConfig.ENABLE_SPONSORED_DOLL.get()
+                && ModRegisterEvent.SPECIAL_TOOLTIPS.containsKey(id)
+                && !ModRegisterEvent.AUTHOR_DOLLS.contains(id)) {
+                // 赞助的玩偶跳过
+                return;
+            }
+
+            BlockState blockState = block.defaultBlockState();
+            ItemStack stack = createItemWithBlockState(blockState);
+            output.accept(stack);
+        });
         // 自定义玩偶
         ServerCustomDollLoader.getModels().forEach(id -> output.accept(createItemWithCustomDollId(id)));
     }

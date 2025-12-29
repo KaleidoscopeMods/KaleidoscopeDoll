@@ -1,6 +1,7 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.init;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
+import com.github.ysbbbbbb.kaleidoscopedoll.config.GeneralConfig;
 import com.github.ysbbbbbb.kaleidoscopedoll.event.ModRegisterEvent;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.CustomDollItem;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollEntityItem;
@@ -8,6 +9,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -42,10 +44,14 @@ public class ModCreativeTabs {
             .icon(() -> ForgeRegistries.ITEMS.getValue(PLAYER_ICON_ID).getDefaultInstance())
             .withTabsBefore(VANILLA_DOLL_TAB.getId())
             .displayItems((par, output) -> {
-                ModRegisterEvent.DOLL_ITEMS.stream()
-                        .filter(item -> SPECIAL_TOOLTIPS.containsKey(ForgeRegistries.ITEMS.getKey(item))
-                                        && !AUTHOR_DOLLS.contains(ForgeRegistries.ITEMS.getKey(item)))
-                        .forEach(output::accept);
+                if (!GeneralConfig.ENABLE_SPONSORED_DOLL.get()) {
+                    output.accept(Items.BARRIER);
+                } else {
+                    ModRegisterEvent.DOLL_ITEMS.stream()
+                            .filter(item -> SPECIAL_TOOLTIPS.containsKey(ForgeRegistries.ITEMS.getKey(item))
+                                            && !AUTHOR_DOLLS.contains(ForgeRegistries.ITEMS.getKey(item)))
+                            .forEach(output::accept);
+                }
             }).build());
 
     public static RegistryObject<CreativeModeTab> AUTHOR_DOLL_TAB = TABS.register("author_doll", () -> CreativeModeTab.builder()

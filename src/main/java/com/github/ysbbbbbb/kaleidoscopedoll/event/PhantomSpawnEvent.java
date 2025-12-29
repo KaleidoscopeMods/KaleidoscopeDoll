@@ -6,6 +6,8 @@ import com.github.ysbbbbbb.kaleidoscopedoll.config.GeneralConfig;
 import com.github.ysbbbbbb.kaleidoscopedoll.entity.DollEntity;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModEntities;
 import com.google.common.collect.Lists;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -18,6 +20,8 @@ import java.util.List;
 
 @EventBusSubscriber(modid = KaleidoscopeDoll.MOD_ID)
 public class PhantomSpawnEvent {
+    private static List<DollBlock> DOLL_BLOCKS = null;
+
     @SubscribeEvent
     public static void onEntitySpawn(EntityJoinLevelEvent event) {
         if (!(event.getEntity() instanceof Phantom phantom)) {
@@ -56,10 +60,20 @@ public class PhantomSpawnEvent {
     }
 
     private static DollBlock getRandomDollBlock(RandomSource random) {
-        List<DollBlock> dollBlocks = Lists.newArrayList(ModRegisterEvent.DOLL_BLOCKS.values());
-        if (dollBlocks.isEmpty()) {
+        if (DOLL_BLOCKS == null) {
+            DOLL_BLOCKS = Lists.newArrayList(ModRegisterEvent.DOLL_BLOCKS.values());
+            // 检查是否禁用了赞助玩偶
+            if (!GeneralConfig.ENABLE_SPONSORED_DOLL.get()) {
+                DOLL_BLOCKS.removeIf(block -> {
+                    ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
+                    return ModRegisterEvent.SPECIAL_TOOLTIPS.containsKey(id)
+                           && !ModRegisterEvent.AUTHOR_DOLLS.contains(id);
+                });
+            }
+        }
+        if (DOLL_BLOCKS.isEmpty()) {
             return null;
         }
-        return dollBlocks.get(random.nextInt(dollBlocks.size()));
+        return DOLL_BLOCKS.get(random.nextInt(DOLL_BLOCKS.size()));
     }
 }

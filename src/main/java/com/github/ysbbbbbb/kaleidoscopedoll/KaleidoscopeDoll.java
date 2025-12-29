@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 @Mod(KaleidoscopeDoll.MOD_ID)
 public final class KaleidoscopeDoll {
     public static final String MOD_ID = "kaleidoscope_doll";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public KaleidoscopeDoll(IEventBus modEventBus, ModContainer modContainer) {
 

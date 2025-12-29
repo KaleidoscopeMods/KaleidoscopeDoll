@@ -3,6 +3,7 @@ package com.github.ysbbbbbb.kaleidoscopedoll.client.render;
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
 import com.github.ysbbbbbb.kaleidoscopedoll.entity.DollEntity;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModItems;
+import com.github.ysbbbbbb.kaleidoscopedoll.item.CustomDollItem;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollEntityItem;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -21,6 +22,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import org.apache.commons.lang3.StringUtils;
 import org.joml.Matrix4f;
 
 import java.util.concurrent.TimeUnit;
@@ -45,12 +47,21 @@ public class DollEntityItemRender extends BlockEntityWithoutLevelRenderer {
         ItemStack dollShowItem = dollCache.getIfPresent(itemStackIn);
         if (dollShowItem == null) {
             DollEntity entity = DollEntityItem.getDollEntity(world, itemStackIn);
-            Block displayBlock = entity.getDisplayBlockState().getBlock();
-            if (displayBlock == Blocks.AIR) {
-                dollShowItem = new ItemStack(ModItems.PURPLE_DOLL_GIFT_BOX.get());
+
+            // 先检查是否是自定义玩偶
+            String dollId = entity.getCustomDollId();
+            if (StringUtils.isNotBlank(dollId)) {
+                dollShowItem = new ItemStack(ModItems.CUSTOM_DOLL.get());
+                CustomDollItem.setModelId(dollShowItem, dollId);
             } else {
-                dollShowItem = new ItemStack(displayBlock);
+                Block displayBlock = entity.getDisplayBlockState().getBlock();
+                if (displayBlock == Blocks.AIR) {
+                    dollShowItem = new ItemStack(ModItems.PURPLE_DOLL_GIFT_BOX.get());
+                } else {
+                    dollShowItem = new ItemStack(displayBlock);
+                }
             }
+
             dollCache.put(itemStackIn, dollShowItem);
         }
 

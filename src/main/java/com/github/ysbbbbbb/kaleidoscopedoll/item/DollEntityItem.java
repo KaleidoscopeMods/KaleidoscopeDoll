@@ -2,6 +2,7 @@ package com.github.ysbbbbbb.kaleidoscopedoll.item;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.client.render.DollEntityItemRender;
 import com.github.ysbbbbbb.kaleidoscopedoll.config.GeneralConfig;
+import com.github.ysbbbbbb.kaleidoscopedoll.data.custom.ServerCustomDollLoader;
 import com.github.ysbbbbbb.kaleidoscopedoll.entity.DollEntity;
 import com.github.ysbbbbbb.kaleidoscopedoll.event.ModRegisterEvent;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModBlocks;
@@ -34,13 +35,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.function.Consumer;
 
 import static com.github.ysbbbbbb.kaleidoscopedoll.entity.DollEntity.TAG_BLOCK_STATE;
+import static com.github.ysbbbbbb.kaleidoscopedoll.entity.DollEntity.TAG_CUSTOM_DOLL_ID;
 
 public class DollEntityItem extends Item {
+    private static final String TAG_DOLL_ENTITY = "doll_entity";
+
     private static final int THROW_DURATION = 5;
 
     public DollEntityItem() {
@@ -57,6 +62,14 @@ public class DollEntityItem extends Item {
         ItemStack stack = new ItemStack(ModItems.DOLL_ENTITY_ITEM.get());
         CompoundTag entityTag = new CompoundTag();
         entityTag.put(TAG_BLOCK_STATE, NbtUtils.writeBlockState(state));
+        stack.set(ModDataComponent.TAG_DOLL_ENTITY, entityTag);
+        return stack;
+    }
+
+    public static ItemStack createItemWithCustomDollId(String customDollId) {
+        ItemStack stack = new ItemStack(ModItems.DOLL_ENTITY_ITEM.get());
+        CompoundTag entityTag = new CompoundTag();
+        entityTag.putString(TAG_CUSTOM_DOLL_ID, customDollId);
         stack.set(ModDataComponent.TAG_DOLL_ENTITY, entityTag);
         return stack;
     }
@@ -88,6 +101,21 @@ public class DollEntityItem extends Item {
         return ModBlocks.PURPLE_DOLL_GIFT_BOX.get();
     }
 
+    public static String getCustomDollIdFromItemStack(ItemStack stack) {
+        if (!stack.is(ModItems.DOLL_ENTITY_ITEM.get())) {
+            return StringUtils.EMPTY;
+        }
+
+        CompoundTag entityTag = stack.get(ModDataComponent.TAG_DOLL_ENTITY);
+        if (entityTag != null && entityTag.contains(TAG_CUSTOM_DOLL_ID)) {
+            if (entityTag.contains(TAG_CUSTOM_DOLL_ID)) {
+                return entityTag.getString(TAG_CUSTOM_DOLL_ID);
+            }
+        }
+
+        return StringUtils.EMPTY;
+    }
+
     public static DollEntity getDollEntity(Level level, ItemStack stack) {
         if (!stack.is(ModItems.DOLL_ENTITY_ITEM.get())) {
             return new DollEntity(ModEntities.DOLL.get(), level);
@@ -110,7 +138,10 @@ public class DollEntityItem extends Item {
     }
 
     public static void addCreativeTab(CreativeModeTab.Output output) {
+        // 基础方块玩偶
         ModRegisterEvent.DOLL_BLOCKS.values().forEach(block -> output.accept(createItemWithBlockState(block.defaultBlockState())));
+        // 自定义玩偶
+        ServerCustomDollLoader.getModels().forEach(id -> output.accept(createItemWithCustomDollId(id)));
     }
 
     @Override
@@ -167,7 +198,7 @@ public class DollEntityItem extends Item {
             dollEntity.setInThrowing(true);
 
             // 如果实体的 BlockState 为空气，设置为紫色礼盒
-            if (dollEntity.getDisplayBlockState().isAir()) {
+            if (StringUtils.isBlank(dollEntity.getCustomDollId()) && dollEntity.getDisplayBlockState().isAir()) {
                 dollEntity.setDisplayBlockState(ModBlocks.PURPLE_DOLL_GIFT_BOX.get().defaultBlockState());
             }
 
@@ -233,7 +264,7 @@ public class DollEntityItem extends Item {
         DollEntity dollEntity = getDollEntity(level, stack);
 
         // 如果实体的BlockState为空气，设置为紫色礼盒
-        if (dollEntity.getDisplayBlockState().isAir()) {
+        if (StringUtils.isBlank(dollEntity.getCustomDollId()) && dollEntity.getDisplayBlockState().isAir()) {
             dollEntity.setDisplayBlockState(ModBlocks.PURPLE_DOLL_GIFT_BOX.get().defaultBlockState());
         }
 

@@ -35,6 +35,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.fluids.FluidType;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
@@ -45,7 +46,11 @@ public class DollEntity extends Entity {
     private static final EntityDataAccessor<Vector3f> DATA_SCALE = SynchedEntityData.defineId(DollEntity.class, EntityDataSerializers.VECTOR3);
     private static final EntityDataAccessor<Vector3f> DATA_TRANSLATION = SynchedEntityData.defineId(DollEntity.class, EntityDataSerializers.VECTOR3);
 
+    private static final EntityDataAccessor<String> CUSTOM_DOLL_ID = SynchedEntityData.defineId(DollEntity.class, EntityDataSerializers.STRING);
+
     public static final String TAG_BLOCK_STATE = "doll_block_state";
+    public static final String TAG_CUSTOM_DOLL_ID = "custom_doll_id";
+
     private static final String TAG_SCALE = "doll_scale";
     private static final String TAG_TRANSLATION = "doll_translation";
     private static final String TAG_DROP_FROM_PHANTOM = "drop_from_phantom";
@@ -313,6 +318,7 @@ public class DollEntity extends Entity {
         builder.define(DATA_BLOCK_STATE, Blocks.AIR.defaultBlockState());
         builder.define(DATA_SCALE, new Vector3f(1.0f));
         builder.define(DATA_TRANSLATION, new Vector3f());
+        builder.define(CUSTOM_DOLL_ID, StringUtils.EMPTY);
     }
 
     @Override
@@ -328,6 +334,9 @@ public class DollEntity extends Entity {
         if (tag.contains(TAG_BLOCK_STATE)) {
             HolderLookup<Block> lookup = this.level().holderLookup(Registries.BLOCK);
             setDisplayBlockState(NbtUtils.readBlockState(lookup, tag.getCompound(TAG_BLOCK_STATE)));
+        }
+        if (tag.contains(TAG_CUSTOM_DOLL_ID)) {
+            setCustomDollId(tag.getString(TAG_CUSTOM_DOLL_ID));
         }
         if (tag.contains(TAG_SCALE)) {
             setDisplayScale(readVector3f(tag.getCompound(TAG_SCALE)));
@@ -348,6 +357,9 @@ public class DollEntity extends Entity {
         BlockState blockState = getDisplayBlockState();
         if (blockState != Blocks.AIR.defaultBlockState()) {
             tag.put(TAG_BLOCK_STATE, NbtUtils.writeBlockState(blockState));
+        }
+        if (StringUtils.isNotBlank(getCustomDollId())) {
+            tag.putString(TAG_CUSTOM_DOLL_ID, getCustomDollId());
         }
         tag.put(TAG_SCALE, writeVector3f(getDisplayScale()));
         tag.put(TAG_TRANSLATION, writeVector3f(getDisplayTranslation()));
@@ -394,6 +406,14 @@ public class DollEntity extends Entity {
 
     public void setDisplayTranslation(Vector3f translation) {
         this.entityData.set(DATA_TRANSLATION, translation, true);
+    }
+
+    public void setCustomDollId(String customDollId) {
+        this.entityData.set(CUSTOM_DOLL_ID, customDollId);
+    }
+
+    public String getCustomDollId() {
+        return this.entityData.get(CUSTOM_DOLL_ID);
     }
 
     public void setInThrowing(boolean inThrowing) {

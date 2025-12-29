@@ -23,5 +23,6 @@ public class BlockStateGenerator extends BlockStateProvider {
         });
 
         horizontalBlock(ModBlocks.COMPUTER.get(), models().getExistingFile(modLoc("block/computer")));
+        horizontalBlock(ModBlocks.CUSTOM_DOLL.get(), models().getExistingFile(modLoc("block/custom_doll")));
     }
 }

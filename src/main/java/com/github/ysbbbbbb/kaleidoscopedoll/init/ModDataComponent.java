@@ -1,6 +1,7 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.init;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -16,5 +17,11 @@ public class ModDataComponent {
             () -> DataComponentType.<CompoundTag>builder()
                     .persistent(CompoundTag.CODEC)
                     .networkSynchronized(ByteBufCodecs.COMPOUND_TAG)
+                    .build());
+
+    public static final Supplier<DataComponentType<String>> TAG_CUSTOM_DOLL_ID = DATA_COMPONENTS.register("custom_doll_id",
+            () -> DataComponentType.<String>builder()
+                    .persistent(Codec.STRING)
+                    .networkSynchronized(ByteBufCodecs.STRING_UTF8)
                     .build());
 }

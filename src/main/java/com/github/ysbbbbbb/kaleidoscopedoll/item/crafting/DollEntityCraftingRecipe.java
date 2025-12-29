@@ -1,7 +1,9 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.item.crafting;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.datagen.TagItem;
+import com.github.ysbbbbbb.kaleidoscopedoll.init.ModItems;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModRecipes;
+import com.github.ysbbbbbb.kaleidoscopedoll.item.CustomDollItem;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollEntityItem;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollItem;
 import net.minecraft.core.RegistryAccess;
@@ -12,6 +14,7 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.StringUtils;
 
 public class DollEntityCraftingRecipe extends CustomRecipe {
     public DollEntityCraftingRecipe(ResourceLocation id, CraftingBookCategory category) {
@@ -30,6 +33,9 @@ public class DollEntityCraftingRecipe extends CustomRecipe {
                 itemCount++;
                 if (stack.getItem() instanceof DollItem) {
                     hasDollItem = true;
+                } else if (stack.is(ModItems.CUSTOM_DOLL.get())) {
+                    String modelId = CustomDollItem.getModelId(stack);
+                    hasDollItem = StringUtils.isNotBlank(modelId);
                 } else if (stack.is(TagItem.BLOCK_DOLLS_TO_ENTITY_ITEM)) {
                     hasBlockToEntityItem = true;
                 } else {
@@ -44,18 +50,33 @@ public class DollEntityCraftingRecipe extends CustomRecipe {
     @Override
     public ItemStack assemble(CraftingContainer container, RegistryAccess registryAccess) {
         ItemStack dollItemStack = ItemStack.EMPTY;
+        boolean isCustomDoll = false;
+
         for (int i = 0; i < container.getContainerSize(); i++) {
             ItemStack stack = container.getItem(i);
             if (stack.getItem() instanceof DollItem) {
                 dollItemStack = stack;
                 break;
+            } else if (stack.is(ModItems.CUSTOM_DOLL.get())) {
+                String modelId = CustomDollItem.getModelId(stack);
+                if (StringUtils.isNotBlank(modelId)) {
+                    dollItemStack = stack;
+                    isCustomDoll = true;
+                    break;
+                }
             }
         }
+
         if (dollItemStack.isEmpty()) {
             return ItemStack.EMPTY;
         }
-        DollItem dollItem = (DollItem) dollItemStack.getItem();
-        return DollEntityItem.createItemWithBlockState(dollItem.getBlock().defaultBlockState());
+        if (isCustomDoll) {
+            String modelId = CustomDollItem.getModelId(dollItemStack);
+            return DollEntityItem.createItemWithCustomDollId(modelId);
+        } else {
+            DollItem dollItem = (DollItem) dollItemStack.getItem();
+            return DollEntityItem.createItemWithBlockState(dollItem.getBlock().defaultBlockState());
+        }
     }
 
     @Override

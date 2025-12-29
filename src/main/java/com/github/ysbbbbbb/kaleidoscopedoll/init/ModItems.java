@@ -1,6 +1,7 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.init;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
+import com.github.ysbbbbbb.kaleidoscopedoll.item.CustomDollItem;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollEntityItem;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.GiftBoxItem;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.TweaksToolItem;
@@ -23,4 +24,5 @@ public final class ModItems {
     public static RegistryObject<Item> YELLOW_DOLL_GIFT_BOX = ITEMS.register("yellow_doll_gift_box", () -> new GiftBoxItem(ModBlocks.YELLOW_DOLL_GIFT_BOX.get()));
 
     public static RegistryObject<Item> DOLL_ENTITY_ITEM = ITEMS.register("doll_entity_item", DollEntityItem::new);
+    public static RegistryObject<Item> CUSTOM_DOLL = ITEMS.register("custom_doll", () -> new CustomDollItem(ModBlocks.CUSTOM_DOLL.get()));
 }

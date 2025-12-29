@@ -1,8 +1,12 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.client.gui;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
+import com.github.ysbbbbbb.kaleidoscopedoll.client.custom.CustomDollLoader;
+import com.github.ysbbbbbb.kaleidoscopedoll.data.custom.ServerCustomDollLoader;
 import com.github.ysbbbbbb.kaleidoscopedoll.datagen.TagItem;
+import com.github.ysbbbbbb.kaleidoscopedoll.init.ModItems;
 import com.github.ysbbbbbb.kaleidoscopedoll.inventory.ComputerMenu;
+import com.github.ysbbbbbb.kaleidoscopedoll.item.CustomDollItem;
 import com.github.ysbbbbbb.kaleidoscopedoll.network.NetworkHandler;
 import com.github.ysbbbbbb.kaleidoscopedoll.network.message.ComputerDollClickMessage;
 import com.google.common.collect.Lists;
@@ -18,6 +22,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITag;
 import net.minecraftforge.registries.tags.ITagManager;
@@ -33,7 +38,7 @@ public class ComputerMenuScreen extends AbstractContainerScreen<ComputerMenu> {
     private static final ResourceLocation BG = new ResourceLocation(KaleidoscopeDoll.MOD_ID, "textures/gui/computer.png");
     private static final int MAX_DOLLS_PER_PAGE = 32;
 
-    private List<Item> dolls = Lists.newArrayList();
+    private List<ItemStack> dolls = Lists.newArrayList();
     private int currentPage = 0;
     private float scrollOffs;
     private boolean scrolling;
@@ -43,15 +48,6 @@ public class ComputerMenuScreen extends AbstractContainerScreen<ComputerMenu> {
     public ComputerMenuScreen(ComputerMenu screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
         this.imageHeight = 208;
-        this.getDolls();
-    }
-
-    private void getDolls() {
-        ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
-        if (tags == null) {
-            return;
-        }
-        this.dolls.addAll(tags.getTag(TagItem.PLAYER_DOLLS).stream().toList());
     }
 
     @Override
@@ -63,35 +59,67 @@ public class ComputerMenuScreen extends AbstractContainerScreen<ComputerMenu> {
     }
 
     private void initDollButtons() {
-        ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
-        if (tags == null) {
-            return;
-        }
-        ITag<Item> tag = tags.getTag(TagItem.PLAYER_DOLLS);
         String searchText = this.searchField.getValue().toLowerCase(Locale.ENGLISH);
+
         this.dolls.clear();
         if (StringUtils.isEmpty(searchText)) {
-            this.dolls.addAll(tag.stream().toList());
+            this.getDolls();
         } else {
-            this.dolls.addAll(tag.stream()
-                    .filter(item -> doSearch(item, searchText))
-                    .toList());
+            this.getSearchDolls(searchText);
         }
+
         int start = currentPage * MAX_DOLLS_PER_PAGE;
         int end = Math.min(start + MAX_DOLLS_PER_PAGE, this.dolls.size());
-        List<Item> dollsToShow = this.dolls.subList(start, end);
+        List<ItemStack> dollsToShow = this.dolls.subList(start, end);
         int xPos = this.leftPos + 7;
         int yPos = this.topPos + 17;
         int xOffset = 18;
         int yOffset = 18;
         for (int i = 0; i < dollsToShow.size(); i++) {
-            Item item = dollsToShow.get(i);
+            ItemStack item = dollsToShow.get(i);
             int x = xPos + (i % 8) * xOffset;
             int y = yPos + (i / 8) * yOffset;
-            this.addRenderableWidget(new DollButton(x, y, item.getDefaultInstance(), button -> {
+            this.addRenderableWidget(new DollButton(x, y, item, button -> {
                 button.setFocused(!button.isFocused());
-                NetworkHandler.CHANNEL.sendToServer(new ComputerDollClickMessage(item.getDefaultInstance()));
+                NetworkHandler.CHANNEL.sendToServer(new ComputerDollClickMessage(item));
             }));
+        }
+    }
+
+    private void getDolls() {
+        // 自定义玩偶
+        ServerCustomDollLoader.getModels().forEach(id -> {
+            ItemStack stack = ModItems.CUSTOM_DOLL.get().getDefaultInstance();
+            CustomDollItem.setModelId(stack, id);
+            this.dolls.add(stack);
+        });
+
+        ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
+        if (tags != null) {
+            this.dolls.addAll(tags.getTag(TagItem.PLAYER_DOLLS)
+                    .stream()
+                    .map(Item::getDefaultInstance)
+                    .toList());
+        }
+    }
+
+    private void getSearchDolls(String searchText) {
+        // 自定义玩偶
+        ServerCustomDollLoader.getModels().forEach(id -> {
+            if (doSearchCustom(id, searchText)) {
+                ItemStack stack = ModItems.CUSTOM_DOLL.get().getDefaultInstance();
+                CustomDollItem.setModelId(stack, id);
+                this.dolls.add(stack);
+            }
+        });
+
+        ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
+        if (tags != null) {
+            ITag<Item> tag = tags.getTag(TagItem.PLAYER_DOLLS);
+            this.dolls.addAll(tag.stream()
+                    .filter(item -> doSearch(item, searchText))
+                    .map(Item::getDefaultInstance)
+                    .toList());
         }
     }
 
@@ -110,6 +138,28 @@ public class ComputerMenuScreen extends AbstractContainerScreen<ComputerMenu> {
             return true;
         }
         return I18n.get("tooltip.kaleidoscope_doll.doll." + key).contains(searchText);
+    }
+
+    private boolean doSearchCustom(String id, String searchText) {
+        // 可以直接搜索物品 id 或者文本描述
+        if (id.contains(searchText)) {
+            return true;
+        }
+
+        String local = Minecraft.getInstance().getLanguageManager().getSelected();
+        String language = CustomDollLoader.getLanguage(local, id);
+        // 语言文件搜索
+        if (language.contains(searchText)) {
+            return true;
+        }
+
+        // 回退搜索英文
+        if (!"en_us".equals(local)) {
+            language = CustomDollLoader.getLanguage("en_us", id);
+            return language.contains(searchText);
+        }
+
+        return false;
     }
 
     private void initSearch() {

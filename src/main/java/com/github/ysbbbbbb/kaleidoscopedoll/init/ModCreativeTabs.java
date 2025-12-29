@@ -2,6 +2,7 @@ package com.github.ysbbbbbb.kaleidoscopedoll.init;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
 import com.github.ysbbbbbb.kaleidoscopedoll.event.ModRegisterEvent;
+import com.github.ysbbbbbb.kaleidoscopedoll.item.CustomDollItem;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollEntityItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -55,6 +56,14 @@ public class ModCreativeTabs {
                 ModRegisterEvent.DOLL_ITEMS.stream()
                         .filter(item -> AUTHOR_DOLLS.contains(ForgeRegistries.ITEMS.getKey(item)))
                         .forEach(output::accept);
+            }).build());
+
+    public static RegistryObject<CreativeModeTab> CUSTOM_DOLL_TAB = TABS.register("custom_doll", () -> CreativeModeTab.builder()
+            .title(Component.translatable("item_group.kaleidoscope_doll.custom_doll.name"))
+            .icon(CustomDollItem::getDefaultItemStack)
+            .withTabsBefore(VANILLA_DOLL_TAB.getId())
+            .displayItems((par, output) -> {
+                CustomDollItem.addCreativeTab(output);
             }).build());
 
     public static RegistryObject<CreativeModeTab> ENTITY_DOLL_TAB = TABS.register("entity_doll", () -> CreativeModeTab.builder()

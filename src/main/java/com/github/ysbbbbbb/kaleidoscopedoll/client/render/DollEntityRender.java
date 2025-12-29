@@ -1,22 +1,30 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.client.render;
 
+import com.github.ysbbbbbb.kaleidoscopedoll.client.custom.CustomDollLoader;
+import com.github.ysbbbbbb.kaleidoscopedoll.client.resources.CustomDollReloadListener;
 import com.github.ysbbbbbb.kaleidoscopedoll.entity.DollEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
+import org.apache.commons.lang3.StringUtils;
 import org.joml.Vector3f;
+
+import javax.annotation.Nullable;
 
 public class DollEntityRender extends EntityRenderer<DollEntity> {
     private static final ResourceLocation EMPTY = new ResourceLocation("minecraft", "textures/misc/empty.png");
@@ -27,8 +35,11 @@ public class DollEntityRender extends EntityRenderer<DollEntity> {
 
     @Override
     public void render(DollEntity dollEntity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-        BlockState blockState = dollEntity.getDisplayBlockState();
-        if (blockState == null || blockState.isAir()) {
+        @Nullable BlockState blockState = dollEntity.getDisplayBlockState();
+        String customDollId = dollEntity.getCustomDollId();
+
+        // 优先判断是不是自定义玩偶
+        if (StringUtils.isBlank(customDollId) && (blockState == null || blockState.isAir())) {
             return;
         }
 
@@ -82,14 +93,49 @@ public class DollEntityRender extends EntityRenderer<DollEntity> {
         // 将方块中心对齐到实体位置
         poseStack.translate(-0.5, 0, -0.5);
 
-        // 渲染方块，使用 renderBatched 方法
+        // 渲染逻辑
+        if (!StringUtils.isBlank(customDollId)) {
+            renderCustom(customDollId, poseStack, bufferSource, packedLight);
+        } else if (blockState != null && !blockState.isAir()) {
+            renderBlock(dollEntity, poseStack, bufferSource, blockState);
+        }
+
+        poseStack.popPose();
+        super.render(dollEntity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+    }
+
+    private static void renderCustom(String modelId, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        Model model;
+        ResourceLocation texture;
+
+        if (StringUtils.isBlank(modelId)) {
+            model = CustomDollReloadListener.DFAULT_DOLL_MODEL;
+            texture = CustomDollReloadListener.DEFAULT_TEXTURE_ID;
+        } else {
+            model = CustomDollLoader.getModel(modelId);
+            if (model == null) {
+                model = CustomDollReloadListener.DFAULT_DOLL_MODEL;
+                texture = CustomDollReloadListener.DEFAULT_TEXTURE_ID;
+            } else {
+                texture = CustomDollLoader.getTexture(modelId);
+                if (texture == null) {
+                    texture = MissingTextureAtlasSprite.getLocation();
+                }
+            }
+        }
+
+        poseStack.translate(0.5, 1.5, 0.5);
+        poseStack.mulPose(Axis.ZN.rotationDegrees(180));
+
+        VertexConsumer buffer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture));
+        model.renderToBuffer(poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+    }
+
+    private static void renderBlock(DollEntity dollEntity, PoseStack poseStack, MultiBufferSource bufferSource, BlockState blockState) {
         BlockRenderDispatcher blockRenderer = Minecraft.getInstance().getBlockRenderer();
         Level level = dollEntity.level();
         VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutout());
         blockRenderer.renderBatched(blockState, dollEntity.blockPosition(), level, poseStack, buffer, false, level.random, ModelData.EMPTY, RenderType.cutout());
-
-        poseStack.popPose();
-        super.render(dollEntity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 
     @Override

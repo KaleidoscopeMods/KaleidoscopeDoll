@@ -2,6 +2,7 @@ package com.github.ysbbbbbb.kaleidoscopedoll.datagen;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
 import com.github.ysbbbbbb.kaleidoscopedoll.event.ModRegisterEvent;
+import com.github.ysbbbbbb.kaleidoscopedoll.init.ModItems;
 import com.google.common.collect.Lists;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -36,6 +37,10 @@ public class TagItem extends ItemTagsProvider {
      * 作者玩偶，注意所有的作者玩偶也是玩家玩偶
      */
     public static final TagKey<Item> AUTHOR_DOLLS = itemTagKey("author_dolls");
+    /**
+     * 自定义玩偶
+     */
+    public static final TagKey<Item> CUSTOM_DOLLS = itemTagKey("custom_dolls");
     /**
      * 所有本模组玩偶的 tag，因为方块形态玩偶都使用了不同的注册名
      */
@@ -109,7 +114,9 @@ public class TagItem extends ItemTagsProvider {
                 .filter(item -> ModRegisterEvent.AUTHOR_DOLLS.contains(ForgeRegistries.ITEMS.getKey(item)))
                 .toArray(Item[]::new));
 
-        this.tag(ALL_DOLLS).add(ModRegisterEvent.DOLL_ITEMS.toArray(Item[]::new));
+        this.tag(CUSTOM_DOLLS).add(ModItems.CUSTOM_DOLL.get());
+
+        this.tag(ALL_DOLLS).add(ModRegisterEvent.DOLL_ITEMS.toArray(Item[]::new)).add(ModItems.CUSTOM_DOLL.get());
 
         this.tag(BLOCK_DOLLS_TO_ENTITY_ITEM).add(Items.SLIME_BALL, Items.CLAY_BALL);
 

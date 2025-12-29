@@ -2,8 +2,10 @@ package com.github.ysbbbbbb.kaleidoscopedoll.init;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
 import com.github.ysbbbbbb.kaleidoscopedoll.block.ComputerBlock;
+import com.github.ysbbbbbb.kaleidoscopedoll.block.CustomDollBlock;
 import com.github.ysbbbbbb.kaleidoscopedoll.block.DollGiftBoxBlock;
 import com.github.ysbbbbbb.kaleidoscopedoll.block.DollMachineBlock;
+import com.github.ysbbbbbb.kaleidoscopedoll.block.entity.CustomDollBlockEntity;
 import com.github.ysbbbbbb.kaleidoscopedoll.block.entity.DollGiftBoxBlockEntiy;
 import com.github.ysbbbbbb.kaleidoscopedoll.block.entity.DollMachineBlockEntity;
 import net.minecraft.world.level.block.Block;
@@ -21,6 +23,7 @@ public class ModBlocks {
     public static RegistryObject<Block> GREEN_DOLL_GIFT_BOX = BLOCKS.register("green_doll_gift_box", DollGiftBoxBlock::new);
     public static RegistryObject<Block> YELLOW_DOLL_GIFT_BOX = BLOCKS.register("yellow_doll_gift_box", DollGiftBoxBlock::new);
     public static RegistryObject<Block> COMPUTER = BLOCKS.register("computer", ComputerBlock::new);
+    public static RegistryObject<Block> CUSTOM_DOLL = BLOCKS.register("custom_doll", CustomDollBlock::new);
 
     public static RegistryObject<BlockEntityType<DollGiftBoxBlockEntiy>> DOLL_GIFT_BOX_BE = BLOCK_ENTITIES.register("doll_gift_box", () ->
             BlockEntityType.Builder.of(DollGiftBoxBlockEntiy::new,
@@ -29,6 +32,10 @@ public class ModBlocks {
                     YELLOW_DOLL_GIFT_BOX.get()
             ).build(null)
     );
+
     public static RegistryObject<BlockEntityType<DollMachineBlockEntity>> DOLL_MACHINE_BE = BLOCK_ENTITIES.register("doll_machine", () ->
             BlockEntityType.Builder.of(DollMachineBlockEntity::new, DOLL_MACHINE.get()).build(null));
+
+    public static RegistryObject<BlockEntityType<CustomDollBlockEntity>> CUSTOM_DOLL_BE = BLOCK_ENTITIES.register("custom_doll", () ->
+            BlockEntityType.Builder.of(CustomDollBlockEntity::new, CUSTOM_DOLL.get()).build(null));
 }

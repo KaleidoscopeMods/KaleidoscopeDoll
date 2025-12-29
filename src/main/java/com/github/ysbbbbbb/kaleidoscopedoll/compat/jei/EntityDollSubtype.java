@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.StringUtils;
 
 public class EntityDollSubtype implements IIngredientSubtypeInterpreter<ItemStack> {
     @Override
@@ -14,6 +15,13 @@ public class EntityDollSubtype implements IIngredientSubtypeInterpreter<ItemStac
         if (context == UidContext.Ingredient) {
             return IIngredientSubtypeInterpreter.NONE;
         } else {
+            // 自定义玩偶
+            String dollId = DollEntityItem.getCustomDollIdFromItemStack(itemStack);
+            if (StringUtils.isNotBlank(dollId)) {
+                return dollId;
+            }
+
+            // 普通玩偶
             Block block = DollEntityItem.getBlockFromItemStack(itemStack);
             ResourceLocation key = ForgeRegistries.BLOCKS.getKey(block);
             if (key == null) {

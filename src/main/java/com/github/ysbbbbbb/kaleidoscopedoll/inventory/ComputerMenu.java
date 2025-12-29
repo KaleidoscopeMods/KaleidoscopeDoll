@@ -1,7 +1,9 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.inventory;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
+import com.github.ysbbbbbb.kaleidoscopedoll.data.custom.ServerCustomDollLoader;
 import com.github.ysbbbbbb.kaleidoscopedoll.datagen.TagItem;
+import com.github.ysbbbbbb.kaleidoscopedoll.item.CustomDollItem;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,6 +18,7 @@ import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import static net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS;
@@ -87,10 +90,24 @@ public class ComputerMenu extends AbstractContainerMenu {
 
     public boolean clickDollButton(ItemStack doll) {
         ItemStack stack = this.input.getStackInSlot(0);
-        // 防止作弊，必须检查一次 doll 是否是 TagItem.PLAYER_DOLLS
-        if (stack.is(TagItem.COMPUTER_TOKENS) && doll.is(TagItem.PLAYER_DOLLS)) {
-            this.output.setStackInSlot(0, doll);
-            return true;
+        // 防止作弊，必须检查一次
+        if (stack.is(TagItem.COMPUTER_TOKENS)) {
+            // 要么是玩家玩偶
+            if (doll.is(TagItem.PLAYER_DOLLS)) {
+                this.output.setStackInSlot(0, doll);
+                return true;
+            }
+
+            // 要么是自定义玩偶
+            if (doll.is(TagItem.CUSTOM_DOLLS)) {
+                // 自定义的 ID 必须在服务端存在
+                String id = CustomDollItem.getModelId(doll);
+                if (StringUtils.isBlank(id) || !ServerCustomDollLoader.getModels().contains(id)) {
+                    return false;
+                }
+                this.output.setStackInSlot(0, doll);
+                return true;
+            }
         }
         return false;
     }

@@ -18,7 +18,7 @@ public class ReloadCommand {
 
     public static LiteralArgumentBuilder<CommandSourceStack> get() {
         LiteralArgumentBuilder<CommandSourceStack> reload = LiteralArgumentBuilder.literal(RELOAD_NAME);
-        reload.then(reload.executes(ReloadCommand::reload));
+        reload.executes(ReloadCommand::reload);
         return reload;
     }
 

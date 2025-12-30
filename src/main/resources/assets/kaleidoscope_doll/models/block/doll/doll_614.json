@@ -5,7 +5,7 @@
 	"render_type": "cutout",
 	"textures": {
 		"1": "kaleidoscope_doll:block/doll/doll_614",
-		"particle": "kaleidoscope_doll:block/doll/doll_614"
+		"particle": "block/white_wool"
 	},
 	"elements": [
 		{

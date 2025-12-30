@@ -139,6 +139,9 @@ public class DollEntityItem extends Item {
     }
 
     public static void addCreativeTab(CreativeModeTab.Output output) {
+        // 自定义玩偶
+        ServerCustomDollLoader.getModels().forEach(id -> output.accept(createItemWithCustomDollId(id)));
+
         // 基础方块玩偶
         ModRegisterEvent.DOLL_BLOCKS.values().forEach(block -> {
             ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
@@ -153,8 +156,6 @@ public class DollEntityItem extends Item {
             ItemStack stack = createItemWithBlockState(blockState);
             output.accept(stack);
         });
-        // 自定义玩偶
-        ServerCustomDollLoader.getModels().forEach(id -> output.accept(createItemWithCustomDollId(id)));
     }
 
     @Override

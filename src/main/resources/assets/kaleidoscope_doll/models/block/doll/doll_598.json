@@ -1,4 +1,5 @@
 {
+	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
 	"render_type": "cutout",
 	"textures": {
@@ -371,19 +372,6 @@
 				"west": {"uv": [8.375, 1, 8.25, 1.125], "texture": "#0"},
 				"up": {"uv": [8.25, 4.625, 8.375, 4.5], "texture": "#0"},
 				"down": {"uv": [8.25, 5.625, 8.375, 5.75], "texture": "#0"}
-			}
-		},
-		{
-			"from": [11.8, 11.925, 6.875],
-			"to": [12.8, 13.325, 8.275],
-			"rotation": {"angle": 0, "axis": "y", "origin": [2, 12.325, 6.575]},
-			"faces": {
-				"north": {"uv": [4.125, 6.125, 4, 6.25], "texture": "#0"},
-				"east": {"uv": [6.75, 0.75, 6.625, 0.875], "texture": "#0"},
-				"south": {"uv": [6.625, 2, 6.5, 2.125], "texture": "#0"},
-				"west": {"uv": [6.5, 3.125, 6.375, 3.25], "texture": "#0"},
-				"up": {"uv": [6.625, 7, 6.75, 6.875], "texture": "#0"},
-				"down": {"uv": [0.75, 7.125, 0.875, 7.25], "texture": "#0"}
 			}
 		},
 		{
@@ -1443,13 +1431,13 @@
 					"name": "眼睛2",
 					"origin": [9, 5, 6],
 					"color": 0,
-					"children": [26, 27, 28]
+					"children": [26, 27]
 				},
 				{
 					"name": "眼睛2",
 					"origin": [7, 5, 6],
 					"color": 0,
-					"children": [29, 30]
+					"children": [28, 29]
 				},
 				{
 					"name": "角",
@@ -1460,37 +1448,37 @@
 							"name": "第一对角 R",
 							"origin": [16, 0, 0],
 							"color": 0,
-							"children": [31, 32, 33, 34, 35]
+							"children": [30, 31, 32, 33, 34]
 						},
 						{
 							"name": "第一对角 L",
 							"origin": [0, 0, 0],
 							"color": 0,
-							"children": [36, 37, 38, 39, 40]
+							"children": [35, 36, 37, 38, 39]
 						},
 						{
 							"name": "第二对角 L",
 							"origin": [7, 5, 6],
 							"color": 0,
-							"children": [41, 42, 43]
+							"children": [40, 41, 42]
 						},
 						{
 							"name": "第二对角 R",
 							"origin": [9, 5, 6],
 							"color": 0,
-							"children": [44, 45, 46]
+							"children": [43, 44, 45]
 						},
 						{
 							"name": "第三对角 R",
 							"origin": [0, 0, -16],
 							"color": 0,
-							"children": [47, 48, 49, 50]
+							"children": [46, 47, 48, 49]
 						},
 						{
 							"name": "第三对角 L",
 							"origin": [16, 0, -16],
 							"color": 0,
-							"children": [51, 52, 53, 54]
+							"children": [50, 51, 52, 53]
 						}
 					]
 				},
@@ -1498,13 +1486,13 @@
 					"name": "胳膊",
 					"origin": [5, 3, 2],
 					"color": 0,
-					"children": [55, 56]
+					"children": [54, 55]
 				},
 				{
 					"name": "腿",
 					"origin": [7, 3, 7],
 					"color": 0,
-					"children": [57, 58]
+					"children": [56, 57]
 				}
 			]
 		},
@@ -1512,7 +1500,7 @@
 			"name": "尾巴",
 			"origin": [4, 3, 14],
 			"color": 0,
-			"children": [59, 60, 61, 62, 63]
+			"children": [58, 59, 60, 61, 62]
 		},
 		{
 			"name": "触须",
@@ -1528,25 +1516,25 @@
 							"name": "chuxu4",
 							"origin": [9, 12, 12],
 							"color": 0,
-							"children": [64, 65, 66]
+							"children": [63, 64, 65]
 						},
 						{
 							"name": "chuxu3",
 							"origin": [9, 9, 13],
 							"color": 0,
-							"children": [67, 68, 69]
+							"children": [66, 67, 68]
 						},
 						{
 							"name": "chuxu 2",
 							"origin": [9, 15, 11],
 							"color": 0,
-							"children": [70, 71, 72]
+							"children": [69, 70, 71]
 						},
 						{
 							"name": "chuxu1",
 							"origin": [9, 15, 13],
 							"color": 0,
-							"children": [73, 74]
+							"children": [72, 73]
 						}
 					]
 				}
@@ -1558,18 +1546,17 @@
 			"color": 0,
 			"children": []
 		},
+		74,
 		75,
 		76,
 		77,
 		78,
 		79,
-		80,
 		{
 			"name": "group",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"children": [81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102]
+			"children": [80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101]
 		}
-	],
-	"format_version": "1.21.6"
+	]
 }

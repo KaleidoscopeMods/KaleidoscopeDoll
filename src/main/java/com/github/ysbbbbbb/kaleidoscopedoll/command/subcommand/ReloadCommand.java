@@ -26,7 +26,7 @@ public class ReloadCommand {
         try {
             ServerCustomDollLoader.init();
             // 向所有的客户端发送同步信息
-            NetworkHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), new CustomDollReloadMessage());
+            NetworkHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), new CustomDollReloadMessage(ServerCustomDollLoader.getModels()));
             context.getSource().sendSuccess(() -> Component.translatable("message.kaleidoscope_doll.reload_sucess"), true);
         } catch (IOException e) {
             KaleidoscopeDoll.LOGGER.error("Failed to reload custom dolls", e);

@@ -3,6 +3,7 @@ package com.github.ysbbbbbb.kaleidoscopedoll.client.custom;
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
 import com.github.ysbbbbbb.kaleidoscopedoll.client.bedrock.BedrockModel;
 import com.github.ysbbbbbb.kaleidoscopedoll.client.bedrock.BedrockModelUtil;
+import com.github.ysbbbbbb.kaleidoscopedoll.utils.Md5Utils;
 import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
 import com.mojang.blaze3d.platform.NativeImage;
@@ -20,10 +21,7 @@ import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Map;
-import java.util.UUID;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import java.util.zip.ZipFile;
@@ -78,6 +76,9 @@ public class CustomDollLoader {
                 }
             });
         }
+
+        // 最后把内部资源包读取的数据存入
+        CustomDollResourceLoader.putAll(MODELS, LANGUAGES, TEXTURES);
     }
 
     private static void loadFromDirectory(Path directory) {
@@ -207,7 +208,7 @@ public class CustomDollLoader {
     }
 
     private static void readTexture(String name, InputStream stream) {
-        String md5Name = md5Hex(name);
+        String md5Name = Md5Utils.md5Hex(name);
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(KaleidoscopeDoll.MOD_ID, "custom/" + md5Name);
         try {
             NativeImage image = NativeImage.read(stream);
@@ -216,21 +217,6 @@ public class CustomDollLoader {
             TEXTURES.put(name, id);
         } catch (Exception e) {
             KaleidoscopeDoll.LOGGER.error("Failed to read texture: {}", name, e);
-        }
-    }
-
-    private static String md5Hex(String input) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] digest = md.digest(input.getBytes(StandardCharsets.UTF_8));
-            StringBuilder sb = new StringBuilder(digest.length * 2);
-            for (byte b : digest) {
-                sb.append(String.format("%02x", b));
-            }
-            return sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            // 不太可能发生，回退到随机 UUID
-            return UUID.randomUUID().toString().replace("-", "");
         }
     }
 

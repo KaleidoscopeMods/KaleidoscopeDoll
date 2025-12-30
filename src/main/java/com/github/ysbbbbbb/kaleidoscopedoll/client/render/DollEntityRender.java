@@ -126,6 +126,7 @@ public class DollEntityRender extends EntityRenderer<DollEntity> {
 
         poseStack.translate(0.5, 1.5, 0.5);
         poseStack.mulPose(Axis.ZN.rotationDegrees(180));
+        poseStack.mulPose(Axis.YN.rotationDegrees(180));
 
         VertexConsumer buffer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture));
         model.renderToBuffer(poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY, -1);

@@ -34,7 +34,7 @@ public class ServerCustomDollLoader {
     /**
      * 缓存数据
      */
-    private static final Set<String> MODELS = Sets.newHashSet();
+    private static final Set<String> MODELS = Sets.newLinkedHashSet();
 
     public static void init() throws IOException {
         if (!Files.isDirectory(ROOT)) {
@@ -57,6 +57,9 @@ public class ServerCustomDollLoader {
                 }
             });
         }
+
+        // 最后把内部数据包读取的数据存入
+        ServerCustomDollResourceLoader.putAll(MODELS);
     }
 
     private static void loadFromDirectory(Path directory) {

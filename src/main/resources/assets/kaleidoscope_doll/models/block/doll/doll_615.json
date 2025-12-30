@@ -6,7 +6,7 @@
 	"textures": {
 		"1": "kaleidoscope_doll:block/doll/doll_615",
 		"2": "kaleidoscope_doll:block/doll/doll_615_2",
-		"particle": "kaleidoscope_doll:block/doll/doll_615_2"
+		"particle": "block/white_wool"
 	},
 	"elements": [
 		{

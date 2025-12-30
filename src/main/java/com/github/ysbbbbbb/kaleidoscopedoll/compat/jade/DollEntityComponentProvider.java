@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.StringUtils;
 import snownee.jade.api.EntityAccessor;
 import snownee.jade.api.IEntityComponentProvider;
 import snownee.jade.api.ITooltip;
@@ -23,6 +24,13 @@ public enum DollEntityComponentProvider implements IEntityComponentProvider {
         if (!(accessor.getEntity() instanceof DollEntity dollEntity)) {
             return;
         }
+
+        String dollId = dollEntity.getCustomDollId();
+        if (StringUtils.isNotBlank(dollId)) {
+            tooltip.add(Component.translatable("tooltip.kaleidoscope_doll.doll.custom").withStyle(ChatFormatting.AQUA));
+            return;
+        }
+
         Block block = dollEntity.getDisplayBlockState().getBlock();
         ResourceLocation key = ForgeRegistries.BLOCKS.getKey(block);
         if (key == null) {

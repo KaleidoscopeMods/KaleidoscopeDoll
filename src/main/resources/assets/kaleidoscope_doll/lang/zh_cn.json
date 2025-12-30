@@ -36,7 +36,6 @@
   "entity.kaleidoscope_doll.doll": "玩偶",
   "config.jade.plugin_kaleidoscope_doll.doll_block": "方块玩偶",
   "config.jade.plugin_kaleidoscope_doll.doll_entity": "实体玩偶",
-  "message.kaleidoscope_doll.reload_sucess": "§6【§b森罗玩偶§6】 §e自定义模型重载成功！",
   "tooltip.kaleidoscope_doll.doll_machine": "使用铁锭，金锭或者钻石代币抽奖！",
   "tooltip.kaleidoscope_doll.doll_gift_box": "破坏后获取玩偶",
   "tooltip.kaleidoscope_doll.computer": "右击使用电脑，将羊毛转化为玩家玩偶",
@@ -45,7 +44,9 @@
   "tooltip.kaleidoscope_doll.tweaks_tool.2": "- 在 GUI 内按下 Shift 或 Ctrl 快速进行按钮调节",
   "tooltip.kaleidoscope_doll.custom.unknown": "未知玩偶",
   "subtitle.kaleidoscope_doll.block.duck_toy": "声音：鸭子玩具",
+  "message.kaleidoscope_doll.reload_sucess": "§6【§b森罗玩偶§6】 §e自定义模型重载成功！",
   "tooltip.kaleidoscope_doll.doll.vanilla": "原版",
+  "tooltip.kaleidoscope_doll.doll.custom": "自定义",
   "tooltip.kaleidoscope_doll.doll.wine_fox": "酒狐",
   "tooltip.kaleidoscope_doll.doll.dokimobs_warden": "萌化生物：坚守者",
   "tooltip.kaleidoscope_doll.doll.author_ysbb": "作者：药水棒冰",
@@ -585,5 +586,10 @@
   "tooltip.kaleidoscope_doll.doll.sponsors_xycbs": "捐赠者：Xycbs",
   "tooltip.kaleidoscope_doll.doll.sponsors_shutuzhuangxibao": "捐赠者：树突状细胞",
   "tooltip.kaleidoscope_doll.doll.sponsors_rexuexilanhua": "捐赠者：热血西蓝花",
-  "tooltip.kaleidoscope_doll.doll.sponsors_halgus": "捐赠者：Halgus"
+  "tooltip.kaleidoscope_doll.doll.sponsors_halgus": "捐赠者：Halgus",
+  "tooltip.kaleidoscope_doll.doll.contributors_ike_aire": "艾雷，贡献者：艾克",
+  "tooltip.kaleidoscope_doll.doll.contributors_ike_airi": "艾利，贡献者：艾克",
+  "tooltip.kaleidoscope_doll.doll.contributors_ike_ema": "艾玛，贡献者：艾克",
+  "tooltip.kaleidoscope_doll.doll.contributors_ike_hiro": "希罗，贡献者：艾克",
+  "tooltip.kaleidoscope_doll.doll.contributors_ike_yukimura": "雪村，贡献者：艾克"
 }

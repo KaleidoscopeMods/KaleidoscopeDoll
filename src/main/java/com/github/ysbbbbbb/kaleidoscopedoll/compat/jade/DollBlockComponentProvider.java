@@ -1,6 +1,7 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.compat.jade;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
+import com.github.ysbbbbbb.kaleidoscopedoll.block.CustomDollBlock;
 import com.github.ysbbbbbb.kaleidoscopedoll.event.ModRegisterEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -20,6 +21,10 @@ public enum DollBlockComponentProvider implements IBlockComponentProvider {
     @Override
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig pluginConfig) {
         Block block = accessor.getBlock();
+        if (block instanceof CustomDollBlock) {
+            tooltip.add(Component.translatable("tooltip.kaleidoscope_doll.doll.custom").withStyle(ChatFormatting.AQUA));
+            return;
+        }
         ResourceLocation key = ForgeRegistries.BLOCKS.getKey(block);
         if (key == null) {
             return;

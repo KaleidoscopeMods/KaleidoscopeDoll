@@ -1,9 +1,11 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.compat.curios;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
+import com.github.ysbbbbbb.kaleidoscopedoll.init.ModItems;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollItem;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -21,7 +23,12 @@ public class CuriosCompatInner {
     }
 
     static void registerDollItemPredicate() {
-        CuriosApi.registerCurioPredicate(new ResourceLocation(KaleidoscopeDoll.MOD_ID, "doll_item"),
-                slotResult -> slotResult.stack().getItem() instanceof DollItem);
+        CuriosApi.registerCurioPredicate(new ResourceLocation(KaleidoscopeDoll.MOD_ID, "doll_item"), slotResult -> {
+            ItemStack item = slotResult.stack();
+            if (item.getItem() instanceof DollItem) {
+                return true;
+            }
+            return item.is(ModItems.CUSTOM_DOLL.get());
+        });
     }
 }

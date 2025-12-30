@@ -46,6 +46,7 @@
   "subtitle.kaleidoscope_doll.block.duck_toy": "Duck Toy Sound",
   "message.kaleidoscope_doll.reload_sucess": "§6[§bKaleidoscope Doll§6] §eCustom dolls reloaded successfully!",
   "tooltip.kaleidoscope_doll.doll.vanilla": "Vanilla",
+  "tooltip.kaleidoscope_doll.doll.custom": "Custom",
   "tooltip.kaleidoscope_doll.doll.wine_fox": "Wine Fox",
   "tooltip.kaleidoscope_doll.doll.dokimobs_warden": "Dokimob Warden",
   "tooltip.kaleidoscope_doll.doll.author_ysbb": "Author: ysbb",
@@ -585,5 +586,10 @@
   "tooltip.kaleidoscope_doll.doll.sponsors_xycbs": "Sponsors: Xycbs",
   "tooltip.kaleidoscope_doll.doll.sponsors_shutuzhuangxibao": "Sponsors: 树突状细胞",
   "tooltip.kaleidoscope_doll.doll.sponsors_rexuexilanhua": "Sponsors: 热血西蓝花",
-  "tooltip.kaleidoscope_doll.doll.sponsors_halgus": "Sponsors: Halgus"
+  "tooltip.kaleidoscope_doll.doll.sponsors_halgus": "Sponsors: Halgus",
+  "tooltip.kaleidoscope_doll.doll.contributors_ike_aire": "Aire, Contributors: Ike",
+  "tooltip.kaleidoscope_doll.doll.contributors_ike_airi": "Airi, Contributors: Ike",
+  "tooltip.kaleidoscope_doll.doll.contributors_ike_ema": "Ema, Contributors: Ike",
+  "tooltip.kaleidoscope_doll.doll.contributors_ike_hiro": "Hiro, Contributors: Ike",
+  "tooltip.kaleidoscope_doll.doll.contributors_ike_yukimura": "Yukimura, Contributors: Ike"
 }

@@ -1,5 +1,6 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.compat.curios;
 
+import com.github.ysbbbbbb.kaleidoscopedoll.init.ModItems;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -60,7 +61,7 @@ public class DollItemRenderer<T extends LivingEntity, M extends EntityModel<T> &
     }
 
     private <T extends LivingEntity, M extends EntityModel<T>> void rendererDollItem(ItemStack itemStack, T livingEntity, PoseStack poseStack, MultiBufferSource multiBufferSource, int light) {
-        if (itemStack.getItem() instanceof DollItem dollItem) {
+        if (itemStack.getItem() instanceof DollItem || itemStack.is(ModItems.CUSTOM_DOLL.get())) {
             poseStack.pushPose();
             poseStack.scale(1.0f, 1.0f, 1.0f);
             this.getParentModel().getHead().translateAndRotate(poseStack);

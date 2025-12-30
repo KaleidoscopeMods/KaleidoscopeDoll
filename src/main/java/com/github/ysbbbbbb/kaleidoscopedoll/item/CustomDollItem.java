@@ -64,7 +64,7 @@ public class CustomDollItem extends BlockItem {
     @Override
     protected boolean updateCustomBlockEntityTag(BlockPos pos, Level level, @Nullable Player player, ItemStack stack, BlockState state) {
         boolean result = super.updateCustomBlockEntityTag(pos, level, player, stack, state);
-        if (!level.isClientSide && !result && player != null) {
+        if (!result) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof CustomDollBlockEntity customDollBlockEntity) {
                 String modelId = getModelId(stack);

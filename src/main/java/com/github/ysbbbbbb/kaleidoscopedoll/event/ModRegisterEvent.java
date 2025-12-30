@@ -24,7 +24,7 @@ public class ModRegisterEvent {
     public static final Set<Item> DOLL_ITEMS = Sets.newLinkedHashSet();
     // 作者栏只记录 ID
     public static final Set<ResourceLocation> AUTHOR_DOLLS = Sets.newHashSet();
-    private static final int MAX_DOLL_COUNT = 621;
+    private static final int MAX_DOLL_COUNT = 622;
 
     private static void registerAllVanillaTooltips() {
         registerVanillaTooltips("doll_328", "wine_fox");
@@ -589,6 +589,8 @@ public class ModRegisterEvent {
         registerSpecialTooltips("doll_618", "contributors_ike_ema");
         registerSpecialTooltips("doll_619", "contributors_ike_hiro");
         registerSpecialTooltips("doll_620", "contributors_ike_yukimura");
+
+        registerSpecialTooltips("doll_621", "contributors_raw_chicken");
     }
 
     @SubscribeEvent

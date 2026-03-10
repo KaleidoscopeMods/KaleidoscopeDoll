@@ -3,6 +3,7 @@ package com.github.ysbbbbbb.kaleidoscopedoll.client.event;
 import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
 import com.github.ysbbbbbb.kaleidoscopedoll.client.render.CustomDollRender;
 import com.github.ysbbbbbb.kaleidoscopedoll.client.render.DollEntityRender;
+import com.github.ysbbbbbb.kaleidoscopedoll.compat.curios.CuriosCompat;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModBlocks;
 import com.github.ysbbbbbb.kaleidoscopedoll.init.ModEntities;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -19,5 +20,10 @@ public class ModEntitiesRender {
         EntityRenderers.register(ModEntities.DOLL.get(), DollEntityRender::new);
 
         BlockEntityRenderers.register(ModBlocks.CUSTOM_DOLL_BE.get(), CustomDollRender::new);
+    }
+
+    @SubscribeEvent
+    public static void addEntityLayers(EntityRenderersEvent.AddLayers event) {
+        CuriosCompat.addEntityLayers(event);
     }
 }

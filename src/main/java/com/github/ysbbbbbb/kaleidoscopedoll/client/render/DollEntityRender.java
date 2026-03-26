@@ -13,24 +13,30 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import org.apache.commons.lang3.StringUtils;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import javax.annotation.Nullable;
 
 public class DollEntityRender extends EntityRenderer<DollEntity> {
     private static final ResourceLocation EMPTY = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/misc/empty.png");
+    private final ItemRenderer itemRenderer;
 
     public DollEntityRender(EntityRendererProvider.Context context) {
         super(context);
+        this.itemRenderer = context.getItemRenderer();
     }
 
     @Override
@@ -101,9 +107,28 @@ public class DollEntityRender extends EntityRenderer<DollEntity> {
             renderBlock(dollEntity, poseStack, bufferSource, blockState);
         }
 
+        renderHoldItem(dollEntity, poseStack, bufferSource, packedLight);
 
         poseStack.popPose();
         super.render(dollEntity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+    }
+
+    private void renderHoldItem(DollEntity dollEntity, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        ItemStack holdItem = dollEntity.getHoldItem();
+        if (holdItem.isEmpty()) {
+            return;
+        }
+
+        poseStack.pushPose();
+        Vector3f translation = dollEntity.getItemTranslation();
+        poseStack.translate(translation.x, translation.y, translation.z);
+        Vector3f scale = dollEntity.getItemScale();
+        poseStack.scale(scale.x, scale.y, scale.z);
+        Vector3f rotation = dollEntity.getItemRotation();
+        poseStack.mulPose(Axis.XP.rotationDegrees(rotation.x));
+        poseStack.mulPose(Axis.YP.rotationDegrees(rotation.y));
+        this.itemRenderer.renderStatic(holdItem, ItemDisplayContext.GROUND, packedLight, OverlayTexture.NO_OVERLAY, poseStack, bufferSource, dollEntity.level(), dollEntity.getId());
+        poseStack.popPose();
     }
 
     private static void renderCustom(String modelId, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {

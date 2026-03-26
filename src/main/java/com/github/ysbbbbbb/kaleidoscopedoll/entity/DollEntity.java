@@ -8,6 +8,7 @@ import com.github.ysbbbbbb.kaleidoscopedoll.init.ModSounds;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollEntityItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Rotations;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -38,16 +39,22 @@ import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.fluids.FluidType;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Optional;
 
 public class DollEntity extends Entity {
     private static final EntityDataAccessor<BlockState> DATA_BLOCK_STATE = SynchedEntityData.defineId(DollEntity.class, EntityDataSerializers.BLOCK_STATE);
     private static final EntityDataAccessor<Vector3f> DATA_SCALE = SynchedEntityData.defineId(DollEntity.class, EntityDataSerializers.VECTOR3);
     private static final EntityDataAccessor<Vector3f> DATA_TRANSLATION = SynchedEntityData.defineId(DollEntity.class, EntityDataSerializers.VECTOR3);
+
     private static final EntityDataAccessor<ItemStack> DATA_HOLD_ITEM = SynchedEntityData.defineId(DollEntity.class, EntityDataSerializers.ITEM_STACK);
+    private static final EntityDataAccessor<Vector3f> DATA_ITEM_SCALE = SynchedEntityData.defineId(DollEntity.class, EntityDataSerializers.VECTOR3);
+    private static final EntityDataAccessor<Vector3f> DATA_ITEM_TRANSLATION = SynchedEntityData.defineId(DollEntity.class, EntityDataSerializers.VECTOR3);
+    private static final EntityDataAccessor<Vector3f> DATA_ITEM_ROTATION = SynchedEntityData.defineId(DollEntity.class, EntityDataSerializers.VECTOR3);
 
     private static final EntityDataAccessor<String> CUSTOM_DOLL_ID = SynchedEntityData.defineId(DollEntity.class, EntityDataSerializers.STRING);
 
@@ -58,7 +65,11 @@ public class DollEntity extends Entity {
     private static final String TAG_TRANSLATION = "doll_translation";
     private static final String TAG_DROP_FROM_PHANTOM = "drop_from_phantom";
     private static final String TAG_DROP_FROM_PHANTOM_TIME = "drop_from_phantom_time";
+
     private static final String TAG_HOLD_ITEM = "hold_item";
+    private static final String TAG_ITEM_SCALE = "item_scale";
+    private static final String TAG_ITEM_TRANSLATION = "item_translation";
+    private static final String TAG_ITEM_ROTATION = "item_rotation";
 
     private boolean inThrowing = false;
     private long bounceTime = 0;
@@ -366,13 +377,16 @@ public class DollEntity extends Entity {
         builder.define(DATA_BLOCK_STATE, Blocks.AIR.defaultBlockState());
         builder.define(DATA_SCALE, new Vector3f(1.0f));
         builder.define(DATA_TRANSLATION, new Vector3f());
-        builder.define(DATA_HOLD_ITEM, ItemStack.EMPTY);
         builder.define(CUSTOM_DOLL_ID, StringUtils.EMPTY);
+        builder.define(DATA_HOLD_ITEM, ItemStack.EMPTY);
+        builder.define(DATA_ITEM_SCALE, new Vector3f(1.0f));
+        builder.define(DATA_ITEM_TRANSLATION, new Vector3f());
+        builder.define(DATA_ITEM_ROTATION, new Vector3f());
     }
 
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
-        if (DATA_SCALE.equals(pKey)) {
+        if (DATA_SCALE.equals(pKey) || DATA_ITEM_SCALE.equals(pKey)) {
             this.refreshDimensions();
         }
         super.onSyncedDataUpdated(pKey);
@@ -402,6 +416,15 @@ public class DollEntity extends Entity {
         if (tag.contains(TAG_HOLD_ITEM)) {
             setHoldItem(ItemStack.parseOptional(this.registryAccess(), tag.getCompound(TAG_HOLD_ITEM)));
         }
+        if (tag.contains(TAG_ITEM_SCALE)) {
+            setItemScale(readVector3f(tag.getCompound(TAG_ITEM_SCALE)));
+        }
+        if (tag.contains(TAG_ITEM_TRANSLATION)) {
+            setItemTranslation(readVector3f(tag.getCompound(TAG_ITEM_TRANSLATION)));
+        }
+        if (tag.contains(TAG_ITEM_ROTATION)) {
+            setItemRotation(readVector3f(tag.getCompound(TAG_ITEM_TRANSLATION)));
+        }
     }
 
     @Override
@@ -420,6 +443,9 @@ public class DollEntity extends Entity {
         if (!getHoldItem().isEmpty()) {
             tag.put(TAG_HOLD_ITEM, getHoldItem().save(this.registryAccess()));
         }
+        tag.put(TAG_ITEM_SCALE, writeVector3f(getItemScale()));
+        tag.put(TAG_ITEM_TRANSLATION, writeVector3f(getItemTranslation()));
+        tag.put(TAG_ITEM_ROTATION, writeVector3f(getItemRotation()));
     }
 
     public void removePhantomRecord(CompoundTag tag) {
@@ -469,6 +495,30 @@ public class DollEntity extends Entity {
 
     public void setHoldItem(ItemStack holdItem) {
         this.entityData.set(DATA_HOLD_ITEM, holdItem.copy());
+    }
+
+    public Vector3f getItemScale() {
+        return this.entityData.get(DATA_ITEM_SCALE);
+    }
+
+    public void setItemScale(Vector3f scale) {
+        this.entityData.set(DATA_ITEM_SCALE, scale, true);
+    }
+
+    public Vector3f getItemTranslation() {
+        return this.entityData.get(DATA_ITEM_TRANSLATION);
+    }
+
+    public void setItemTranslation(Vector3f translation) {
+        this.entityData.set(DATA_ITEM_TRANSLATION, translation, true);
+    }
+
+    public Vector3f getItemRotation() {
+        return this.entityData.get(DATA_ITEM_ROTATION);
+    }
+
+    public void setItemRotation(Vector3f rotations) {
+        this.entityData.set(DATA_ITEM_ROTATION, rotations, true);
     }
 
     public void setCustomDollId(String customDollId) {

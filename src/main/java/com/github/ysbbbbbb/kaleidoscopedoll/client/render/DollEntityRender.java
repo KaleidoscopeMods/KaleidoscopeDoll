@@ -37,9 +37,10 @@ public class DollEntityRender extends EntityRenderer<DollEntity> {
     public void render(DollEntity dollEntity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
         @Nullable BlockState blockState = dollEntity.getDisplayBlockState();
         String customDollId = dollEntity.getCustomDollId();
+        boolean hasBody = !StringUtils.isBlank(customDollId) || (blockState != null && !blockState.isAir());
+        boolean hasHoldItem = !dollEntity.getHoldItem().isEmpty();
 
-        // 优先判断是不是自定义玩偶
-        if (StringUtils.isBlank(customDollId) && (blockState == null || blockState.isAir())) {
+        if (!hasBody && !hasHoldItem) {
             return;
         }
 
@@ -99,6 +100,7 @@ public class DollEntityRender extends EntityRenderer<DollEntity> {
         } else if (blockState != null && !blockState.isAir()) {
             renderBlock(dollEntity, poseStack, bufferSource, blockState);
         }
+
 
         poseStack.popPose();
         super.render(dollEntity, entityYaw, partialTick, poseStack, bufferSource, packedLight);

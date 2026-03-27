@@ -423,7 +423,7 @@ public class DollEntity extends Entity {
             setItemTranslation(readVector3f(tag.getCompound(TAG_ITEM_TRANSLATION)));
         }
         if (tag.contains(TAG_ITEM_ROTATION)) {
-            setItemRotation(readVector3f(tag.getCompound(TAG_ITEM_TRANSLATION)));
+            setItemRotation(readVector3f(tag.getCompound(TAG_ITEM_ROTATION)));
         }
     }
 

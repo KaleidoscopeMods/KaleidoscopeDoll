@@ -57,153 +57,162 @@ public class TweaksToolScreen extends Screen {
 
         // 缩放
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.scale.x -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.scale.x -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 25, y, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.scale.x += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.scale.x += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 75, y, 16, 16).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.scale.y -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.scale.y -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 25, y + 20, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.scale.y += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.scale.y += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 75, y + 20, 16, 16).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.scale.z -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.scale.z -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 25, y + 40, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.scale.z += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.scale.z += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 75, y + 40, 16, 16).build());
 
         // 位移
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.translation.x -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.translation.x -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 25, y + 70, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.translation.x += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.translation.x += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 75, y + 70, 16, 16).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.translation.y -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.translation.y -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 25, y + 90, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.translation.y += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.translation.y += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 75, y + 90, 16, 16).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.translation.z -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.translation.z -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 25, y + 110, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.translation.z += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.translation.z += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 75, y + 110, 16, 16).build());
 
         // 旋转
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.rotation.x -= (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.rotation.x -= (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 25, y + 140, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.rotation.x += (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.rotation.x += (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 75, y + 140, 16, 16).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.rotation.y -= (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.rotation.y -= (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 25, y + 160, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.rotation.y += (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.rotation.y += (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 75, y + 160, 16, 16).build());
 
         // 物品缩放
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.item_scale.x -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.item_scale.x -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 285, y, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.item_scale.x += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.item_scale.x += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y, 16, 16).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.item_scale.y -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.item_scale.y -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 285, y + 20, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.item_scale.y += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.item_scale.y += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y + 20, 16, 16).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.item_scale.z -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.item_scale.z -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 285, y + 40, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.item_scale.z += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.item_scale.z += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y + 40, 16, 16).build());
 
         // 物品位移
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.item_translation.x -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.item_translation.x -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 285, y + 70, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.item_translation.x += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.item_translation.x += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y + 70, 16, 16).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.item_translation.y -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.item_translation.y -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 285, y + 90, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.item_translation.y += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.item_translation.y += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y + 90, 16, 16).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.item_translation.z -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.item_translation.z -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 285, y + 110, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.item_translation.z += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.item_translation.z += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y + 110, 16, 16).build());
 
         // 物品旋转
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.item_rotation.x -= (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.item_rotation.x -= (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 285, y + 140, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.item_rotation.x += (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.item_rotation.x += (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y + 140, 16, 16).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.item_rotation.y -= (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.item_rotation.y -= (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 285, y + 160, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.item_rotation.y += (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 2 : 1));
+            this.item_rotation.y += (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y + 160, 16, 16).build());
+
+        this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
+            this.item_rotation.z -= (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.sendTweaksMessage();
+        }).bounds(x + 285, y + 180, 16, 16).build());
+        this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
+            this.item_rotation.z += (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.sendTweaksMessage();
+        }).bounds(x + 335, y + 180, 16, 16).build());
 
         // 重置
         this.addRenderableWidget(Button.builder(Component.translatable("controls.reset"), button -> {
@@ -229,33 +238,37 @@ public class TweaksToolScreen extends Screen {
         int x = (this.width - 380) / 2;
         int y = (this.height - 200) / 2 + 10;
 
-        graphics.drawCenteredString(font, Component.translatable("gui.kaleidoscope_doll.tweaks_tool.total_scale"), x + 60, y - 2, 0xFFFFFF);
-        graphics.drawCenteredString(font, "X", x + 60, y + 15, 0xFFFFFF);
-        graphics.drawCenteredString(font, "Y", x + 60, y + 35, 0xFFFFFF);
-        graphics.drawCenteredString(font, "Z", x + 60, y + 55, 0xFFFFFF);
+        graphics.drawCenteredString(font, Component.translatable("gui.kaleidoscope_doll.tweaks_tool.help"), x + 190, y - 35, 0xFFFFFF);
 
-        graphics.drawCenteredString(font, Component.translatable("gui.kaleidoscope_doll.tweaks_tool.total_translation"), x + 60, y + 68, 0xFFFFFF);
-        graphics.drawCenteredString(font, "X", x + 60, y + 85, 0xFFFFFF);
-        graphics.drawCenteredString(font, "Y", x + 60, y + 105, 0xFFFFFF);
-        graphics.drawCenteredString(font, "Z", x + 60, y + 125, 0xFFFFFF);
 
-        graphics.drawCenteredString(font, Component.translatable("gui.kaleidoscope_doll.tweaks_tool.total_rotation"), x + 60, y + 138, 0xFFFFFF);
-        graphics.drawCenteredString(font, "X", x + 60, y + 155, 0xFFFFFF);
-        graphics.drawCenteredString(font, "Y", x + 60, y + 175, 0xFFFFFF);
+        graphics.drawCenteredString(font, Component.translatable("gui.kaleidoscope_doll.tweaks_tool.total_scale"), x + 59, y - 2, 0xFFFFFF);
+        graphics.drawCenteredString(font, "X", x + 59, y + 15, 0xFFFFFF);
+        graphics.drawCenteredString(font, "Y", x + 59, y + 35, 0xFFFFFF);
+        graphics.drawCenteredString(font, "Z", x + 59, y + 55, 0xFFFFFF);
 
-        graphics.drawCenteredString(font, Component.translatable("gui.kaleidoscope_doll.tweaks_tool.item_scale"), x + 320, y - 2, 0xFFFFFF);
-        graphics.drawCenteredString(font, "X", x + 320, y + 15, 0xFFFFFF);
-        graphics.drawCenteredString(font, "Y", x + 320, y + 35, 0xFFFFFF);
-        graphics.drawCenteredString(font, "Z", x + 320, y + 55, 0xFFFFFF);
+        graphics.drawCenteredString(font, Component.translatable("gui.kaleidoscope_doll.tweaks_tool.total_translation"), x + 59, y + 68, 0xFFFFFF);
+        graphics.drawCenteredString(font, "X", x + 59, y + 85, 0xFFFFFF);
+        graphics.drawCenteredString(font, "Y", x + 59, y + 105, 0xFFFFFF);
+        graphics.drawCenteredString(font, "Z", x + 59, y + 125, 0xFFFFFF);
 
-        graphics.drawCenteredString(font, Component.translatable("gui.kaleidoscope_doll.tweaks_tool.item_translation"), x + 320, y + 68, 0xFFFFFF);
-        graphics.drawCenteredString(font, "X", x + 320, y + 85, 0xFFFFFF);
-        graphics.drawCenteredString(font, "Y", x + 320, y + 105, 0xFFFFFF);
-        graphics.drawCenteredString(font, "Z", x + 320, y + 125, 0xFFFFFF);
+        graphics.drawCenteredString(font, Component.translatable("gui.kaleidoscope_doll.tweaks_tool.total_rotation"), x + 59, y + 138, 0xFFFFFF);
+        graphics.drawCenteredString(font, "X", x + 59, y + 155, 0xFFFFFF);
+        graphics.drawCenteredString(font, "Y", x + 59, y + 175, 0xFFFFFF);
 
-        graphics.drawCenteredString(font, Component.translatable("gui.kaleidoscope_doll.tweaks_tool.item_rotation"), x + 320, y + 138, 0xFFFFFF);
-        graphics.drawCenteredString(font, "X", x + 320, y + 155, 0xFFFFFF);
-        graphics.drawCenteredString(font, "Y", x + 320, y + 175, 0xFFFFFF);
+        graphics.drawCenteredString(font, Component.translatable("gui.kaleidoscope_doll.tweaks_tool.item_scale"), x + 319, y - 2, 0xFFFFFF);
+        graphics.drawCenteredString(font, "X", x + 319, y + 15, 0xFFFFFF);
+        graphics.drawCenteredString(font, "Y", x + 319, y + 35, 0xFFFFFF);
+        graphics.drawCenteredString(font, "Z", x + 319, y + 55, 0xFFFFFF);
+
+        graphics.drawCenteredString(font, Component.translatable("gui.kaleidoscope_doll.tweaks_tool.item_translation"), x + 319, y + 68, 0xFFFFFF);
+        graphics.drawCenteredString(font, "X", x + 319, y + 85, 0xFFFFFF);
+        graphics.drawCenteredString(font, "Y", x + 319, y + 105, 0xFFFFFF);
+        graphics.drawCenteredString(font, "Z", x + 319, y + 125, 0xFFFFFF);
+
+        graphics.drawCenteredString(font, Component.translatable("gui.kaleidoscope_doll.tweaks_tool.item_rotation"), x + 319, y + 138, 0xFFFFFF);
+        graphics.drawCenteredString(font, "X", x + 319, y + 155, 0xFFFFFF);
+        graphics.drawCenteredString(font, "Y", x + 319, y + 175, 0xFFFFFF);
+        graphics.drawCenteredString(font, "Z", x + 319, y + 195, 0xFFFFFF);
     }
 
     private void sendTweaksMessage() {

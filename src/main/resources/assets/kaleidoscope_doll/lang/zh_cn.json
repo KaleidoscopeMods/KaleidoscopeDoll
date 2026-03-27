@@ -30,6 +30,7 @@
   "block.kaleidoscope_doll.doll": "玩偶",
   "block.kaleidoscope_doll.computer": "电脑",
   "gui.kaleidoscope_doll.computer.search": "\uD83D\uDD0E 搜索……",
+  "gui.kaleidoscope_doll.tweaks_tool.help": "按下Shift点击10倍，按下Ctrl点击0.1倍",
   "gui.kaleidoscope_doll.tweaks_tool.total_scale": "整体缩放",
   "gui.kaleidoscope_doll.tweaks_tool.total_rotation": "整体旋转",
   "gui.kaleidoscope_doll.tweaks_tool.total_translation": "整体位移",

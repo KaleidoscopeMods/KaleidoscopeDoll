@@ -30,6 +30,7 @@
   "block.kaleidoscope_doll.doll": "Doll",
   "block.kaleidoscope_doll.computer": "Computer",
   "gui.kaleidoscope_doll.computer.search": "\uD83D\uDD0E Search...",
+  "gui.kaleidoscope_doll.tweaks_tool.help": "Shift click 10 times faster, Ctrl click 0.1 times slower",
   "gui.kaleidoscope_doll.tweaks_tool.total_scale": "Overall Scale",
   "gui.kaleidoscope_doll.tweaks_tool.total_rotation": "Overall Rotation",
   "gui.kaleidoscope_doll.tweaks_tool.total_translation": "Overall Translation",

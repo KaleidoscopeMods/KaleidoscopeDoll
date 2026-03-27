@@ -127,6 +127,7 @@ public class DollEntityRender extends EntityRenderer<DollEntity> {
         Vector3f rotation = dollEntity.getItemRotation();
         poseStack.mulPose(Axis.XP.rotationDegrees(rotation.x));
         poseStack.mulPose(Axis.YP.rotationDegrees(rotation.y));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(rotation.z));
         this.itemRenderer.renderStatic(holdItem, ItemDisplayContext.GROUND, packedLight, OverlayTexture.NO_OVERLAY, poseStack, bufferSource, dollEntity.level(), dollEntity.getId());
         poseStack.popPose();
     }

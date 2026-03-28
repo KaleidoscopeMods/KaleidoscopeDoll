@@ -25,25 +25,25 @@ public final class DollTweakersMessage implements CustomPacketPayload {
             ByteBufCodecs.VECTOR3F, msg -> msg.translation,
             ByteBufCodecs.FLOAT, msg -> msg.rotation.x,
             ByteBufCodecs.FLOAT, msg -> msg.rotation.y,
-            ByteBufCodecs.COMPOUND_TAG, msg -> msg.item_display,
+            ByteBufCodecs.COMPOUND_TAG, msg -> msg.itemDisplay,
             DollTweakersMessage::new
     );
     private final int entityId;
     private final Vector3f scale;
     private final Vector3f translation;
     private final Vector2f rotation;
-    private final CompoundTag item_display;
+    private final CompoundTag itemDisplay;
 
     public DollTweakersMessage(int entityId,
                                Vector3f scale,
                                Vector3f translation,
                                Vector2f rotation,
-                               CompoundTag item_display) {
+                               CompoundTag itemDisplay) {
         this.entityId = entityId;
         this.scale = scale;
         this.translation = translation;
         this.rotation = rotation;
-        this.item_display = item_display;
+        this.itemDisplay = itemDisplay;
         limitValues(this);
     }
 
@@ -52,8 +52,8 @@ public final class DollTweakersMessage implements CustomPacketPayload {
                                Vector3f translation,
                                float xRot,
                                float yRot,
-                               CompoundTag item_display) {
-        this(entityId, scale, translation, new Vector2f(xRot, yRot), item_display);
+                               CompoundTag itemDisplay) {
+        this(entityId, scale, translation, new Vector2f(xRot, yRot), itemDisplay);
     }
 
     public static void limitValues(DollTweakersMessage message) {
@@ -79,9 +79,9 @@ public final class DollTweakersMessage implements CustomPacketPayload {
                     dollEntity.setDisplayTranslation(message.translation);
                     dollEntity.moveTo(dollEntity.getX(), dollEntity.getY(), dollEntity.getZ(),
                             message.rotation.y, message.rotation.x);
-                    dollEntity.setItemScale(readVector3f(message.item_display.getCompound("item_scale")));
-                    dollEntity.setItemTranslation(readVector3f(message.item_display.getCompound("item_translation")));
-                    dollEntity.setItemRotation(readVector3f(message.item_display.getCompound("item_rotation")));
+                    dollEntity.setItemScale(readVector3f(message.itemDisplay.getCompound("item_scale")));
+                    dollEntity.setItemTranslation(readVector3f(message.itemDisplay.getCompound("item_translation")));
+                    dollEntity.setItemRotation(readVector3f(message.itemDisplay.getCompound("item_rotation")));
                 }
             });
         }

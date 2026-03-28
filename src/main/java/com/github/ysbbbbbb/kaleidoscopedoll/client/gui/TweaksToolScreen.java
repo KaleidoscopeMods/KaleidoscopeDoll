@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.core.Rotations;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.EntityHitResult;
@@ -21,9 +20,9 @@ public class TweaksToolScreen extends Screen {
     private final Vector3f scale;
     private final Vector3f translation;
     private final Vector2f rotation;
-    private final Vector3f item_scale;
-    private final Vector3f item_translation;
-    private final Vector3f item_rotation;
+    private final Vector3f itemScale;
+    private final Vector3f itemTranslation;
+    private final Vector3f itemRotation;
 
     protected TweaksToolScreen(DollEntity entity) {
         super(Component.literal("Tweaks Tool"));
@@ -31,9 +30,9 @@ public class TweaksToolScreen extends Screen {
         this.scale = entity.getDisplayScale();
         this.translation = entity.getDisplayTranslation();
         this.rotation = new Vector2f(entity.getXRot(), entity.getYRot());
-        this.item_scale = entity.getItemScale();
-        this.item_translation = entity.getItemTranslation();
-        this.item_rotation = entity.getItemRotation();
+        this.itemScale = entity.getItemScale();
+        this.itemTranslation = entity.getItemTranslation();
+        this.itemRotation = entity.getItemRotation();
     }
 
     public static void openScreen() {
@@ -132,85 +131,85 @@ public class TweaksToolScreen extends Screen {
 
         // 物品缩放
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.item_scale.x -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemScale.x -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 285, y, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.item_scale.x += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemScale.x += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y, 16, 16).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.item_scale.y -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemScale.y -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 285, y + 20, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.item_scale.y += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemScale.y += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y + 20, 16, 16).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.item_scale.z -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemScale.z -= (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 285, y + 40, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.item_scale.z += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemScale.z += (scale * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y + 40, 16, 16).build());
 
         // 物品位移
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.item_translation.x -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemTranslation.x -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 285, y + 70, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.item_translation.x += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemTranslation.x += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y + 70, 16, 16).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.item_translation.y -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemTranslation.y -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 285, y + 90, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.item_translation.y += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemTranslation.y += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y + 90, 16, 16).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.item_translation.z -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemTranslation.z -= (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 285, y + 110, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.item_translation.z += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemTranslation.z += (translation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y + 110, 16, 16).build());
 
         // 物品旋转
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.item_rotation.x -= (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemRotation.x -= (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 285, y + 140, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.item_rotation.x += (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemRotation.x += (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y + 140, 16, 16).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.item_rotation.y -= (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemRotation.y -= (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 285, y + 160, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.item_rotation.y += (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemRotation.y += (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y + 160, 16, 16).build());
 
         this.addRenderableWidget(Button.builder(Component.literal("-"), button -> {
-            this.item_rotation.z -= (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemRotation.z -= (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 285, y + 180, 16, 16).build());
         this.addRenderableWidget(Button.builder(Component.literal("+"), button -> {
-            this.item_rotation.z += (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
+            this.itemRotation.z += (rotation * (Screen.hasShiftDown() ? 10 : 1) * (Screen.hasControlDown() ? 0.1f : 1));
             this.sendTweaksMessage();
         }).bounds(x + 335, y + 180, 16, 16).build());
 
@@ -220,9 +219,9 @@ public class TweaksToolScreen extends Screen {
             this.scale.set(1);
             this.translation.set(0);
             this.rotation.set(0, yRot + 180);
-            this.item_scale.set(1);
-            this.item_translation.set(0);
-            this.item_rotation.set(0, 0, 0);
+            this.itemScale.set(1);
+            this.itemTranslation.set(0);
+            this.itemRotation.set(0, 0, 0);
             this.sendTweaksMessage();
         }).bounds(x + 140, y - 22, 100, 16).build());
     }
@@ -273,9 +272,9 @@ public class TweaksToolScreen extends Screen {
 
     private void sendTweaksMessage() {
         CompoundTag item_display = new CompoundTag();
-        item_display.put("item_scale", writeVector3f(item_scale));
-        item_display.put("item_translation", writeVector3f(item_translation));
-        item_display.put("item_rotation", writeVector3f(item_rotation));
+        item_display.put("item_scale", writeVector3f(itemScale));
+        item_display.put("item_translation", writeVector3f(itemTranslation));
+        item_display.put("item_rotation", writeVector3f(itemRotation));
 
         // 需要对缩放做限制
         PacketDistributor.sendToServer(new DollTweakersMessage(entityId, scale, translation, rotation, item_display));

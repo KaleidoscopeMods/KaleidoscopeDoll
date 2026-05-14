@@ -1,4 +1,5 @@
 {
+	"format_version": "1.21.6",
 	"credit": "by YSBB  2025",
 	"render_type": "cutout",
 	"textures": {
@@ -7,9 +8,9 @@
 	},
 	"elements": [
 		{
-			"from": [3, 0, 3],
-			"to": [13, 10, 13],
-			"rotation": {"angle": 0, "axis": "y", "origin": [3, 0, 3]},
+			"from": [3, 0.15, 3],
+			"to": [13, 10.15, 13],
+			"rotation": {"angle": 0, "axis": "z", "origin": [8, 5.15, 8]},
 			"faces": {
 				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
 				"east": {"uv": [0, 0, 16, 16], "texture": "#0"},

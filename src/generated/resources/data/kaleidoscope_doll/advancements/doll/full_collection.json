@@ -793,6 +793,30 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "doll_690": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "kaleidoscope_doll:doll_690"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "doll_691": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "kaleidoscope_doll:doll_691"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "doll_7": {
       "conditions": {
         "items": [
@@ -1053,6 +1077,12 @@
     ],
     [
       "doll_329"
+    ],
+    [
+      "doll_690"
+    ],
+    [
+      "doll_691"
     ]
   ],
   "rewards": {

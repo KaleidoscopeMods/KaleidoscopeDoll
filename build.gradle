@@ -115,8 +115,8 @@ dependencies {
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.9.1+1.20.1")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.9.1+1.20.1:api")
 
-    compileOnly fg.deobf("net.createmod.ponder:Ponder-Forge-1.20.1:1.0.80")
-    implementation fg.deobf("maven.modrinth:create:1.20.1-6.0.6")
+    // compileOnly fg.deobf("net.createmod.ponder:Ponder-Forge-1.20.1:1.0.80")
+    // implementation fg.deobf("maven.modrinth:create:1.20.1-6.0.6")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }

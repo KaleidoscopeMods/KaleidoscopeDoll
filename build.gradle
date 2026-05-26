@@ -3,6 +3,7 @@ plugins {
     id 'idea'
     id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 group = mod_group_id
@@ -56,6 +57,11 @@ sourceSets.main.resources {
     exclude '.cache/**'
 }
 
+mixin {
+    add sourceSets.main, "kaleidoscope_doll.refmap.json"
+    config "kaleidoscope_doll.mixins.json"
+}
+
 repositories {
     // 优先本地 libs 文件夹
     flatDir {
@@ -85,6 +91,13 @@ repositories {
         name = "Curios"
         url = uri("https://maven.theillusivec4.top/")
     }
+    maven {
+        url = "https://maven.createmod.net"
+        content {
+            includeGroup "net.createmod.ponder"
+            includeGroup "dev.engine-room.flywheel"
+        }
+    }
 }
 
 dependencies {
@@ -101,6 +114,11 @@ dependencies {
     runtimeOnly fg.deobf('curse.maven:touhou-little-maid-355044:6613821-sources-6613853')
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.9.1+1.20.1")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.9.1+1.20.1:api")
+
+    compileOnly fg.deobf("net.createmod.ponder:Ponder-Forge-1.20.1:1.0.80")
+    implementation fg.deobf("maven.modrinth:create:1.20.1-6.0.6")
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
 tasks.named('processResources', ProcessResources).configure {

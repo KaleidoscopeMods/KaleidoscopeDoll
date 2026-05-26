@@ -1,6 +1,7 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.network.message;
 
 import com.github.ysbbbbbb.kaleidoscopedoll.entity.DollEntity;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
@@ -14,12 +15,14 @@ public class DollTweakersMessage {
     private final Vector3f scale;
     private final Vector3f translation;
     private final Vector2f rotation;
+    private final CompoundTag itemDisplay;
 
-    public DollTweakersMessage(int entityId, Vector3f scale, Vector3f translation, Vector2f rotation) {
+    public DollTweakersMessage(int entityId, Vector3f scale, Vector3f translation, Vector2f rotation, CompoundTag itemDisplay) {
         this.entityId = entityId;
         this.scale = scale;
         this.translation = translation;
         this.rotation = rotation;
+        this.itemDisplay = itemDisplay;
         limitValues(this);
     }
 
@@ -42,6 +45,7 @@ public class DollTweakersMessage {
         buf.writeVector3f(message.translation);
         buf.writeFloat(message.rotation.x);
         buf.writeFloat(message.rotation.y);
+        buf.writeNbt(message.itemDisplay);
     }
 
     public static DollTweakersMessage decode(FriendlyByteBuf buf) {
@@ -51,7 +55,8 @@ public class DollTweakersMessage {
         float rotX = buf.readFloat();
         float rotY = buf.readFloat();
         Vector2f rotation = new Vector2f(rotX, rotY);
-        return new DollTweakersMessage(entityId, scale, translation, rotation);
+        CompoundTag itemDisplay = buf.readNbt();
+        return new DollTweakersMessage(entityId, scale, translation, rotation, itemDisplay);
     }
 
     public static void handle(DollTweakersMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
@@ -65,9 +70,16 @@ public class DollTweakersMessage {
                     dollEntity.setDisplayTranslation(message.translation);
                     dollEntity.moveTo(dollEntity.getX(), dollEntity.getY(), dollEntity.getZ(),
                             message.rotation.y, message.rotation.x);
+                    dollEntity.setItemScale(readVector3f(message.itemDisplay.getCompound("item_scale")));
+                    dollEntity.setItemTranslation(readVector3f(message.itemDisplay.getCompound("item_translation")));
+                    dollEntity.setItemRotation(readVector3f(message.itemDisplay.getCompound("item_rotation")));
                 }
             });
         }
         context.setPacketHandled(true);
+    }
+
+    private static Vector3f readVector3f(CompoundTag tag) {
+        return new Vector3f(tag.getFloat("x"), tag.getFloat("y"), tag.getFloat("z"));
     }
 }

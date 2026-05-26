@@ -1,0 +1,16 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "com.github.ysbbbbbb.kaleidoscopedoll.mixin.compat",
+  "plugin": "com.github.ysbbbbbb.kaleidoscopedoll.mixin.handler.MixinPlugin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "kaleidoscope_cookery.refmap.json",
+  "mixins": [
+    "create.SeatBlockMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

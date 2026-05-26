@@ -3,7 +3,7 @@ loaderVersion = "${loader_version_range}"
 license = "${mod_license}"
 
 [[mixins]]
-config = "${mod_id}-compat.mixins.json"
+config = "${mod_id}.mixins.json"
 
 [[mods]]
 modId = "${mod_id}"

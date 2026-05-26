@@ -271,13 +271,13 @@ public class TweaksToolScreen extends Screen {
     }
 
     private void sendTweaksMessage() {
-        CompoundTag item_display = new CompoundTag();
-        item_display.put("item_scale", writeVector3f(itemScale));
-        item_display.put("item_translation", writeVector3f(itemTranslation));
-        item_display.put("item_rotation", writeVector3f(itemRotation));
+        CompoundTag itemDisplay = new CompoundTag();
+        itemDisplay.put("item_scale", writeVector3f(itemScale));
+        itemDisplay.put("item_translation", writeVector3f(itemTranslation));
+        itemDisplay.put("item_rotation", writeVector3f(itemRotation));
 
         // 需要对缩放做限制
-        PacketDistributor.sendToServer(new DollTweakersMessage(entityId, scale, translation, rotation, item_display));
+        PacketDistributor.sendToServer(new DollTweakersMessage(entityId, scale, translation, rotation, itemDisplay));
     }
 
     @Override

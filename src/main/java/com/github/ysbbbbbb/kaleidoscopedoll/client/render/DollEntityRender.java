@@ -25,7 +25,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import org.apache.commons.lang3.StringUtils;
-import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import javax.annotation.Nullable;
@@ -120,19 +119,26 @@ public class DollEntityRender extends EntityRenderer<DollEntity> {
         }
 
         poseStack.pushPose();
+
         Vector3f translation = dollEntity.getItemTranslation();
         poseStack.translate(translation.x, translation.y, translation.z);
+
         Vector3f scale = dollEntity.getItemScale();
         poseStack.scale(scale.x, scale.y, scale.z);
+
         Vector3f rotation = dollEntity.getItemRotation();
         poseStack.mulPose(Axis.XP.rotationDegrees(rotation.x));
         poseStack.mulPose(Axis.YP.rotationDegrees(rotation.y));
         poseStack.mulPose(Axis.ZP.rotationDegrees(rotation.z));
-        this.itemRenderer.renderStatic(holdItem, ItemDisplayContext.GROUND, packedLight, OverlayTexture.NO_OVERLAY, poseStack, bufferSource, dollEntity.level(), dollEntity.getId());
+
+        this.itemRenderer.renderStatic(holdItem, ItemDisplayContext.GROUND, packedLight,
+                OverlayTexture.NO_OVERLAY, poseStack, bufferSource, dollEntity.level(),
+                dollEntity.getId());
+
         poseStack.popPose();
     }
 
-    private static void renderCustom(String modelId, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+    private void renderCustom(String modelId, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
         Model model;
         ResourceLocation texture;
 
@@ -160,11 +166,12 @@ public class DollEntityRender extends EntityRenderer<DollEntity> {
         model.renderToBuffer(poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY, -1);
     }
 
-    private static void renderBlock(DollEntity dollEntity, PoseStack poseStack, MultiBufferSource bufferSource, BlockState blockState) {
+    private void renderBlock(DollEntity dollEntity, PoseStack poseStack, MultiBufferSource bufferSource, BlockState blockState) {
         BlockRenderDispatcher blockRenderer = Minecraft.getInstance().getBlockRenderer();
         Level level = dollEntity.level();
         VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutout());
-        blockRenderer.renderBatched(blockState, dollEntity.blockPosition(), level, poseStack, buffer, false, level.random, ModelData.EMPTY, RenderType.cutout());
+        blockRenderer.renderBatched(blockState, dollEntity.blockPosition(), level, poseStack,
+                buffer, false, level.random, ModelData.EMPTY, RenderType.cutout());
     }
 
     @Override

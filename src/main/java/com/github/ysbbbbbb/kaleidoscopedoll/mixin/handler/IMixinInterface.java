@@ -1,7 +1,8 @@
 package com.github.ysbbbbbb.kaleidoscopedoll.mixin.handler;
 
-public interface IMixinInterface {
+import com.github.ysbbbbbb.kaleidoscopedoll.KaleidoscopeDoll;
 
+public interface IMixinInterface {
     static boolean applyInterfaceMixin(Class<?> targetClass) {
         return IMixinInterface.class.isAssignableFrom(targetClass);
     }
@@ -10,9 +11,8 @@ public interface IMixinInterface {
         try {
             return applyInterfaceMixin(Class.forName(targetClass, false, IMixinInterface.class.getClassLoader()));
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            KaleidoscopeDoll.LOGGER.error("Failed to apply mixin interface for class: {}", targetClass, e);
             return false;
         }
     }
-
 }

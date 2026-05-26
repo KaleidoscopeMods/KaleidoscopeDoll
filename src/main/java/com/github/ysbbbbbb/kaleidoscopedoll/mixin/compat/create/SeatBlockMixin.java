@@ -18,16 +18,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(SeatBlock.class)
 public abstract class SeatBlockMixin implements IMixinInterface {
     @Inject(method = "updateEntityAfterFallOn", at = @At("HEAD"))
-    private void kaleidoscope_doll$updateEntityAfterFallOn(BlockGetter reader, Entity entity, CallbackInfo ci) {
+    private void kaleidoscopeDoll$updateEntityAfterFallOn(BlockGetter reader, Entity entity, CallbackInfo ci) {
         BlockPos pos = entity.blockPosition();
         if (entity instanceof DollEntity) {
             if (SeatBlock.isSeatOccupied(entity.level(), pos)) {
                 Vec3 vec3 = entity.getDeltaMovement();
-                if (vec3.y < 0.0D)
+                if (vec3.y < 0.0D) {
                     entity.setDeltaMovement(vec3.x, -vec3.y * (double) 0.66F * 0.8D, vec3.z);
+                }
             } else {
-                if (reader.getBlockState(pos).getBlock() != ((SeatBlock) (Object) this))
+                if (reader.getBlockState(pos).getBlock() != ((SeatBlock) (Object) this)) {
                     return;
+                }
                 SeatBlock.sitDown(entity.level(), pos, entity);
             }
         }

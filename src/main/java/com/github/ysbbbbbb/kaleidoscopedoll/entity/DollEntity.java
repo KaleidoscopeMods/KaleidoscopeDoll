@@ -8,7 +8,6 @@ import com.github.ysbbbbbb.kaleidoscopedoll.init.ModSounds;
 import com.github.ysbbbbbb.kaleidoscopedoll.item.DollEntityItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.Rotations;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -27,7 +26,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -39,12 +37,9 @@ import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.fluids.FluidType;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Optional;
 
 public class DollEntity extends Entity {
     private static final EntityDataAccessor<BlockState> DATA_BLOCK_STATE = SynchedEntityData.defineId(DollEntity.class, EntityDataSerializers.BLOCK_STATE);
@@ -74,9 +69,9 @@ public class DollEntity extends Entity {
     private boolean inThrowing = false;
     private long bounceTime = 0;
     /**
-     * 存取物品CD
+     * 存取物品 Cooldown
      */
-    private long takeCD = 0;
+    private long takeCooldown = 0;
 
     /**
      * 用来标记是否是从幻翼上掉下来的，如果玩家x分钟内没有捡起，则自然消失
@@ -238,8 +233,9 @@ public class DollEntity extends Entity {
 
     private boolean bounce() {
         long time = this.bounceTime - System.currentTimeMillis();
-        if (time > 0)
+        if (time > 0) {
             return false;
+        }
         this.bounceTime = System.currentTimeMillis() + 500;
         return true;
     }
@@ -253,32 +249,31 @@ public class DollEntity extends Entity {
                 TweaksToolScreen.openScreen();
             }
             return InteractionResult.SUCCESS;
-        }
-        else if (getHoldItem().isEmpty() && player.isCrouching() && !itemStack.isEmpty()) {
-            long takeCD = this.takeCD - System.currentTimeMillis();
-            if (takeCD > 0) {return InteractionResult.PASS;}
-            var a = itemStack.copy();
-            var b = itemStack.copy();
-            a.setCount(1);
-            b.setCount(itemStack.getCount() - 1);
-            setHoldItem(a);
-            player.setItemInHand(hand, b);
-            this.takeCD = System.currentTimeMillis() + 500;
+        } else if (getHoldItem().isEmpty() && player.isCrouching() && !itemStack.isEmpty()) {
+            long takeCooldown = this.takeCooldown - System.currentTimeMillis();
+            if (takeCooldown > 0) {
+                return InteractionResult.PASS;
+            }
+            ItemStack split = itemStack.split(1);
+            this.setHoldItem(split);
+            this.takeCooldown = System.currentTimeMillis() + 500;
             return InteractionResult.SUCCESS;
         }
 
         if (!getHoldItem().isEmpty() && player.isCrouching() && itemStack.isEmpty()) {
-            long takeCD = this.takeCD - System.currentTimeMillis();
-            if (takeCD > 0) {return InteractionResult.PASS;}
+            long takeCooldown = this.takeCooldown - System.currentTimeMillis();
+            if (takeCooldown > 0) {
+                return InteractionResult.PASS;
+            }
             player.setItemInHand(hand, getHoldItem().copy());
-            setHoldItem(ItemStack.EMPTY);
-            this.takeCD = System.currentTimeMillis() + 500;
+            this.setHoldItem(ItemStack.EMPTY);
+            this.takeCooldown = System.currentTimeMillis() + 500;
             return InteractionResult.SUCCESS;
         }
 
         if (!bounce()) {
             return InteractionResult.PASS;
-        };
+        }
         if (player.level() instanceof ServerLevel serverLevel) {
             noise(serverLevel);
             return InteractionResult.SUCCESS;
@@ -305,22 +300,22 @@ public class DollEntity extends Entity {
     public boolean hurt(DamageSource source, float amount) {
         if (this.isInvulnerableTo(source)) {
             return false;
-        } else {
-            // 必须是玩家直接造成的伤害才能打掉
-            if (!this.isRemoved() && !this.level().isClientSide && source.getDirectEntity() instanceof Player) {
-                this.kill();
-                this.markHurt();
-                this.dropItem(source.getEntity());
-                return true;
-            }
-            else if (this.level() instanceof ServerLevel serverLevel) {
-                if (!bounce()) {
-                    return false;
-                };
-                noise(serverLevel);
-            }
-            return false;
         }
+        // 必须是玩家直接造成的伤害才能打掉
+        if (!this.isRemoved() && !this.level().isClientSide && source.getDirectEntity() instanceof Player) {
+            this.kill();
+            this.markHurt();
+            this.dropItem(source.getEntity());
+            return true;
+        }
+        // 否则仅弹一下，并发出声音
+        if (this.level() instanceof ServerLevel serverLevel) {
+            if (!bounce()) {
+                return false;
+            }
+            noise(serverLevel);
+        }
+        return false;
     }
 
     private void dropItem(@Nullable Entity pBrokenEntity) {
@@ -407,12 +402,14 @@ public class DollEntity extends Entity {
         if (tag.contains(TAG_TRANSLATION)) {
             setDisplayTranslation(readVector3f(tag.getCompound(TAG_TRANSLATION)));
         }
+
         if (tag.contains(TAG_DROP_FROM_PHANTOM)) {
             this.dropFromPhantom = tag.getBoolean(TAG_DROP_FROM_PHANTOM);
         }
         if (tag.contains(TAG_DROP_FROM_PHANTOM_TIME)) {
             this.dropFromPhantomTick = tag.getInt(TAG_DROP_FROM_PHANTOM_TIME);
         }
+
         if (tag.contains(TAG_HOLD_ITEM)) {
             setHoldItem(ItemStack.parseOptional(this.registryAccess(), tag.getCompound(TAG_HOLD_ITEM)));
         }
@@ -436,13 +433,14 @@ public class DollEntity extends Entity {
         if (StringUtils.isNotBlank(getCustomDollId())) {
             tag.putString(TAG_CUSTOM_DOLL_ID, getCustomDollId());
         }
+
         tag.put(TAG_SCALE, writeVector3f(getDisplayScale()));
         tag.put(TAG_TRANSLATION, writeVector3f(getDisplayTranslation()));
+
         tag.putBoolean(TAG_DROP_FROM_PHANTOM, this.dropFromPhantom);
         tag.putInt(TAG_DROP_FROM_PHANTOM_TIME, this.dropFromPhantomTick);
-        if (!getHoldItem().isEmpty()) {
-            tag.put(TAG_HOLD_ITEM, getHoldItem().save(this.registryAccess()));
-        }
+
+        tag.put(TAG_HOLD_ITEM, getHoldItem().saveOptional(this.registryAccess()));
         tag.put(TAG_ITEM_SCALE, writeVector3f(getItemScale()));
         tag.put(TAG_ITEM_TRANSLATION, writeVector3f(getItemTranslation()));
         tag.put(TAG_ITEM_ROTATION, writeVector3f(getItemRotation()));

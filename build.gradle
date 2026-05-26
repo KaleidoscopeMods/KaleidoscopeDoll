@@ -109,8 +109,8 @@ dependencies {
     // Curios
     implementation "top.theillusivec4.curios:curios-neoforge:9.2.0+1.21.1"
 
-    compileOnly "net.createmod.ponder:Ponder-NeoForge-1.21.1:1.0.56"
-    implementation "maven.modrinth:create:1.21.1-6.0.6"
+    // compileOnly "net.createmod.ponder:Ponder-NeoForge-1.21.1:1.0.56"
+    // implementation "maven.modrinth:create:1.21.1-6.0.6"
 }
 
 // 用于 neoforge.mods 里替换那一堆 ${xxxx}

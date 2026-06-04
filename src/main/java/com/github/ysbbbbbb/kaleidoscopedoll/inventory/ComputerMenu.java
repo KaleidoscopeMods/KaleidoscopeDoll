@@ -94,7 +94,9 @@ public class ComputerMenu extends AbstractContainerMenu {
         if (stack.is(TagItem.COMPUTER_TOKENS)) {
             // 要么是玩家玩偶
             if (doll.is(TagItem.PLAYER_DOLLS)) {
-                this.output.setStackInSlot(0, doll);
+                // 玩家玩偶不需要任何组件，故直接创建新的 stack 对象
+                ItemStack newStack = new ItemStack(doll.getItem());
+                this.output.setStackInSlot(0, newStack);
                 return true;
             }
 
@@ -105,7 +107,10 @@ public class ComputerMenu extends AbstractContainerMenu {
                 if (StringUtils.isBlank(id) || !ServerCustomDollLoader.getModels().contains(id)) {
                     return false;
                 }
-                this.output.setStackInSlot(0, doll);
+                // 自定义玩偶仅允许 TAG_CUSTOM_DOLL_ID 组件
+                ItemStack newStack = new ItemStack(doll.getItem());
+                CustomDollItem.setModelId(newStack, id);
+                this.output.setStackInSlot(0, newStack);
                 return true;
             }
         }

@@ -666,5 +666,10 @@
   "tooltip.kaleidoscope_doll.doll.sponsors_aisiti": "捐赠者：埃斯提",
   "tooltip.kaleidoscope_doll.doll.sponsors_enchong": "捐赠者：恩宠",
   "tooltip.kaleidoscope_doll.doll.sponsors_tiyamate": "捐赠者：提亚玛特",
-  "tooltip.kaleidoscope_doll.doll.sponsors_shiyu": "捐赠者：时雨"
+  "tooltip.kaleidoscope_doll.doll.sponsors_shiyu": "捐赠者：时雨",
+  "tooltip.kaleidoscope_doll.doll.sponsors_veronica": "捐赠者：Veronica",
+  "tooltip.kaleidoscope_doll.doll.sponsors_felu": "捐赠者：Felu",
+  "gui.kaleidoscope_doll.tweaks_tool.rotation": "旋转",
+  "gui.kaleidoscope_doll.tweaks_tool.scale": "缩放",
+  "gui.kaleidoscope_doll.tweaks_tool.translation": "位移"
 }

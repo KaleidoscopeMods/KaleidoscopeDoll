@@ -24,7 +24,7 @@ public class ModRegisterEvent {
     public static final Set<Item> DOLL_ITEMS = Sets.newLinkedHashSet();
     // 作者栏只记录 ID
     public static final Set<ResourceLocation> AUTHOR_DOLLS = Sets.newHashSet();
-    private static final int MAX_DOLL_COUNT = 692;
+    private static final int MAX_DOLL_COUNT = 694;
 
     private static void registerAllVanillaTooltips() {
         registerVanillaTooltips("doll_328", "wine_fox");
@@ -39,9 +39,9 @@ public class ModRegisterEvent {
         registerAuthorTooltips("doll_67", "author_abert_cat");
         registerAuthorTooltips("doll_68", "author_cr_019");
         registerAuthorTooltips("doll_599", "author_bzdxg");
-        registerAuthorTooltips("doll_600", "author_mly");
         registerAuthorTooltips("doll_601", "author_yca");
         registerAuthorTooltips("doll_614", "author_grainalcohol");
+        registerAuthorTooltips("doll_692", "author_mly");
     }
 
     private static void registerAllSpecialTooltips() {
@@ -573,6 +573,8 @@ public class ModRegisterEvent {
         registerSpecialTooltips("doll_597", "sponsors_new_wy");
         registerSpecialTooltips("doll_598", "sponsors_yw_wen");
 
+        registerSpecialTooltips("doll_600", "sponsors_veronica");
+
         registerSpecialTooltips("doll_602", "sponsors_changhaiming");
         registerSpecialTooltips("doll_603", "sponsors_haruka_aoba");
         registerSpecialTooltips("doll_604", "sponsors_jdk_shinano");
@@ -662,6 +664,8 @@ public class ModRegisterEvent {
         registerSpecialTooltips("doll_687", "sponsors_enchong");
         registerSpecialTooltips("doll_688", "sponsors_tiyamate");
         registerSpecialTooltips("doll_689", "sponsors_shiyu");
+
+        registerSpecialTooltips("doll_693", "sponsors_felu");
     }
 
     @SubscribeEvent

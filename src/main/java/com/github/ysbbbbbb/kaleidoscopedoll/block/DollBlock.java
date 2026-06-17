@@ -13,16 +13,11 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
@@ -32,9 +27,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class DollBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
+public class DollBlock extends Block implements SimpleWaterloggedBlock {
+    private static final IntegerProperty ROTATION = BlockStateProperties.ROTATION_16;
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    private static final VoxelShape DOLL_SHAPE = Block.box(2.0d, 0.0d, 2.0d, 14.0d, 12.0d, 14.0d);
+
+    private static final VoxelShape DOLL_SHAPE = Block.box(2, 0, 2, 14, 12, 14);
 
     private static final double PARTICLE_OFFSET_RANGE = 0.25;
     private static final double PARTICLE_HEIGHT_OFFSET = 1.0;
@@ -52,7 +49,8 @@ public class DollBlock extends HorizontalDirectionalBlock implements SimpleWater
                 .sound(SoundType.WOOL)
                 .strength(0f, 10f)
                 .noOcclusion());
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.SOUTH)
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(ROTATION, 0)
                 .setValue(WATERLOGGED, false));
     }
 
@@ -123,12 +121,11 @@ public class DollBlock extends HorizontalDirectionalBlock implements SimpleWater
 
     @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
-        FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
-        boolean isWaterlogged = fluidState.getType() == Fluids.WATER;
-
+        boolean isWaterAt = context.getLevel().isWaterAt(context.getClickedPos());
+        int rotation = RotationSegment.convertToSegment(context.getRotation());
         return this.defaultBlockState()
-                .setValue(FACING, context.getHorizontalDirection().getOpposite())
-                .setValue(WATERLOGGED, isWaterlogged);
+                .setValue(ROTATION, rotation)
+                .setValue(WATERLOGGED, isWaterAt);
     }
 
     @Override
@@ -138,6 +135,18 @@ public class DollBlock extends HorizontalDirectionalBlock implements SimpleWater
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, WATERLOGGED);
+        builder.add(ROTATION, WATERLOGGED);
+    }
+
+    @Override
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        int max = RotationSegment.getMaxSegmentIndex() + 1;
+        return state.setValue(ROTATION, rotation.rotate(state.getValue(ROTATION), max));
+    }
+
+    @Override
+    public BlockState mirror(BlockState pState, Mirror pMirror) {
+        int max = RotationSegment.getMaxSegmentIndex() + 1;
+        return pState.setValue(ROTATION, pMirror.mirror(pState.getValue(ROTATION), max));
     }
 }

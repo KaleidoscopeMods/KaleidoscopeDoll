@@ -36,5 +36,6 @@ public class DataGenerators {
         ));
         generator.addProvider(event.includeClient(), new ItemModelGenerator(pack, existingFileHelper));
         generator.addProvider(event.includeClient(), new BlockStateGenerator(pack, existingFileHelper));
+        generator.addProvider(event.includeClient(), new BlockModelGenerator(pack, existingFileHelper));
     }
 }

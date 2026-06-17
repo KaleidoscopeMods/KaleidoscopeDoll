@@ -1,0 +1,12 @@
+{
+  "parent": "kaleidoscope_doll:block/doll/doll_107",
+  "transform": {
+    "origin": "center",
+    "rotation": [
+      0.0,
+      -1.0,
+      0.0,
+      0.0
+    ]
+  }
+}

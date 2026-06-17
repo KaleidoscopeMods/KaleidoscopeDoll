@@ -12,10 +12,9 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.apache.commons.lang3.StringUtils;
 
 public class CustomDollRender implements BlockEntityRenderer<CustomDollBlockEntity> {
@@ -23,7 +22,8 @@ public class CustomDollRender implements BlockEntityRenderer<CustomDollBlockEnti
     }
 
     @Override
-    public void render(CustomDollBlockEntity doll, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+    public void render(CustomDollBlockEntity doll, float partialTick, PoseStack poseStack,
+                       MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         String modelId = doll.getModelId();
 
         Model model;
@@ -46,12 +46,13 @@ public class CustomDollRender implements BlockEntityRenderer<CustomDollBlockEnti
         }
 
         BlockState blockState = doll.getBlockState();
-        Direction facing = blockState.getValue(HorizontalDirectionalBlock.FACING);
+        int rot = blockState.getValue(BlockStateProperties.ROTATION_16);
+        float angle = -rot * 22.5f;
 
         poseStack.pushPose();
         poseStack.translate(0.5, 1.5, 0.5);
         poseStack.mulPose(Axis.ZN.rotationDegrees(180));
-        poseStack.mulPose(Axis.YN.rotationDegrees(180 - facing.get2DDataValue() * 90));
+        poseStack.mulPose(Axis.YN.rotationDegrees(angle));
 
         VertexConsumer buffer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture));
         model.renderToBuffer(poseStack, buffer, packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);

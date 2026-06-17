@@ -1,34 +1,100 @@
 {
   "variants": {
-    "facing=east,waterlogged=false": {
-      "model": "kaleidoscope_doll:block/doll/doll_209",
-      "y": 90
+    "rotation=0,waterlogged=false": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_0"
     },
-    "facing=east,waterlogged=true": {
-      "model": "kaleidoscope_doll:block/doll/doll_209",
-      "y": 90
+    "rotation=0,waterlogged=true": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_0"
     },
-    "facing=north,waterlogged=false": {
-      "model": "kaleidoscope_doll:block/doll/doll_209"
+    "rotation=1,waterlogged=false": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_1"
     },
-    "facing=north,waterlogged=true": {
-      "model": "kaleidoscope_doll:block/doll/doll_209"
+    "rotation=1,waterlogged=true": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_1"
     },
-    "facing=south,waterlogged=false": {
-      "model": "kaleidoscope_doll:block/doll/doll_209",
-      "y": 180
+    "rotation=10,waterlogged=false": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_10"
     },
-    "facing=south,waterlogged=true": {
-      "model": "kaleidoscope_doll:block/doll/doll_209",
-      "y": 180
+    "rotation=10,waterlogged=true": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_10"
     },
-    "facing=west,waterlogged=false": {
-      "model": "kaleidoscope_doll:block/doll/doll_209",
-      "y": 270
+    "rotation=11,waterlogged=false": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_11"
     },
-    "facing=west,waterlogged=true": {
-      "model": "kaleidoscope_doll:block/doll/doll_209",
-      "y": 270
+    "rotation=11,waterlogged=true": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_11"
+    },
+    "rotation=12,waterlogged=false": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_12"
+    },
+    "rotation=12,waterlogged=true": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_12"
+    },
+    "rotation=13,waterlogged=false": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_13"
+    },
+    "rotation=13,waterlogged=true": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_13"
+    },
+    "rotation=14,waterlogged=false": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_14"
+    },
+    "rotation=14,waterlogged=true": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_14"
+    },
+    "rotation=15,waterlogged=false": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_15"
+    },
+    "rotation=15,waterlogged=true": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_15"
+    },
+    "rotation=2,waterlogged=false": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_2"
+    },
+    "rotation=2,waterlogged=true": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_2"
+    },
+    "rotation=3,waterlogged=false": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_3"
+    },
+    "rotation=3,waterlogged=true": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_3"
+    },
+    "rotation=4,waterlogged=false": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_4"
+    },
+    "rotation=4,waterlogged=true": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_4"
+    },
+    "rotation=5,waterlogged=false": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_5"
+    },
+    "rotation=5,waterlogged=true": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_5"
+    },
+    "rotation=6,waterlogged=false": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_6"
+    },
+    "rotation=6,waterlogged=true": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_6"
+    },
+    "rotation=7,waterlogged=false": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_7"
+    },
+    "rotation=7,waterlogged=true": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_7"
+    },
+    "rotation=8,waterlogged=false": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_8"
+    },
+    "rotation=8,waterlogged=true": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_8"
+    },
+    "rotation=9,waterlogged=false": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_9"
+    },
+    "rotation=9,waterlogged=true": {
+      "model": "kaleidoscope_doll:rot_doll/doll_209/rot_9"
     }
   }
 }

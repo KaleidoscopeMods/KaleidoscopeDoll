@@ -681,11 +681,101 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "doll_699": {
+      "conditions": {
+        "items": [
+          {
+            "items": "kaleidoscope_doll:doll_699"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "doll_7": {
       "conditions": {
         "items": [
           {
             "items": "kaleidoscope_doll:doll_7"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "doll_700": {
+      "conditions": {
+        "items": [
+          {
+            "items": "kaleidoscope_doll:doll_700"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "doll_701": {
+      "conditions": {
+        "items": [
+          {
+            "items": "kaleidoscope_doll:doll_701"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "doll_702": {
+      "conditions": {
+        "items": [
+          {
+            "items": "kaleidoscope_doll:doll_702"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "doll_703": {
+      "conditions": {
+        "items": [
+          {
+            "items": "kaleidoscope_doll:doll_703"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "doll_704": {
+      "conditions": {
+        "items": [
+          {
+            "items": "kaleidoscope_doll:doll_704"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "doll_705": {
+      "conditions": {
+        "items": [
+          {
+            "items": "kaleidoscope_doll:doll_705"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "doll_706": {
+      "conditions": {
+        "items": [
+          {
+            "items": "kaleidoscope_doll:doll_706"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "doll_707": {
+      "conditions": {
+        "items": [
+          {
+            "items": "kaleidoscope_doll:doll_707"
           }
         ]
       },
@@ -939,6 +1029,33 @@
     ],
     [
       "doll_691"
+    ],
+    [
+      "doll_699"
+    ],
+    [
+      "doll_700"
+    ],
+    [
+      "doll_701"
+    ],
+    [
+      "doll_702"
+    ],
+    [
+      "doll_703"
+    ],
+    [
+      "doll_704"
+    ],
+    [
+      "doll_705"
+    ],
+    [
+      "doll_706"
+    ],
+    [
+      "doll_707"
     ]
   ],
   "rewards": {

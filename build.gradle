@@ -117,6 +117,7 @@ dependencies {
 
     // compileOnly fg.deobf("net.createmod.ponder:Ponder-Forge-1.20.1:1.0.80")
     // implementation fg.deobf("maven.modrinth:create:1.20.1-6.0.6")
+    runtimeOnly fg.deobf("maven.modrinth:embeddium:0.3.31+mc1.20.1")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
